@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/LoginToolbarID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FD0B0B"
+        android:visibility="invisible" />
+
+
+    <EditText
+        android:id="@+id/LoginEditTextEmailID"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LoginToolbarID"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:gravity="center|left"
+        android:hint="Email Adresinizi Giriniz"
+        android:maxLines="1" />
+
+
+    <EditText
+        android:id="@+id/LoginEditTextPasswordID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LoginEditTextEmailID"
+        android:layout_alignStart="@id/LoginEditTextEmailID"
+        android:layout_alignEnd="@id/LoginEditTextEmailID"
+        android:layout_marginTop="25dp"
+        android:gravity="center|left"
+        android:hint="Parola"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        tools:ignore="RtlHardcoded" />
+    
+    
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Giriş"
+        android:onClick="loginBtnAction"
+        android:layout_below="@id/LoginEditTextPasswordID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"/>
+
+
+</RelativeLayout>
