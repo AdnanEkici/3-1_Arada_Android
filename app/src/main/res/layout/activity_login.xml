@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login"
     tools:context=".LoginActivity">
 
 
@@ -11,45 +12,108 @@
         android:id="@+id/LoginToolbarID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FD0B0B"
         android:visibility="invisible" />
 
-
-    <EditText
-        android:id="@+id/LoginEditTextEmailID"
-        android:layout_width="250dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/LoginToolbarID"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="50dp"
-        android:gravity="center|left"
-        android:hint="Email Adresinizi Giriniz"
-        android:maxLines="1" />
-
-
-    <EditText
-        android:id="@+id/LoginEditTextPasswordID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/LoginEditTextEmailID"
-        android:layout_alignStart="@id/LoginEditTextEmailID"
-        android:layout_alignEnd="@id/LoginEditTextEmailID"
-        android:layout_marginTop="25dp"
-        android:gravity="center|left"
-        android:hint="Parola"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        tools:ignore="RtlHardcoded" />
-    
-    
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:text="Giriş"
-        android:onClick="loginBtnAction"
-        android:layout_below="@id/LoginEditTextPasswordID"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"/>
+        android:layout_centerVertical="true"
+        android:layout_margin="50dp"
+        app:cardBackgroundColor="#20808080"
+        app:cardElevation="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/signin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="Sign in"
+                android:textColor="@color/green2"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/LoginEditTextEmailID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:drawableLeft="@drawable/ic_baseline_mail_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/green3"
+                android:hint="Email"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="@color/green2"
+                android:textColorHint="@color/green2" />
+
+            <EditText
+                android:id="@+id/LoginEditTextPasswordID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:drawableLeft="@drawable/ic_baseline_lock_24"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/green3"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="@color/green2"
+                android:textColorHint="@color/green2"
+                tools:ignore="RtlHardcoded" />
+
+            <TextView
+                android:id="@+id/forgotPass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:text="Forgot Password?"
+                android:textColor="@color/green2"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/brown3"
+                android:onClick="loginBtnAction"
+                android:text="LOGIN"
+                android:textColor="@color/beige" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:text="Don't have an account?"
+                android:textColor="@color/green2"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Go to questionnaire"
+                android:textColor="@color/green2"
+                />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </RelativeLayout>
