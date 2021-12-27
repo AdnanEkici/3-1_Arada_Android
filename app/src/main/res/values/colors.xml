@@ -9,4 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#9E9E9E</color>
     <color name="colortransparentwhite">#cccccc</color>
+    <color name="brown4">#C3765A</color>
+    <color name="brown3">#CB997E</color>
+    <color name="brown2">#DDBEA9</color>
+    <color name="beige">#FFE8D6</color>
+    <color name="green">#B7B7A4</color>
+    <color name="green2">#A5A58D</color>
+    <color name="green3">#6B705C</color>
 </resources>
