@@ -2,6 +2,7 @@ package com.example.winxbitirmeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -61,11 +62,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-        email = email_edit.getText().toString();
-        password = password_edit.getText().toString();
+        Intent intent = new Intent(LoginActivity.this , QuestionnaireActivity.class);
+        startActivity(intent);
+        finish();
 
-
-        Toast.makeText(LoginActivity.this , email + " VE " + password , Toast.LENGTH_LONG).show();
     }
 
 
