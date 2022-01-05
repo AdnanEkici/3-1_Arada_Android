@@ -3,7 +3,7 @@
     <!-- Focused and not pressed -->
     <item android:state_focused="true"
         android:state_pressed="false"
-        android:color="@color/brown6" />
+        android:color="@color/dark_green" />
 
     <!-- Focused and pressed -->
     <item android:state_focused="true"
@@ -16,6 +16,6 @@
         android:color="#FF5A00" />
 
     <!-- Default color -->
-    <item android:color="@color/brown6" />
+    <item android:color="@color/dark_green" />
 
 </selector>

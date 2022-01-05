@@ -35,7 +35,7 @@
                 android:layout_marginEnd="15dp"
                 android:paddingStart="5dp"
                 android:text="Soru1: "
-                android:textColor="@color/brown5"
+                android:textColor="@color/dark_green"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="A"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire1Radio12ID"
@@ -71,7 +71,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="B"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire1Radio13ID"
@@ -82,7 +82,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="C"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
             </RadioGroup>
 
@@ -98,7 +98,7 @@
                 android:layout_marginEnd="15dp"
                 android:paddingStart="5dp"
                 android:text="Soru2: "
-                android:textColor="@color/brown5"
+                android:textColor="@color/dark_green"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -122,7 +122,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="A"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire2Radio22ID"
@@ -134,7 +134,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="B"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire2Radio23ID"
@@ -145,7 +145,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="C"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
             </RadioGroup>
 
@@ -161,7 +161,7 @@
                 android:layout_marginEnd="15dp"
                 android:paddingStart="5dp"
                 android:text="Soru3: "
-                android:textColor="@color/brown5"
+                android:textColor="@color/dark_green"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -185,7 +185,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="A"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire3Radio32ID"
@@ -197,7 +197,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="B"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire3Radio33ID"
@@ -208,7 +208,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="C"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
             </RadioGroup>
 
@@ -224,7 +224,7 @@
                 android:layout_marginEnd="15dp"
                 android:paddingStart="5dp"
                 android:text="Soru4: "
-                android:textColor="@color/brown5"
+                android:textColor="@color/dark_green"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -248,7 +248,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="A"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire4Radio42ID"
@@ -260,7 +260,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="B"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire4Radio43ID"
@@ -271,7 +271,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="C"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
             </RadioGroup>
 
@@ -287,7 +287,7 @@
                 android:layout_marginEnd="15dp"
                 android:paddingStart="5dp"
                 android:text="Soru5: "
-                android:textColor="@color/brown5"
+                android:textColor="@color/dark_green"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -311,7 +311,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="A"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire5Radio52ID"
@@ -323,7 +323,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="B"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
                 <RadioButton
                     android:id="@+id/Questionnaire5Radio53ID"
@@ -334,7 +334,7 @@
                     android:scaleX="0.9"
                     android:scaleY="0.9"
                     android:text="C"
-                    android:textColor="@color/brown5" />
+                    android:textColor="@color/dark_green" />
 
             </RadioGroup>
 
@@ -365,7 +365,7 @@
                     android:layout_margin="10dp"
                     android:layout_marginTop="10dp"
                     android:background="#00FFFFFF"
-                    android:backgroundTint="@color/brown5"
+                    android:backgroundTint="@color/dark_green"
                     android:text="Next"
                     android:textColor="@drawable/questionnierebuttonselected" />
 
