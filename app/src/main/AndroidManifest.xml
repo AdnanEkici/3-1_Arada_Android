@@ -4,6 +4,8 @@
     package="com.example.winxbitirmeapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,9 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Winxbitirmeapp"
         tools:ignore="ExtraText">
+        <activity android:name=".Questionnaires.QuestionnaireActivity"></activity>
         <activity android:name=".LoginActivity" />
-
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
