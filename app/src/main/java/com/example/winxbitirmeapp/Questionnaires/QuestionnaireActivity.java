@@ -9,12 +9,14 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.example.winxbitirmeapp.R;
 
 public class QuestionnaireActivity extends AppCompatActivity {
 
 
+    private ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +43,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
     //Private Actions
     private void init()
     {
-
-
-    }
-
-    private void selectedIndicator(int position)
-    {
-
-    }
-
-    private void dotsIndicator()
-    {
+        logo = findViewById(R.id.QuestionnaireBackgroundLogoID);
+        logo.setAlpha(100); //value: [0-255]. Where 0 is fully transparent and 255 is fully opaque.
 
     }
 
