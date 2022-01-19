@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/beige"
+    android:background="@drawable/general_background"
     android:fillViewport="true"
     tools:context=".Questionnaires.QuestionnaireActivity">
 
@@ -24,7 +24,14 @@
             android:layout_below="@id/Questionnaire1ToolbarID"
             android:layout_centerInParent="true"
             android:layout_marginTop="50dp"
-            android:background="@color/beige">
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/QuestionnaireBackgroundLogoID"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/logo"/>
 
             <!--    Soru1-->
             <TextView
@@ -374,4 +381,7 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+
+
 </ScrollView>
