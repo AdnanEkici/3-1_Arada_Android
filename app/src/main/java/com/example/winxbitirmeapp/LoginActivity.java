@@ -63,7 +63,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-
+        // db gelince burasi degiscek
+        Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 
