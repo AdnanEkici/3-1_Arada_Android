@@ -15,8 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Winxbitirmeapp"
         tools:ignore="ExtraText">
-        <activity android:name=".Questionnaires.QuestionnaireActivity"></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MeditationActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SleepActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="true" />
+        <activity android:name=".Questionnaires.QuestionnaireActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".HomeActivity" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
