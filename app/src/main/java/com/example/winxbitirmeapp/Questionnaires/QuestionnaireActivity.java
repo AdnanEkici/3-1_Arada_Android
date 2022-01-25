@@ -29,11 +29,10 @@ import java.util.List;
 public class QuestionnaireActivity extends AppCompatActivity {
 
 
-    //private ImageView logo;
+    private ImageView logo;
     private ArrayList<Integer> selectedAnswers;
     private ArrayList<String> questions;
     private ListView questionlistView;
-    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +61,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private void init()
     {
         questionlistView = findViewById(R.id.QuestionnaireListViewID);
-        //logo = findViewById(R.id.QuestionnaireBackgroundLogoID);
-        //logo.setAlpha(40); //value: [0-255]. Where 0 is fully transparent and 255 is fully opaque.
+        logo = findViewById(R.id.QuestionnaireBackgroundLogoID);
+        logo.setAlpha(10); //value: [0-255]. Where 0 is fully transparent and 255 is fully opaque.
         questions = new ArrayList<>(10);
         questions.add("Soru1 :");
         questions.add("Soru2 :");
