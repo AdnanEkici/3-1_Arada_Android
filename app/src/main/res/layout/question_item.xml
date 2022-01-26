@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/QuestionnaireItemTextID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:maxLines="1"
+        android:paddingStart="5dp"
+        android:text="Soru 1: Kendinizi ne kadar yalnız hissediyorsunuz ?"
+        android:textColor="@color/dark_green"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText,RtlSymmetry" />
+
+
+    <RelativeLayout
+        android:id="@+id/QuestionnaireItemRRID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/QuestionnaireItemTextID"
+        android:layout_alignEnd="@id/QuestionnaireItemTextID"
+        android:orientation="vertical">
+
+
+
+
+
+
+       <RadioGroup
+            android:id="@+id/QuestionnaireItemRadioGroupID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/QuestionnaireItemAnswer1ID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/tooglebuttonbackgroundunchecked"
+                android:button="@android:color/transparent"
+                android:paddingStart="7dp"
+                android:text="Katılıyorum"
+                android:textAlignment="textStart"
+                android:textColor="#dabd9d"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+            <RadioButton
+                android:id="@+id/QuestionnaireItemAnswer2ID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/tooglebuttonbackgroundunchecked"
+                android:button="@android:color/transparent"
+                android:paddingStart="7dp"
+                android:text="Biraz Katılıyorum"
+                android:textAlignment="textStart"
+                android:textColor="#dabd9d"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+            <RadioButton
+                android:id="@+id/QuestionnaireItemAnswer3ID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/tooglebuttonbackgroundunchecked"
+                android:button="@android:color/transparent"
+                android:paddingStart="7dp"
+                android:text="Katılmıyorum"
+                android:textAlignment="textStart"
+                android:textColor="#dabd9d"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+        </RadioGroup>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

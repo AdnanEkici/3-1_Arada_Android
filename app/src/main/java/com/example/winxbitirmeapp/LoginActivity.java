@@ -63,12 +63,18 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-        Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
+        // db gelince burasi degiscek
+        Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
         startActivity(intent);
         finish();
 
     }
 
 
-
+    public void moveQuestions(View view)
+    {
+        Intent intent = new Intent(LoginActivity.this , QuestionnaireActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
