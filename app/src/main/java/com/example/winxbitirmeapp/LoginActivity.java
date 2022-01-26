@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_login);
 
         this.init();
 
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-        Intent intent = new Intent(LoginActivity.this , QuestionnaireActivity.class);
+        Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
         startActivity(intent);
         finish();
 

@@ -17,6 +17,7 @@
         tools:ignore="ExtraText">
         <activity android:name=".Questionnaires.QuestionnaireActivity"></activity>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
