@@ -22,7 +22,7 @@
             android:name=".MeditationActivity"
             android:exported="true" />
         <activity
-            android:name=".SleepActivity"
+            android:name=".SleepActivity.SleepActivity"
             android:exported="true" />
         <activity
             android:name=".ChatActivity"
