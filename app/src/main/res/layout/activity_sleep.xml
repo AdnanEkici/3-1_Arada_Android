@@ -114,6 +114,7 @@
             android:layout_marginStart="7dp" />
 
         <GridLayout
+            android:id="@+id/SleepActivityGLID"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_below="@id/SleepActivityChartID"
@@ -268,7 +269,14 @@
         </GridLayout>
 
 
-
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/SleepActivityGLID"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:textColor="#D03030"
+            android:text="Alarm Kur" />
 
 
     </RelativeLayout>
