@@ -48,13 +48,13 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="Sign Up"
+                android:text="SIGN IN"
                 android:textColor="@color/dark_green"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/LoginEditTextEmailID"
+                android:id="@+id/FirstNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -72,7 +72,7 @@
                 android:textSize="14dp" />
 
             <EditText
-                android:id="@+id/b"
+                android:id="@+id/LastNameEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -90,7 +90,7 @@
                 android:textSize="14dp" />
 
             <EditText
-                android:id="@+id/a"
+                android:id="@+id/EmailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -108,8 +108,7 @@
                 android:textSize="14dp" />
 
             <EditText
-                android:id="@+id/LoginEditTextPasswordID"
-
+                android:id="@+id/PsswordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -128,28 +127,8 @@
                 android:textSize="14dp"
                 tools:ignore="RtlHardcoded" />
 
-
-            <!-- <DatePicker
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/date_field"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner"/>-->
-
-            <!--<TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Select Date:"
-                android:textSize="30sp"
-                android:textColor="@color/black"
-                android:layout_marginTop="30dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />-->
-
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/datePickerButton"
+                android:id="@+id/BirthdayPickerButton"
                 style="?android:spinnerStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -168,7 +147,7 @@
                 android:textSize="14dp" />
 
             <RadioGroup
-                android:id="@+id/aaaaa"
+                android:id="@+id/GenderPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -178,7 +157,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/Questionnaire1Radio11ID"
+                    android:id="@+id/GenderPickerFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -190,7 +169,7 @@
                     android:textColor="@color/green" />
 
                 <RadioButton
-                    android:id="@+id/Questionnaire1Radio12ID"
+                    android:id="@+id/GenderPickerMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -205,14 +184,14 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/hey"
+                android:id="@+id/SignInButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/green"
                 android:onClick="test"
-                android:text="LOGIN"
+                android:text="SIGN IN"
                 android:textColor="@color/white" />
 
 
