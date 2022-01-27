@@ -38,8 +38,8 @@ public class RegisterActivity extends AppCompatActivity{
     private void init()
     {
         initDatePicker();
-        dateButton = (AppCompatButton) findViewById(R.id.datePickerButton);
-        loginButton = (MaterialButton) findViewById(R.id.hey);
+        dateButton = (AppCompatButton) findViewById(R.id.BirthdayPickerButton);
+        loginButton = (MaterialButton) findViewById(R.id.SignInButton);
         dateButton.setText("Birthdate");
     }
 
