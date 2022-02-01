@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">winxbitirmeapp</string>
+    <string-array name="genders">
+        <item>Female</item>
+        <item>Male</item>
+    </string-array>
+
 </resources>
+

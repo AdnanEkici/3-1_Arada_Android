@@ -69,6 +69,13 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void signInBtnAction(View view)
+    {
+        Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
 
     public void moveQuestions(View view)
     {
