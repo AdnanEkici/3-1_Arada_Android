@@ -55,6 +55,7 @@
             <EditText
                 android:id="@+id/LoginEditTextEmailID"
                 android:layout_width="match_parent"
+                android:text="test8@gmail.com"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:background="#60FFFFFF"
@@ -75,6 +76,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="#60FFFFFF"
+                android:text="12345678"
                 android:drawableLeft="@drawable/ic_baseline_lock_24"
                 android:drawablePadding="10dp"
                 android:drawableTint="@color/green"

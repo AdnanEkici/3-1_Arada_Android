@@ -12,6 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="WINX"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Winxbitirmeapp"
         tools:ignore="ExtraText">
@@ -22,7 +23,7 @@
             android:name=".MeditationActivity"
             android:exported="true" />
         <activity
-            android:name=".SleepActivity"
+            android:name=".SleepActivity.SleepActivity"
             android:exported="true" />
         <activity
             android:name=".ChatActivity"
