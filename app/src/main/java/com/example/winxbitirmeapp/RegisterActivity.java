@@ -11,11 +11,29 @@ import android.telephony.ClosedSubscriberGroupInfo;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.google.android.material.button.MaterialButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLOutput;
 import java.util.Calendar;
 
 
@@ -23,6 +41,9 @@ public class RegisterActivity extends AppCompatActivity{
 
     public Button dateButton,loginButton;
     private DatePickerDialog datePickerDialog;
+
+    private EditText firstNameText, lastnameText, passwordText, emailText;
+    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -41,24 +62,20 @@ public class RegisterActivity extends AppCompatActivity{
         dateButton = (AppCompatButton) findViewById(R.id.BirthdayPickerButton);
         loginButton = (MaterialButton) findViewById(R.id.SignInButton);
         dateButton.setText("Birthdate");
-    }
 
+        firstNameText = findViewById(R.id.FirstNameEditText);
+        lastnameText = findViewById(R.id.LastNameEditText);
+        passwordText = findViewById(R.id.PasswordEditText);
+        emailText = findViewById(R.id.EmailEditText);
+
+        radioGroup = findViewById(R.id.GenderPicker);
+    }
 
     public void test(View view){
         Intent intent = new Intent(RegisterActivity.this , QuestionnaireActivity.class);
         startActivity(intent);
         finish();
     }
-
-    /*private String getTodaysDate()
-    {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        month = month + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
-    }*/
 
     private void initDatePicker()
     {
@@ -126,6 +143,75 @@ public class RegisterActivity extends AppCompatActivity{
         datePickerDialog.show();
     }
 
+    //Button Action
+    public void registerBtn(View view)//Kontrolleri failsafeleri yapılmalıdır.
+    {
+        //Date alınmadı;
+        String name = firstNameText.getText().toString();
+        String surname = lastnameText.getText().toString();
+        String email = emailText.getText().toString();
+        String password = passwordText.getText().toString();
+
+        int genid=radioGroup.getCheckedRadioButtonId();
+        RadioButton radioButton = (RadioButton) findViewById(genid);
+        String gender=radioButton.getText().toString();
+
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            String URL = "http://10.2.38.242:8080/api/auth/signup";
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("email", email);
+            jsonBody.put("password", password);
+            jsonBody.put("name", name);
+            jsonBody.put("surname", surname);
+            jsonBody.put("gender", gender.toUpperCase());
+            final String requestBody = jsonBody.toString();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    System.out.println("TEST: " + response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
+            }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return requestBody == null ? null : requestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                        return null;
+                    }
+                }
+
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null) {
+                        responseString = String.valueOf(response.statusCode);
+                        // can get more details such as response.headers
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+
+            requestQueue.add(stringRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }
 
 
 }
