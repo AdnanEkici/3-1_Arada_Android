@@ -24,19 +24,17 @@
         app:cardPreventCornerOverlap="true">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:layout_gravity="start"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:src="@drawable/moon"
-            app:tint="@color/white" />
+            android:src="@drawable/sleep2"
+             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:paddingEnd="40dp"
+            android:paddingEnd="20dp"
             android:text="SLEEP"
             android:textColor="@color/white"
             android:textSize="25sp"
@@ -63,19 +61,16 @@
         app:cardPreventCornerOverlap="true">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:layout_gravity="start"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:src="@drawable/yoga"
-            app:tint="@color/white" />
+            android:src="@drawable/meditation2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:paddingEnd="40dp"
+            android:paddingEnd="20dp"
             android:text="MEDITATION"
             android:textColor="@color/white"
             android:textSize="25sp"
@@ -105,19 +100,16 @@
         app:cardPreventCornerOverlap="true">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:layout_gravity="start"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:src="@drawable/chat"
-            app:tint="@color/white" />
+            android:src="@drawable/chat2" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
-            android:paddingEnd="40dp"
+            android:paddingEnd="20dp"
             android:text="CHAT"
             android:textColor="@color/white"
             android:textSize="25sp"

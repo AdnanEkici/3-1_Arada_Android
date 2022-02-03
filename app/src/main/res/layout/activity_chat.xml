@@ -4,45 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/general_background"
+    android:background="@drawable/chat_gecis_background"
     android:clipChildren="false"
     tools:context=".ChatActivity">
 
+    <ImageView
+        android:id="@+id/imageID"
+        android:layout_marginTop="20dp"
+        android:layout_above="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/chat_gecis"/>
+
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="chat"
-        />
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textID"
+        android:layout_centerHorizontal="true"
+        android:text="Start A Conversation"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
+    <TextView
+        android:id="@+id/textID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textAlignment="center"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis velit sed mi mattis." />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goToChatScreenBtnID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom_bar"
-        android:clipChildren="false"
-        app:itemIconSize="26dp"
-        app:itemIconTint="@drawable/tab_color"
-        app:itemTextColor="@drawable/tab_color"
-        app:menu="@menu/menu">
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:onClick="goToChatAction"
+        android:scaleType="center"
+        android:src="@drawable/ic_baseline_arrow_24"
+        app:backgroundTint="@color/brown2"
+        app:fabCustomSize="75dp"
+        app:maxImageSize="60dp"
+        app:tint="@android:color/white" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/homeViewBtnID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-15dp"
-            android:scaleType="center"
-            android:src="@drawable/logo_white"
-            app:backgroundTint="@color/green"
-            app:fabCustomSize="75dp"
-            app:maxImageSize="60dp"
-            app:tint="@android:color/white"
-
-            />
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 
 </RelativeLayout>

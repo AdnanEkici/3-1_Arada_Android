@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -19,13 +20,19 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        bottomNavigationView = findViewById(R.id.bottomNav);
-        bottomNavigationView.setSelectedItemId(R.id.chat);
+        //bottomNavigationView = findViewById(R.id.bottomNav);
+        //bottomNavigationView.setSelectedItemId(R.id.chat);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        //bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    public void goToChatAction(View view) {
+        Intent intent = new Intent(ChatActivity.this , ChatMainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    /*private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -52,5 +59,5 @@ public class ChatActivity extends AppCompatActivity {
             //getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
             return true;
         }
-    };
+    };*/
 }
