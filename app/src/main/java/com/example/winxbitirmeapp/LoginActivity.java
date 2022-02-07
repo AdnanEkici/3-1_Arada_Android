@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         //String URL = "http://10.2.38.242:8080/api/auth/signin";
 
         final String URL = "http://10.2.38.242:8080/api/auth/signin";
-// Post params to be sent to the server
+        // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
         params.put("password", password);
