@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Winxbitirmeapp"
         tools:ignore="ExtraText">
         <activity
+            android:name=".ChatMainActivity"
+            android:exported="true" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="true" />
         <activity
