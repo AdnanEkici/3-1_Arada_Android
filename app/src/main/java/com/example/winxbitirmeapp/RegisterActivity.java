@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.ClosedSubscriberGroupInfo;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -87,6 +88,8 @@ public class RegisterActivity extends AppCompatActivity{
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
+
+                //date ----> day month year
             }
         };
 
@@ -99,6 +102,8 @@ public class RegisterActivity extends AppCompatActivity{
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
         //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+
 
     }
 

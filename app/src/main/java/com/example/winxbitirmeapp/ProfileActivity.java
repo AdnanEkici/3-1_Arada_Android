@@ -2,17 +2,22 @@ package com.example.winxbitirmeapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+    private TextView firstNameText, lastnameText, genderText, emailText, birthdateText;
 
 
     @Override
@@ -24,6 +29,19 @@ public class ProfileActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        this.init();
+    }
+
+    //Private Actions
+    private void init()
+    {
+        firstNameText = findViewById(R.id.FirstNameTextView);
+        lastnameText = findViewById(R.id.LastNameTextView);
+        emailText = findViewById(R.id.EmailTextView);
+        birthdateText = findViewById(R.id.BirthdateTextView);
+        genderText = findViewById(R.id.GenderTextView);
+
+        this.setAllTextHint();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -54,4 +72,15 @@ public class ProfileActivity extends AppCompatActivity {
             return true;
         }
     };
+
+    private void setAllTextHint(){
+
+        //servisten gelen istek üzerindeki bilgiler ile doldurulacak
+        firstNameText.setText("Alien");
+        lastnameText.setText("Far From Earth");
+        emailText.setText("mgosmen@etu.edu.tr");
+        birthdateText.setText("14/02/1998");
+        genderText.setText("Female");
+
+    }
 }
