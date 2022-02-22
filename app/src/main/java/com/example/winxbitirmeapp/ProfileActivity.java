@@ -10,9 +10,22 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -40,6 +53,8 @@ public class ProfileActivity extends AppCompatActivity {
         emailText = findViewById(R.id.EmailTextView);
         birthdateText = findViewById(R.id.BirthdateTextView);
         genderText = findViewById(R.id.GenderTextView);
+
+        String data = getIntent().getExtras().getString("accessToken","none");
 
         this.setAllTextHint();
     }
@@ -87,4 +102,75 @@ public class ProfileActivity extends AppCompatActivity {
         genderText.setText("Female");
 
     }
+
+    private void getUserDataFrom()
+    {
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        //String url ="http://10.2.36.41:8080/deneme";
+        //String URL = "http://10.2.38.242:8080/api/auth/signin";
+
+        final String URL = "http://10.2.38.242:8080/api/auth/signin";
+      // Post params to be sent to the server
+        HashMap<String, String> params = new HashMap<String, String>();
+        //params.put("email", email);
+        //params.put("password", password);
+
+        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("He: " + response.toString());
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(String.valueOf(response));
+
+                            //Alttaki yorumlu kod json arrayi okur
+                           // JSONArray jsonArray = jsonObject.getJSONArray("data");
+                           // for (int i = 0; i < jsonArray.length(); i++) {
+                           //     JSONObject jo = jsonArray.getJSONObject(i);
+                           //     System.out.println("Bruh: " + jo.getString("tokenType"));
+                           // }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }){
+
+           //Headera gönder
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("winx", "mokoko");
+                return headers;
+            }
+        };
+
+// add the request object to the queue to be executed
+        queue.add(req);
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
