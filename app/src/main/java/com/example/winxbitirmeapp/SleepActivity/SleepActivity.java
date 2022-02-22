@@ -114,12 +114,12 @@ public class SleepActivity extends AppCompatActivity {
         timeView = (TextView) findViewById(R.id.SleepActivityTimeTextID);;
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
 
-        Date currentTime = Calendar.getInstance().getTime();
+        //Date currentTime = Calendar.getInstance().getTime();
         //Wed Jan 26 20:39:35 GMT+03:00 2022
-        String dateAndTime = currentTime.toString().substring(0 , 10);
-        dateView.setText(dateAndTime);
-        dateAndTime = currentTime.toString().substring(11 , 19);
-        timeView.setText(dateAndTime);
+        //String dateAndTime = currentTime.toString().substring(0 , 10);
+        //dateView.setText(dateAndTime);
+        //dateAndTime = currentTime.toString().substring(11 , 19);
+        //timeView.setText(dateAndTime);
 
     }
 

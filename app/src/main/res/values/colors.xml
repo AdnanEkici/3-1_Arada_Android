@@ -6,6 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="brown5">#c9b8a1</color>
     <color name="brown4">#C3765A</color>
     <color name="brown3">#CB997E</color>
     <color name="brown2">#DDBEA9</color>
@@ -16,4 +17,6 @@
     <color name="light_green">#B3C47B</color>
     <color name="green">#92A74B</color>
     <color name="dark_green">#2E5700</color>
+    <color name="dark_green_chat">#244500</color>
+    <color name="dark_green_chat_received">#1B3400</color>
 </resources>
