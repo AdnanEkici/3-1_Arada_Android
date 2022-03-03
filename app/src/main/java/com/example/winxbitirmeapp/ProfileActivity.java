@@ -32,6 +32,8 @@ public class ProfileActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private TextView firstNameText, lastnameText, genderText, emailText, birthdateText;
 
+    private String token;
+    private String tokenType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,11 @@ public class ProfileActivity extends AppCompatActivity {
         birthdateText = findViewById(R.id.BirthdateTextView);
         genderText = findViewById(R.id.GenderTextView);
 
-        String data = getIntent().getExtras().getString("accessToken","none");
-
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+        System.out.println("Bruh11:" + tokenType + " " + token);
+        this.getUserDataFrom();
         this.setAllTextHint();
     }
 
@@ -68,21 +73,29 @@ public class ProfileActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.sleep:
                     intent = new Intent(ProfileActivity.this , SleepActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     overridePendingTransition(0,0);
                     break;
                 case R.id.yoga:
                     intent = new Intent(ProfileActivity.this , MeditationActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     overridePendingTransition(0,0);
                     break;
                 case R.id.chat:
                     intent = new Intent(ProfileActivity.this , ChatActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     overridePendingTransition(0,0);
                     break;
                 case R.id.profile:
                     intent = new Intent(ProfileActivity.this , ProfileActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     overridePendingTransition(0,0);
                     break;
@@ -111,7 +124,7 @@ public class ProfileActivity extends AppCompatActivity {
         //String url ="http://10.2.36.41:8080/deneme";
         //String URL = "http://10.2.38.242:8080/api/auth/signin";
 
-        final String URL = "http://10.2.38.242:8080/api/auth/signin";
+        final String URL = "http://10.5.36.56:8080/user/profile";
       // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         //params.put("email", email);
@@ -122,16 +135,18 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println("He: " + response.toString());
+
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(String.valueOf(response));
-
+                            System.out.println("Bruh140:" + jsonObject);
                             //Alttaki yorumlu kod json arrayi okur
                            // JSONArray jsonArray = jsonObject.getJSONArray("data");
                            // for (int i = 0; i < jsonArray.length(); i++) {
                            //     JSONObject jo = jsonArray.getJSONObject(i);
                            //     System.out.println("Bruh: " + jo.getString("tokenType"));
                            // }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -150,7 +165,7 @@ public class ProfileActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 //headers.put("Content-Type", "application/json");
-                headers.put("winx", "mokoko");
+                headers.put("tokenAccess", tokenType + " " + token);
                 return headers;
             }
         };

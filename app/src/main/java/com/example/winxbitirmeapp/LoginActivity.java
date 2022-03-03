@@ -3,6 +3,7 @@ package com.example.winxbitirmeapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -40,10 +41,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText email_edit , password_edit;
     private String email, password;
-    private String token;
     private TextView ghostText;
     private CheckBox rememberMe;
     private SharedPreferences preferences;
+    private ProgressDialog dialog;
+    private String token;
+    private String tokenType;
 
 
 
@@ -129,12 +132,18 @@ public class LoginActivity extends AppCompatActivity {
     public void loginBtnAction(View view)
     {
         // db gelince burasi degiscek
+        /*
         Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
         startActivity(intent);
         finish();
         String email = "";
         String password = "";
-
+        */
+        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+        dialog.setMessage("Yükleniyor");
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+        dialog.show();
         try
         {
             email = email_edit.getText().toString();
@@ -151,37 +160,34 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-    /*
-        // db gelince burasi degiscek
-        Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-        startActivity(intent);
-        finish();
-    */
-
-
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://10.5.36.39:8080/user/signin";
+        final String URL = "http://10.5.36.56:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
+        params.put("username", email);//Beyzaya Sor eskiden yoktu
         params.put("password", password);
 
         JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("He: " + response.toString());
+                        System.out.println("Response177: " + response.toString());
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(String.valueOf(response));
-                            token = jsonObject.getString("tokenType");
-                            System.out.println("Bruh: " + jsonObject.getString("accessToken"));
+                            tokenType = jsonObject.getString("tokenType");
+                            token = jsonObject.getString("accessToken");
+                            //System.out.println("Bruh182: " + jsonObject.getString("accessToken"));
+                            //System.out.println("Bruh183: " + token);
 
+                            dialog.dismiss();
                             Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-                            intent.putExtra("accessToken", jsonObject.getString("accessToken"));
+                            intent.putExtra("token", token);
+                            intent.putExtra("tokenType", tokenType);
                             startActivity(intent);
                             finish();
 
@@ -191,8 +197,10 @@ public class LoginActivity extends AppCompatActivity {
                            //     JSONObject jo = jsonArray.getJSONObject(i);
                            //     System.out.println("Bruh: " + jo.getString("tokenType"));
                            // }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            dialog.dismiss();
                         }
 
 
@@ -201,6 +209,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                Toast.makeText(LoginActivity.this ,"Email veya şifre hatalı." , Toast.LENGTH_LONG).show();
+                dialog.dismiss();
             }
         }){
 
@@ -224,7 +234,6 @@ public class LoginActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
         startActivity(intent);
-        finish();
 
     }
 

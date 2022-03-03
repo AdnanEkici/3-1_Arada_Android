@@ -163,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity{
 
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.5.36.39:8080/user/signup";
+            String URL = "http://10.5.36.56:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);
@@ -176,11 +176,21 @@ public class RegisterActivity extends AppCompatActivity{
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    System.out.println("TEST: " + response);
+                    if (response.contains("200"))
+                    {
+                        Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(RegisterActivity.this , "Başarısız kayıt lütfen tekrar deneyin" , Toast.LENGTH_SHORT).show();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(RegisterActivity.this , "Bu email adresi kullanılmaktadır." , Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override

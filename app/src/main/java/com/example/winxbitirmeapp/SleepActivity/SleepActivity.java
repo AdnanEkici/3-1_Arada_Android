@@ -48,6 +48,9 @@ public class SleepActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private LineChart chart;
     private TextView dateView, timeView;
+    private String token;
+    private String tokenType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +77,26 @@ public class SleepActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.sleep:
                     intent = new Intent(SleepActivity.this , SleepActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
                 case R.id.yoga:
                     intent = new Intent(SleepActivity.this , MeditationActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
                 case R.id.chat:
                     intent = new Intent(SleepActivity.this , ChatActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
                 case R.id.profile:
                     intent = new Intent(SleepActivity.this , ProfileActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
             }
@@ -113,6 +124,9 @@ public class SleepActivity extends AppCompatActivity {
         dateView = (TextView) findViewById(R.id.SleepActivityDateTextID);;
         timeView = (TextView) findViewById(R.id.SleepActivityTimeTextID);;
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
 
         //Date currentTime = Calendar.getInstance().getTime();
         //Wed Jan 26 20:39:35 GMT+03:00 2022
