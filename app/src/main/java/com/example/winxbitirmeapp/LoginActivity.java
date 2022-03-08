@@ -86,9 +86,9 @@ public class LoginActivity extends AppCompatActivity {
         String checkbox = preferences.getString("rememberMe", "");
 
         if (checkbox.equals("true")){
-            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-            startActivity(intent);
-            finish();//logout button lazim
+           // Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+           // startActivity(intent);
+           // finish();//logout button lazim
 
         }else {
 
@@ -168,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
-        params.put("username", email);//Beyzaya Sor eskiden yoktu
+        params.put("username", email);
         params.put("password", password);
 
         JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
