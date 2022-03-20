@@ -431,15 +431,16 @@
                     android:orientation="vertical">
 
 
-                    <ImageView
+                    <Button
                         android:id="@+id/SleepActicityCardImage1ID"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:src="@color/black" />
+                        android:src="@color/black"
+                        android:onClick="startVoiceButton"/>
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="9dp"
                         android:text="Menu1" />
                 </LinearLayout>
 

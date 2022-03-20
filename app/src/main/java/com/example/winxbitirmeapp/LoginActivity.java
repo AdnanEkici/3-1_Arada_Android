@@ -282,10 +282,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signInBtnAction(View view)
     {
-        System.out.println("ADO:" + ghostText.getText());
-        //Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
-        //startActivity(intent);
-        //finish();
+        //System.out.println("ADO:" + ghostText.getText());
+        Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 
