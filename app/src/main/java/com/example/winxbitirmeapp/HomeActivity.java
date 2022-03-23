@@ -2,13 +2,16 @@ package com.example.winxbitirmeapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -17,6 +20,10 @@ public class HomeActivity extends AppCompatActivity {
     private CardView meditationCardView;
     private CardView chatCardView;
     private RelativeLayout cardViewLayout;
+
+
+    private String token;
+    private String tokenType;
 
 
     @Override
@@ -30,6 +37,12 @@ public class HomeActivity extends AppCompatActivity {
         chatCardView = findViewById(R.id.chatCardView);
         //cardViewLayout = findViewById(R.id.cardViewLayout);
 
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+
+
+
 
         //bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -37,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this , SleepActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
                 startActivity(intent);
                 //bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -47,6 +62,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this , MeditationActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
                 startActivity(intent);
 
             }
@@ -56,6 +73,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this , ChatActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
                 startActivity(intent);
             }
         });
@@ -65,34 +84,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    /*private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-            Intent intent = null;
-
-            switch (item.getItemId()){
-                case R.id.sleep:
-                    intent = new Intent(HomeActivity.this , SleepActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.yoga:
-                    intent = new Intent(HomeActivity.this , MeditationActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.chat:
-                    intent = new Intent(HomeActivity.this , ChatActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.profile:
-                    intent = new Intent(HomeActivity.this , ProfileActivity.class);
-                    startActivity(intent);
-                    break;
-            }
-            //getSupportFragmentManager().beginTransaction().replace(R.id.container,fragment).commit();
-            return true;
-        }
-    };*/
 
 
 }
