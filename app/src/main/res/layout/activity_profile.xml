@@ -8,6 +8,20 @@
     android:clipChildren="false"
     tools:context=".ProfileActivity">
 
+    <ImageButton
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="25dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_settings_24"
+        android:scaleType="fitCenter"/>
+
+
 
     <com.mikhaellopez.circularimageview.CircularImageView
         android:id="@+id/image"
@@ -32,14 +46,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/image"
         android:gravity="center"
+        android:shadowColor="#AAABAB"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="3"
         android:text="ALIEN FAR FROM EARTH"
         android:textColor="@color/dark_green"
         android:textSize="20dp"
-        android:textStyle="bold"
-        android:shadowColor="#AAABAB"
-        android:shadowRadius="3"
-        android:shadowDx="1"
-        android:shadowDy="1"/>
+        android:textStyle="bold" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -204,7 +218,7 @@
                     </LinearLayout>
 
 
-                    <TextView
+                    <EditText
                         android:id="@+id/FirstNameTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -253,7 +267,7 @@
                         android:textColorHint="@color/green"
                         android:textSize="14dp" />
 
-                    <TextView
+                    <EditText
                         android:id="@+id/BirthdateTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -269,22 +283,18 @@
                         android:textColorHint="@color/green"
                         android:textSize="14dp"
                         tools:ignore="RtlHardcoded" />
-                    <TextView
+
+                    <Spinner
                         android:id="@+id/GenderTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:background="@drawable/selected_rounded"
+                        android:background="@drawable/custom_spinner"
                         android:drawableLeft="@drawable/ic_baseline_cake_24"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/green"
-                        android:hint="Gender"
-                        android:maxLines="1"
-                        android:padding="5dp"
-                        android:textColor="@color/green"
-                        android:textColorHint="@color/green"
-                        android:textSize="14dp"
-                        tools:ignore="RtlHardcoded" />
+                        android:spinnerMode="dropdown"  />
+
+
+
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>

@@ -39,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         lastnameText = findViewById(R.id.LastNameTextView);
         emailText = findViewById(R.id.EmailTextView);
         birthdateText = findViewById(R.id.BirthdateTextView);
-        genderText = findViewById(R.id.GenderTextView);
+        //genderText = findViewById(R.id.GenderTextView);
 
         this.setAllTextHint();
     }
@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         lastnameText.setText("Far From Earth");
         emailText.setText("mgosmen@etu.edu.tr");
         birthdateText.setText("14/02/1998");
-        genderText.setText("Female");
+        //genderText.setText("Female");
 
     }
 }
