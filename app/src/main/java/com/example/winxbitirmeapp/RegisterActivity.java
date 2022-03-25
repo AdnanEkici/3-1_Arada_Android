@@ -1,11 +1,16 @@
 package com.example.winxbitirmeapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.telephony.ClosedSubscriberGroupInfo;
 import android.util.Log;
@@ -28,7 +33,17 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +51,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLOutput;
 import java.util.Calendar;
+import java.util.HashMap;
 
 
 public class RegisterActivity extends AppCompatActivity{
@@ -45,6 +61,9 @@ public class RegisterActivity extends AppCompatActivity{
 
     private EditText firstNameText, lastnameText, passwordText, emailText;
     private RadioGroup radioGroup;
+
+    private FirebaseAuth auth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,12 +89,34 @@ public class RegisterActivity extends AppCompatActivity{
         emailText = findViewById(R.id.EmailEditText);
 
         radioGroup = findViewById(R.id.GenderPicker);
+
+        auth = FirebaseAuth.getInstance();
     }
 
-    public void test(View view){
-        Intent intent = new Intent(RegisterActivity.this , QuestionnaireActivity.class);
-        startActivity(intent);
-        finish();
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void checkInternet()
+    {
+        if (!isNetworkConnected())
+        {
+            androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(RegisterActivity.this).create();
+            alertDialog.setTitle("Bağlantı Problemi");
+            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            alertDialog.setMessage("Cihazınız internete bağlı değil.");
+            alertDialog.setButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL, "Tamam",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            System.exit(0);
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
     private void initDatePicker()
@@ -161,7 +202,88 @@ public class RegisterActivity extends AppCompatActivity{
         RadioButton radioButton = (RadioButton) findViewById(genid);
         String gender=radioButton.getText().toString();
 
-        try {
+
+
+        auth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                            //if else icine al
+                            assert firebaseUser != null;
+                            String userEmail = firebaseUser.getEmail();
+                            HashMap<String,String> hashMap = new HashMap<>();
+                            hashMap.put("email",userEmail);
+                            hashMap.put("chatClick","0"); //logout ta 0 yap burayi
+                            hashMap.put("isMatched","0"); //logout ta 0 yap burayi
+                            hashMap.put("matchedEmail","-1");
+
+                            //username falan koymadim
+
+                           FirebaseFirestore.getInstance().collection("User")
+                                   .document(userEmail)
+                                   .set(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                               @Override
+                               public void onSuccess(Void unused) {
+                                   System.out.println("SUCCESSFUL ADD");
+                                   Intent intent = new Intent(RegisterActivity.this , HomeActivity.class);
+                                   startActivity(intent);
+                                   finish();
+                               }
+                           }).addOnFailureListener(new OnFailureListener() {
+                               @Override
+                               public void onFailure(@NonNull Exception e) {
+                                   System.out.println("FAILED TO ADD");
+                               }
+                           });
+
+                        }else{
+                            Toast.makeText(RegisterActivity.this,"BRUH YOU CANT REGISTER",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+        //Chat icin
+       /* auth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                            //if else icine al
+
+                            assert firebaseUser != null;
+                            String userEmail = firebaseUser.getEmail();
+
+                            db = FirebaseDatabase.getInstance().getReference("Users").child(userEmail);
+
+                            HashMap<String,String> hashMap = new HashMap<>();
+                            hashMap.put("email",userEmail);
+                            hashMap.put("isOnline","1"); //logout ta 0 yap burayi
+                            System.out.println(hashMap);
+                            //username falan koymadim
+
+                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Intent intent = new Intent(RegisterActivity.this , HomeActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                            });
+                        }else{
+                            Toast.makeText(RegisterActivity.this,"BRUH YOU CANT REGISTER",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });*/
+
+        /*try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             String URL = "http://10.5.36.56:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
@@ -222,7 +344,7 @@ public class RegisterActivity extends AppCompatActivity{
             requestQueue.add(stringRequest);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
 
