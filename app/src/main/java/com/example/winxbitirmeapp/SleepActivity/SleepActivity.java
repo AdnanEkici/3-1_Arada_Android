@@ -2,17 +2,23 @@ package com.example.winxbitirmeapp.SleepActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -45,9 +51,16 @@ import java.util.List;
 
 public class SleepActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_RECORD_AUDIO = 1;
     private BottomNavigationView bottomNavigationView;
     private LineChart chart;
     private TextView dateView, timeView;
+    
+    private SoundMeter soundMeter;
+
+    private String token;
+    private String tokenType;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +68,7 @@ public class SleepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sleep);
         this.checkInternet();
 
-
+        soundMeter = new SoundMeter();
 
 
         this.init();
@@ -76,18 +89,26 @@ public class SleepActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.sleep:
                     intent = new Intent(SleepActivity.this , SleepActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
                 case R.id.yoga:
                     intent = new Intent(SleepActivity.this , MeditationActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
                 case R.id.chat:
                     intent = new Intent(SleepActivity.this , ChatActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
                 case R.id.profile:
                     intent = new Intent(SleepActivity.this , ProfileActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
                     startActivity(intent);
                     break;
             }
@@ -115,13 +136,16 @@ public class SleepActivity extends AppCompatActivity {
         dateView = (TextView) findViewById(R.id.SleepActivityDateTextID);;
         timeView = (TextView) findViewById(R.id.SleepActivityTimeTextID);;
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
 
-        Date currentTime = Calendar.getInstance().getTime();
+        //Date currentTime = Calendar.getInstance().getTime();
         //Wed Jan 26 20:39:35 GMT+03:00 2022
-        String dateAndTime = currentTime.toString().substring(0 , 10);
-        dateView.setText(dateAndTime);
-        dateAndTime = currentTime.toString().substring(11 , 19);
-        timeView.setText(dateAndTime);
+        //String dateAndTime = currentTime.toString().substring(0 , 10);
+        //dateView.setText(dateAndTime);
+        //dateAndTime = currentTime.toString().substring(11 , 19);
+        //timeView.setText(dateAndTime);
 
     }
 
@@ -242,5 +266,53 @@ public class SleepActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+    public void startVoiceButton(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
+        }
+        else {
+            startVoiceDetection();
+        }
+
+    }
+
+    public void startVoiceDetection() {
+        //TODO: Do soundMeter.stop() control
+        soundMeter.start();
+
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+                //TODO: save sound data
+                System.out.println(soundMeter.getAmplitude());
+                h.postDelayed(this, 1000);
+            }
+        }, 1000); // 1 second delay (takes millis)
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_RECORD_AUDIO: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startVoiceDetection();
+
+                } else {
+                    //TODO: Do something on voice record permission rejection
+                }
+                return;
+            }
+
+        }
+    }
 
 }

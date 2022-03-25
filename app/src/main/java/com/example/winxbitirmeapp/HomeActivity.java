@@ -6,14 +6,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-
 import androidx.appcompat.app.AlertDialog;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,6 +25,10 @@ public class HomeActivity extends AppCompatActivity {
     private CardView meditationCardView;
     private CardView chatCardView;
     private RelativeLayout cardViewLayout;
+
+
+    private String token;
+    private String tokenType;
 
 
     @Override
@@ -35,6 +42,12 @@ public class HomeActivity extends AppCompatActivity {
         chatCardView = findViewById(R.id.chatCardView);
         //cardViewLayout = findViewById(R.id.cardViewLayout);
 
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+
+
+
 
         //bottomNavigationView.setVisibility(View.INVISIBLE);
 
@@ -42,6 +55,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this , SleepActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
                 startActivity(intent);
                 //bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -52,6 +67,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this , MeditationActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
                 startActivity(intent);
 
             }
@@ -61,6 +78,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this , ChatActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
                 startActivity(intent);
                 finish();
             }

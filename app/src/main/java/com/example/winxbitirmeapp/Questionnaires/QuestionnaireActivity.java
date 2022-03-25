@@ -33,6 +33,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private ArrayList<Integer> selectedAnswers;
     private ArrayList<String> questions;
     private ListView questionlistView;
+    private String token;
+    private String tokenType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

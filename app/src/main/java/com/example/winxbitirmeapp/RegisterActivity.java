@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.telephony.ClosedSubscriberGroupInfo;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -128,6 +129,8 @@ public class RegisterActivity extends AppCompatActivity{
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 dateButton.setText(date);
+
+                //date ----> day month year
             }
         };
 
@@ -140,6 +143,8 @@ public class RegisterActivity extends AppCompatActivity{
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
         //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+
 
     }
 
@@ -280,9 +285,10 @@ public class RegisterActivity extends AppCompatActivity{
 
         /*try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.2.38.242:8080/api/auth/signup";
+            String URL = "http://10.5.36.56:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
+            jsonBody.put("username", email);
             jsonBody.put("password", password);
             jsonBody.put("name", name);
             jsonBody.put("surname", surname);
@@ -292,11 +298,21 @@ public class RegisterActivity extends AppCompatActivity{
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    System.out.println("TEST: " + response);
+                    if (response.contains("200"))
+                    {
+                        Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(RegisterActivity.this , "Başarısız kayıt lütfen tekrar deneyin" , Toast.LENGTH_SHORT).show();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(RegisterActivity.this , "Bu email adresi kullanılmaktadır." , Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
