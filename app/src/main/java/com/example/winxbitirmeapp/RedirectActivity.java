@@ -9,21 +9,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
 
-public class SplashActivity extends AppCompatActivity {
+public class RedirectActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_redirect);
 
-
-        Intent intent = new Intent(SplashActivity.this , LoginActivity.class);
-        startActivity(intent);
-        finish();
-
-
-
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(RedirectActivity.this , HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, 3000);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -31,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
     {
         if (!isNetworkConnected())
         {
-            AlertDialog alertDialog = new AlertDialog.Builder(SplashActivity.this).create();
+            AlertDialog alertDialog = new AlertDialog.Builder(RedirectActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
             alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
@@ -51,10 +53,4 @@ public class SplashActivity extends AppCompatActivity {
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
-
-
-
-
-
-
 }

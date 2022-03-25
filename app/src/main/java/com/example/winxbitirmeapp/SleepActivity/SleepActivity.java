@@ -63,6 +63,8 @@ public class SleepActivity extends AppCompatActivity {
     }
 
 
+
+
     //Life Actions
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
