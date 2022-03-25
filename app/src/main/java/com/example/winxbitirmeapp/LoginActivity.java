@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }else {
 
-        }*/
+        }
 
         rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
