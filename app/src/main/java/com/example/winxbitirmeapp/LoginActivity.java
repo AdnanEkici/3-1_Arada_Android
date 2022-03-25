@@ -2,10 +2,15 @@ package com.example.winxbitirmeapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
@@ -26,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -45,8 +51,8 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox rememberMe;
     private SharedPreferences preferences;
     private ProgressDialog dialog;
-    private String token;
-    private String tokenType;
+    private String token = "A"; // A ve B yi sil
+    private String tokenType = "B";
 
 
 
@@ -57,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        this.checkInternet();
         this.init();
 
     }
@@ -132,14 +139,14 @@ public class LoginActivity extends AppCompatActivity {
     public void loginBtnAction(View view)
     {
         // db gelince burasi degiscek
-        /*
-        Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+        Intent intent = new Intent(LoginActivity.this , ToDoActivity.class);
         startActivity(intent);
         finish();
         String email = "";
         String password = "";
-        */
-        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+
+        //Yorumu Aç
+        /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog.setMessage("Yükleniyor");
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
@@ -226,7 +233,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // add the request object to the queue to be executed
         queue.add(req);
-
+*/
 
     }
 
@@ -243,6 +250,34 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    //Bu metot oncreatete setcontentview'ın hemen altda çağrılmalı
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void checkInternet()
+    {
+        if (!isNetworkConnected())
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+            alertDialog.setTitle("Bağlantı Problemi");
+            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            alertDialog.setMessage("Cihazınız internete bağlı değil.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            System.exit(0);
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
 
 
     }
