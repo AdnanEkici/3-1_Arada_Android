@@ -52,6 +52,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLOutput;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 
 public class RegisterActivity extends AppCompatActivity{
@@ -189,6 +190,20 @@ public class RegisterActivity extends AppCompatActivity{
         datePickerDialog.show();
     }
 
+
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
     //Button Action
     public void registerBtn(View view)//Kontrolleri failsafeleri yapılmalıdır.
     {
@@ -201,6 +216,23 @@ public class RegisterActivity extends AppCompatActivity{
         int genid=radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) findViewById(genid);
         String gender=radioButton.getText().toString();
+
+        if (name.length()==0){
+            firstNameText.setError("Enter name");
+        }
+        else if (surname.length()==0){
+            lastnameText.setError("Enter surname");
+        }
+        else if (email.length()==0){
+            emailText.setError("Enter an email");
+        }
+        else if (!isValid(email)){
+            emailText.setError("Enter a valid email");
+        }
+        else if (password.length()<6){
+            passwordText.setError("Enter a valid password");
+        }
+        //BURAYA DEVAM ET KONTROLLERE HATA OLDUGU ICIN KONTROL EDEMEDIM
 
 
 
@@ -219,6 +251,7 @@ public class RegisterActivity extends AppCompatActivity{
                             hashMap.put("chatClick","0"); //logout ta 0 yap burayi
                             hashMap.put("isMatched","0"); //logout ta 0 yap burayi
                             hashMap.put("matchedEmail","-1");
+                            hashMap.put("isOnline","0");
 
                             //username falan koymadim
 
@@ -352,4 +385,8 @@ public class RegisterActivity extends AppCompatActivity{
     }
 
 
+    public void gotoSignIn(View view) {
+        Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
+        startActivity(intent);
+    }
 }

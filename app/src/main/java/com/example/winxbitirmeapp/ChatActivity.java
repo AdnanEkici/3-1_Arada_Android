@@ -11,14 +11,22 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import com.example.winxbitirmeapp.Models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Text;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -27,6 +35,8 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DocumentReference documentReference;
     private FirebaseFirestore firebaseFirestore;
+    private TextView textID;
+
 
 
     //Bu metot oncreatete setcontentview'ın hemen altda çağrılmalı
@@ -38,6 +48,10 @@ public class ChatActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        textID = (TextView)findViewById(R.id.textID);
+        Intent intent = getIntent();
+        String counter = intent.getStringExtra("onlineNumber");
+        textID.setText("Online users: " + counter);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -67,9 +81,6 @@ public class ChatActivity extends AppCompatActivity {
     }
     public void goToChatAction(View view) {
         FirebaseUser firebaseUser = auth.getCurrentUser();
-
-        //if else icine al
-        assert firebaseUser != null;
         String userEmail = firebaseUser.getEmail();
 
         documentReference = firebaseFirestore.collection("User").document(userEmail);

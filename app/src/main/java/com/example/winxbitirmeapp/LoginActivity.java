@@ -33,9 +33,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -45,6 +48,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -171,27 +175,67 @@ public class LoginActivity extends AppCompatActivity {
 
     //Button Actions
 
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
     public void loginBtnAction(View view)
     {
         // db gelince burasi degiscek
 
+
         String email = email_edit.getText().toString();
         String password = password_edit.getText().toString();
 
-        auth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }else{
-                            Toast.makeText(LoginActivity.this,"BRUH YOU CANT LOGIN",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        if (email.length()==0){
+            email_edit.setError("Enter an email");
+        }
+        else if (!isValid(email)){
+            email_edit.setError("Enter a valid email");
+        }
+        else if (password.length()<6){
+            password_edit.setError("Enter a valid password");
+        }else {
 
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+
+                                FirebaseFirestore.getInstance().collection("User").document(auth.getCurrentUser().getEmail())
+                                        .update("isOnline", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
 
         /*
         Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
@@ -200,7 +244,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = "";
         String password = "";
         */
-        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+        /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog.setMessage("Yükleniyor");
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
@@ -225,7 +269,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://10.5.36.56:8080/user/signin";
+        final String URL = "http://192.168.1.104:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -286,7 +330,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         // add the request object to the queue to be executed
-        queue.add(req);
+        queue.add(req);*/
 
 
 
