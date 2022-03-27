@@ -32,7 +32,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -146,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = "";
 
         //Yorumu Aç
-        /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog.setMessage("Yükleniyor");
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
@@ -188,8 +187,6 @@ public class LoginActivity extends AppCompatActivity {
                             jsonObject = new JSONObject(String.valueOf(response));
                             tokenType = jsonObject.getString("tokenType");
                             token = jsonObject.getString("accessToken");
-                            //System.out.println("Bruh182: " + jsonObject.getString("accessToken"));
-                            //System.out.println("Bruh183: " + token);
 
                             dialog.dismiss();
                             Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
@@ -233,7 +230,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // add the request object to the queue to be executed
         queue.add(req);
-*/
 
     }
 

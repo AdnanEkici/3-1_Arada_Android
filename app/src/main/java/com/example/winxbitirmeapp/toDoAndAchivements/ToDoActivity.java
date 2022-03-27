@@ -35,7 +35,6 @@ public class ToDoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_do);
         this.init();
-        System.out.println("bru"+tasks.isEmpty());
 
         SwipeListViewTouchListener touchListener = new SwipeListViewTouchListener(todoListView, new SwipeListViewTouchListener.OnSwipeCallback() {
                             @Override

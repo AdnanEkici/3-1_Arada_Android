@@ -4,7 +4,6 @@
     android:layout_height="match_parent">
 
 
-
     <TextView
         android:id="@+id/ToDoRowTextID"
         android:text="Bugün 2 litre su içiceğim."

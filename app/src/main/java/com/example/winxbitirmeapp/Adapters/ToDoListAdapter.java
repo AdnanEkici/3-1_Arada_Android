@@ -20,8 +20,6 @@ public class ToDoListAdapter extends ArrayAdapter<ToDoModel> {
 
     private class ViewHolder {
         private TextView toDo;
-        private RadioButton answer1, answer2, answer3;
-        private RadioGroup rg;
     }
 
     private ArrayList<ToDoModel> array;
