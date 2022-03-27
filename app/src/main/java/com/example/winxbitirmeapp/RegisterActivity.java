@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.telephony.ClosedSubscriberGroupInfo;
 import android.util.Log;
@@ -35,7 +36,9 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLOutput;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class RegisterActivity extends AppCompatActivity{
@@ -45,6 +48,8 @@ public class RegisterActivity extends AppCompatActivity{
 
     private EditText firstNameText, lastnameText, passwordText, emailText;
     private RadioGroup radioGroup;
+
+    private String dateForDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -87,9 +92,13 @@ public class RegisterActivity extends AppCompatActivity{
             {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
+                //System.out.println("date ---> " + date);
+                try {
+                    dateForDatabase = makeDateStringForDatabase(day, month, year);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 dateButton.setText(date);
-
-                //date ----> day month year
             }
         };
 
@@ -110,6 +119,13 @@ public class RegisterActivity extends AppCompatActivity{
     private String makeDateString(int day, int month, int year)
     {
         return getMonthFormat(month) + " " + day + " " + year;
+    }
+
+    private String makeDateStringForDatabase(int day, int month, int year) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateStr = year + "-" + month + "-" + day;
+        Date date = simpleDateFormat.parse(dateStr);
+        return dateStr;
     }
 
     private String getMonthFormat(int month)
@@ -163,7 +179,7 @@ public class RegisterActivity extends AppCompatActivity{
 
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.5.36.56:8080/user/signup";
+            String URL = "http://192.168.1.82:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);
@@ -171,6 +187,7 @@ public class RegisterActivity extends AppCompatActivity{
             jsonBody.put("name", name);
             jsonBody.put("surname", surname);
             jsonBody.put("gender", gender.toUpperCase());
+            jsonBody.put("birthDate", dateForDatabase);
             final String requestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -213,6 +230,7 @@ public class RegisterActivity extends AppCompatActivity{
                     String responseString = "";
                     if (response != null) {
                         responseString = String.valueOf(response.statusCode);
+                        //System.out.println("response -----> " + responseString);
                         // can get more details such as response.headers
                     }
                     return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
