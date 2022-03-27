@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -25,7 +27,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +37,9 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-    private TextView firstNameText, lastnameText, genderText, emailText, birthdateText;
+    private TextView firstNameText, lastnameText, emailText, birthdateText, genderText;
+    private RelativeLayout profileScreen;
+    private ScrollView settingsScreen;
 
     private String name = "";
     private String surname = "";
@@ -67,13 +70,17 @@ public class ProfileActivity extends AppCompatActivity {
         emailText = findViewById(R.id.EmailTextView);
         birthdateText = findViewById(R.id.BirthdateTextView);
         genderText = findViewById(R.id.GenderTextView);
+        profileScreen = findViewById(R.id.profileLayout);
+        settingsScreen = findViewById(R.id.settingsLayout);
+
+        profileScreen.setVisibility(View.VISIBLE);
+        settingsScreen.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
-        //System.out.println("Bruh11:" + tokenType + " " + token);
+        System.out.println("Bruh11:" + tokenType + " " + token);
         this.getUserDataFrom();
-        this.setAllTextHint();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -143,26 +150,13 @@ public class ProfileActivity extends AppCompatActivity {
         }
     };
 
-    private void setAllTextHint(){
-
-        //servisten gelen istek üzerindeki bilgiler ile doldurulacak
-        firstNameText.setText("Alien");
-        lastnameText.setText("Far From Earth");
-        emailText.setText("mgosmen@etu.edu.tr");
-        birthdateText.setText("14/02/1998");
-        genderText.setText("Female");
-
-    }
-
-
-
     private void getUserDataFrom()
     {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.5.36.56:8080/profile";
+        final String URL = "http://192.168.1.82:8080/profile";
       // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         //params.put("email", email);
@@ -180,11 +174,11 @@ public class ProfileActivity extends AppCompatActivity {
                             System.out.println("Bruh140:" + jsonObject);
                             name = jsonObject.getString("name");
                             surname = jsonObject.getString("surname");
-                            gender = jsonObject.getString("geder");
+                            gender = jsonObject.getString("gender");
                             email = jsonObject.getString("email");
                             birthdate = jsonObject.getString("birthDate");
 
-
+                            System.out.println("Bruh 142: " + name);
                             firstNameText.setText(name);
                             lastnameText.setText(surname);
                             emailText.setText(email);
@@ -221,22 +215,33 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
 
-// add the request object to the queue to be executed
+        // add the request object to the queue to be executed
         queue.add(req);
 
 
 
     }
 
+    public void settingsButton(View view){
+        profileScreen.setVisibility(View.INVISIBLE);
+        settingsScreen.setVisibility(View.VISIBLE);
+    }
 
+    public void profilePictureChangeButton(View view){
+        profileScreen.setVisibility(View.INVISIBLE);
+        settingsScreen.setVisibility(View.VISIBLE);
+    }
 
+    public void saveBtnAction(View view){
+        finish();
+        startActivity(getIntent());
+    }
 
-
-
-
-
-
-
+    public void cancelBtnAction(View view){
+        finish();
+        startActivity(getIntent());
+    }
 
 
 }
+
