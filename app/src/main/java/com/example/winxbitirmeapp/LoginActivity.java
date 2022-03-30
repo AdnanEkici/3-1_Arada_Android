@@ -32,6 +32,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.StaticAnket.first_questionnaire_questions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -173,7 +174,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-        // db gelince burasi degiscek
+
+                                                //Bulunduğum sayfa   //Gitmek istediğim
+        Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
+        startActivity(intent);
+        finish();
+
+       /* // db gelince burasi degiscek // SİL BENİ
 
         String email = email_edit.getText().toString();
         String password = password_edit.getText().toString();
@@ -193,13 +200,13 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
 
-        /*
+        *//*
         Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
         startActivity(intent);
         finish();
         String email = "";
         String password = "";
-        */
+        *//*
         dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog.setMessage("Yükleniyor");
         dialog.setCancelable(false);
@@ -287,7 +294,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // add the request object to the queue to be executed
         queue.add(req);
-
+*/
 
 
     }

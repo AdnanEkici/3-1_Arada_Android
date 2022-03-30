@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple_500"
+    android:fillViewport="true"
+    tools:context=".StaticAnket.first_questionnaire_questions">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/beige">
+
+        <TextView
+            android:id="@+id/FirstQustionnairefirstquestionID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="I am life of the party" />
+
+        <RadioGroup
+            android:id="@+id/FirstQuestionnaireItemRadioGroupID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/FirstQustionnairefirstquestionID"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completely Agree" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agree" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nor Agree Nor Disagree" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disagree" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completely Disagree" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/FirstQustionnairesecondquestionID"
+            android:layout_width="match_parent"
+            android:textSize="22sp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/FirstQuestionnaireItemRadioGroupID"
+            android:layout_marginTop="5dp"
+            android:text="TEST" />
+
+        <EditText
+            android:id="@+id/FirstQustionnairesecondanswerID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/FirstQustionnairesecondquestionID"
+            android:hint="Your Answer" />
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="BANA TIKLA"
+            android:onClick="mokoko"
+            android:layout_below="@id/FirstQustionnairesecondanswerID" />
+
+
+    </RelativeLayout>
+</ScrollView>
