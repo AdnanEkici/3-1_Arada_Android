@@ -5,10 +5,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -32,6 +35,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,8 +63,8 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox rememberMe;
     private SharedPreferences preferences;
     private ProgressDialog dialog;
-    private String token;
-    private String tokenType;
+    private String token = "A"; // A ve B yi sil
+    private String tokenType = "B";
 
     private FirebaseAuth auth;
 
@@ -73,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        this.checkInternet();
         this.init();
 
     }
@@ -134,33 +139,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private void checkInternet()
-    {
-        if (!isNetworkConnected())
-        {
-            AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-            alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
-            alertDialog.setMessage("Cihazınız internete bağlı değil.");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            System.exit(0);
-                        }
-                    });
-            alertDialog.show();
-        }
-    }
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
-    }
-
 
 
 
@@ -245,6 +223,9 @@ public class LoginActivity extends AppCompatActivity {
         String password = "";
         */
         /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+
+        //Yorumu Aç
+        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog.setMessage("Yükleniyor");
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
@@ -269,7 +250,8 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://192.168.1.82:8080/user/signin";
+
+        final String URL = "http://10.2.38.96:8080/user/signin";
 
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
@@ -287,8 +269,6 @@ public class LoginActivity extends AppCompatActivity {
                             jsonObject = new JSONObject(String.valueOf(response));
                             tokenType = jsonObject.getString("tokenType");
                             token = jsonObject.getString("accessToken");
-                            //System.out.println("Bruh182: " + jsonObject.getString("accessToken"));
-                            //System.out.println("Bruh183: " + token);
 
                             dialog.dismiss();
                             Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
@@ -334,7 +314,6 @@ public class LoginActivity extends AppCompatActivity {
         queue.add(req);*/
 
 
-
     }
 
     public void signInBtnAction(View view)
@@ -352,6 +331,34 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    //Bu metot oncreatete setcontentview'ın hemen altda çağrılmalı
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void checkInternet()
+    {
+        if (!isNetworkConnected())
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+            alertDialog.setTitle("Bağlantı Problemi");
+            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            alertDialog.setMessage("Cihazınız internete bağlı değil.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            System.exit(0);
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
 
 
     }
