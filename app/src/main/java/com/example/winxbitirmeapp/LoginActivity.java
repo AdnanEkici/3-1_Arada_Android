@@ -106,9 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         if (checkbox.equals("true")){
-           // Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-           // startActivity(intent);
-           // finish();//logout button lazim
+
 
 
         }else {
@@ -238,10 +236,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
        
-        /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
-
-
-
+        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog.setMessage("Yükleniyor");
         dialog.setCancelable(false);
@@ -329,7 +324,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         // add the request object to the queue to be executed
-        queue.add(req);*/
+        queue.add(req);
 
 
 
