@@ -16,7 +16,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -45,7 +50,6 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
-
 
 
 
@@ -78,10 +82,31 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this , ChatActivity.class);
-                intent.putExtra("token", token);
-                intent.putExtra("tokenType", tokenType);
-                startActivity(intent);
-                finish();
+
+                FirebaseFirestore.getInstance().collection("User")
+                        .whereEqualTo("isOnline", "1")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    int counter = 0;
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        counter++;
+
+                                    }
+
+                                    intent.putExtra("onlineNumber",""+counter);
+                                    intent.putExtra("token", token);
+                                    intent.putExtra("tokenType", tokenType);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }
+                        });
+
+
+
             }
         });
 
