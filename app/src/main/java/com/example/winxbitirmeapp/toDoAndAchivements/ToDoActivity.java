@@ -18,7 +18,7 @@ import com.example.winxbitirmeapp.Models.ToDoModel;
 import com.example.winxbitirmeapp.R;
 
 import java.util.ArrayList;
-
+//profil/todo
 public class ToDoActivity extends AppCompatActivity {
 
     private ListView todoListView;
@@ -121,9 +121,6 @@ public class ToDoActivity extends AppCompatActivity {
         doneemptyText = findViewById(R.id.doneEmptyTextID);
 
         tasks = new ArrayList<>(10);
-
-
-
         dones = new ArrayList<>(10);
 
 
@@ -189,4 +186,19 @@ public class ToDoActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+
+    private void getUserData()
+    {
+
+    }
+
+    private void saveUserData()
+    {
+
+    }
+
+
+
+
 }
