@@ -138,7 +138,31 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void checkInternet()
+    {
+        if (!isNetworkConnected())
+        {
+            androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(LoginActivity.this).create();
+            alertDialog.setTitle("Bağlantı Problemi");
+            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            alertDialog.setMessage("Cihazınız internete bağlı değil.");
+            alertDialog.setButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL, "Tamam",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            System.exit(0);
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
 
     //DB Actions
 
