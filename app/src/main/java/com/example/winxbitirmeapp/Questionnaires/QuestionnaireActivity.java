@@ -131,7 +131,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
         {
             AlertDialog alertDialog = new AlertDialog.Builder(QuestionnaireActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            alertDialog.setIcon(getResources().getDrawable(R.drawable.nowifi));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {
