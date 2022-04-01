@@ -32,6 +32,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -429,6 +430,13 @@ public class ProfileActivity extends AppCompatActivity {
         bdate[1] = Integer.parseInt(parts[1]); //month
         bdate[2] = Integer.parseInt(parts[2]); //year
         return bdate;
+    }
+    public void goTodo(View view)
+    {
+        Intent intent = new Intent(ProfileActivity.this , ToDoActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
     }
 
 }

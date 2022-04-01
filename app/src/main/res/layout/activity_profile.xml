@@ -20,6 +20,10 @@
             android:layout_height="wrap_content"
             >
 
+
+
+
+
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/profilePicture"
                 android:layout_width="180dp"
@@ -272,6 +276,14 @@
         android:layout_height="match_parent"
         android:visibility="invisible">
 
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="75dp"
+            android:layout_alignParentEnd="true"
+            android:onClick="goTodo"
+            android:text="todoya git"
+            android:textColor="@color/black" />
+
         <ImageButton
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -283,6 +295,7 @@
             android:layout_marginBottom="25dp"
             android:background="@android:color/transparent"
             android:onClick="settingsButtonOnClick"
+            android:onClick="settingsButton"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_baseline_settings_24" />
 
