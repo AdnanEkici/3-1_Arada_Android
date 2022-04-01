@@ -295,7 +295,6 @@
             android:layout_marginBottom="25dp"
             android:background="@android:color/transparent"
             android:onClick="settingsButtonOnClick"
-            android:onClick="settingsButton"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_baseline_settings_24" />
 
