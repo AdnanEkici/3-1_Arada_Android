@@ -82,7 +82,36 @@ public class ChatMainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
+                            logoutChat();
                             readMessages();
+                        }
+                    }
+                });
+
+    }
+
+    private void logoutChat() {
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("User")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent( QuerySnapshot value,
+                                         FirebaseFirestoreException e) {
+
+                        if (e != null) {
+                            return;
+                        }
+
+                        for (QueryDocumentSnapshot dc : value) {
+                            if (dc.getString("email").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()) && dc.getString("isMatched").equals("-1")) {
+                                Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
+                                startActivity(intent);
+                                finish();
+
+                            }
                         }
                     }
                 });
@@ -240,26 +269,7 @@ public class ChatMainActivity extends AppCompatActivity {
                         if (e != null) {
                             return;
                         }
-                        db.collection("User")
-                                .whereEqualTo("email",firebaseUser.getEmail())
-                                .whereEqualTo("chatClick", "0")
-                                .whereEqualTo("isMatched","0")
-                                .whereEqualTo("matchedEmail","-1")
-                                .get()
-                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if (task.isSuccessful()){
-                                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                                Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        }else{
 
-                                        }
-                                    }
-                                });
 
                         mChat.clear();
                         for (QueryDocumentSnapshot dc : value) {

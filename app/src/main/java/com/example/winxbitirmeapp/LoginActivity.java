@@ -34,10 +34,13 @@ import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.Gson;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +49,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -132,33 +136,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private void checkInternet()
-    {
-        if (!isNetworkConnected())
-        {
-            AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
-            alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
-            alertDialog.setMessage("Cihazınız internete bağlı değil.");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            System.exit(0);
-                        }
-                    });
-            alertDialog.show();
-        }
-    }
-
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
-    }
-
-
 
 
 
@@ -172,25 +149,72 @@ public class LoginActivity extends AppCompatActivity {
 
     //Button Actions
 
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
     public void loginBtnAction(View view)
     {
         // db gelince burasi degiscek
 
+
         String email = email_edit.getText().toString();
         String password = password_edit.getText().toString();
 
+        if (email.length()==0){
+            email_edit.setError("Enter an email");
+        }
+        else if (!isValid(email)){
+            email_edit.setError("Enter a valid email");
+        }
+        else if (password.length()<6){
+            password_edit.setError("Enter a valid password");
+        }else {
 
-        auth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
 
-                        }else{
-                            Toast.makeText(LoginActivity.this,"BRUH YOU CANT LOGIN",Toast.LENGTH_SHORT).show();
+                                FirebaseFirestore.getInstance().collection("User").document(auth.getCurrentUser().getEmail())
+                                        .update("isOnline", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+
+                                    }
+                                });
+
+
+                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
+
+
+       
+        /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
 
 
 
@@ -217,6 +241,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
+
 
 
         final String URL = "http://10.2.38.96:8080/user/signin";
@@ -280,7 +305,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         // add the request object to the queue to be executed
-        queue.add(req);
+        queue.add(req);*/
 
 
 
