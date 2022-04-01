@@ -179,9 +179,6 @@ public class LoginActivity extends AppCompatActivity {
         String email = email_edit.getText().toString();
         String password = password_edit.getText().toString();
 
-        Intent intent = new Intent(LoginActivity.this , ToDoActivity.class);
-        startActivity(intent);
-
 
         auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
