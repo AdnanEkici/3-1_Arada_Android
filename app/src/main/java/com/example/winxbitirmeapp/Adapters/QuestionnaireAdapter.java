@@ -106,6 +106,7 @@ public class QuestionnaireAdapter extends ArrayAdapter<String> {
             method(position , holder.rg);
 
         }
+
         return view;
     }
 
