@@ -32,6 +32,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -178,6 +179,11 @@ public class LoginActivity extends AppCompatActivity {
         String email = email_edit.getText().toString();
         String password = password_edit.getText().toString();
 
+        Intent intent = new Intent(LoginActivity.this , ToDoActivity.class);
+        startActivity(intent);
+
+/*
+
         auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -280,6 +286,7 @@ public class LoginActivity extends AppCompatActivity {
         // add the request object to the queue to be executed
         queue.add(req);
 
+*/
 
 
     }
