@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.example.winxbitirmeapp.Models.ToDoModel;
 import com.example.winxbitirmeapp.R;
 
 import java.util.ArrayList;
-
+//profil/todo
 public class ToDoActivity extends AppCompatActivity {
 
     private ListView todoListView;
@@ -28,6 +29,8 @@ public class ToDoActivity extends AppCompatActivity {
     private TextView todoemptyText , doneemptyText;
     private ToDoListAdapter adapterTask;
     private ToDoListAdapter adapterDone;
+    private String tokenType;
+    private String token;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -120,10 +123,12 @@ public class ToDoActivity extends AppCompatActivity {
         todoemptyText = findViewById(R.id.todoemptyTextID);
         doneemptyText = findViewById(R.id.doneEmptyTextID);
 
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+        System.out.println("Bruh11:" + tokenType + " " + token);
+
         tasks = new ArrayList<>(10);
-
-
-
         dones = new ArrayList<>(10);
 
 
@@ -189,4 +194,19 @@ public class ToDoActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+
+    private void getUserData()
+    {
+
+    }
+
+    private void saveUserData()
+    {
+
+    }
+
+
+
+
 }

@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private String token;
     private String tokenType;
+    private boolean flag = false;
 
     private FirebaseAuth auth;
 
@@ -97,7 +98,6 @@ public class LoginActivity extends AppCompatActivity {
     {
         email_edit = findViewById(R.id.LoginEditTextEmailID);
         password_edit = findViewById(R.id.LoginEditTextPasswordID);
-        ghostText = findViewById(R.id.GhostTextViewID);
         rememberMe = findViewById(R.id.rememberMe);
         preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("rememberMe", "");
@@ -105,34 +105,122 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
 
-        if (checkbox.equals("true")){
-           // Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-           // startActivity(intent);
-           // finish();//logout button lazim
+      if(!flag)
+      {
+          if (checkbox.equals("true"))
+          {
+              rememberMe.setChecked(true);
+
+              dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+              dialog.setMessage("Yükleniyor");
+              dialog.setCancelable(false);
+              dialog.setInverseBackgroundForced(false);
+              dialog.show();
+              String emailFromPref = preferences.getString("email", "def");
+              String passFromPref = preferences.getString("password", "def");
+              RequestQueue queue = Volley.newRequestQueue(this);
+              auth.signInWithEmailAndPassword(emailFromPref, passFromPref)
+                      .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                          @Override
+                          public void onComplete(@NonNull Task<AuthResult> task) {
+                              if (task.isSuccessful()) {
+
+                                  FirebaseFirestore.getInstance().collection("User").document(auth.getCurrentUser().getEmail())
+                                          .update("isOnline", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                      @Override
+                                      public void onSuccess(Void unused)
+                                      {
+
+                                          // Instantiate the RequestQueue.
+                                          final String URL = "http://10.2.38.96:8080/user/signin";
+                                          // Post params to be sent to the server
+                                          HashMap<String, String> params = new HashMap<String, String>();
+                                          params.put("email", emailFromPref);
+                                          params.put("username", emailFromPref);
+                                          params.put("password", passFromPref);
+
+                                          JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                                                  new Response.Listener<JSONObject>() {
+                                                      @Override
+                                                      public void onResponse(JSONObject response) {
+                                                          JSONObject jsonObject = null;
+                                                          try {
+                                                              jsonObject = new JSONObject(String.valueOf(response));
+                                                              tokenType = jsonObject.getString("tokenType");
+                                                              token = jsonObject.getString("accessToken");
+
+                                                              dialog.dismiss();
+                                                              Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                                              intent.putExtra("token", token);
+                                                              intent.putExtra("tokenType", tokenType);
+                                                              startActivity(intent);
+                                                              finish();
+
+                                                              //Alttaki yorumlu kod json arrayi okur
+                                                              // JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                                              // for (int i = 0; i < jsonArray.length(); i++) {
+                                                              //     JSONObject jo = jsonArray.getJSONObject(i);
+                                                              //     System.out.println("Bruh: " + jo.getString("tokenType"));
+                                                              // }
+
+                                                          } catch (JSONException e) {
+                                                              e.printStackTrace();
+                                                              dialog.dismiss();
+                                                          }
 
 
-        }else {
+                                                      }
+                                                  }, new Response.ErrorListener() {
+                                              @Override
+                                              public void onErrorResponse(VolleyError error) {
+                                                  VolleyLog.e("Error: ", error.getMessage());
+                                                  dialog.dismiss();
+                                              }
+                                          }){
 
-        }
+                                              //Headera gönder
+                                              @Override
+                                              public Map<String, String> getHeaders() throws AuthFailureError {
+                                                  HashMap<String, String> headers = new HashMap<String, String>();
+                                                  //headers.put("Content-Type", "application/json");
+                                                  headers.put("winx", "mokoko");
+                                                  return headers;
+                                              }
+                                          };
 
-        rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (compoundButton.isChecked()){
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("rememberMe","true");
-                    editor.apply();
+                                          // add the request object to the queue to be executed
+                                          queue.add(req);
+                                          if(dialog.isShowing())
+                                          {
+                                              dialog.dismiss();
+                                          }
 
-                }else{
-                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("rememberMe","false");
-                    editor.apply();
+                                      }
+                                  }).addOnFailureListener(new OnFailureListener() {
+                                      @Override
+                                      public void onFailure(@NonNull Exception e) {
 
-                }
-            }
-        });
+
+                                      }
+                                  });
+                              } else {
+                                  if(dialog.isShowing())
+                                  {
+                                      dialog.dismiss();
+                                  }
+                              }
+                          }
+                      });
+
+
+
+
+          }else
+          {
+              rememberMe.setChecked(false);
+          }
+      }
+
 
     }
 
@@ -188,6 +276,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
+
+
+
+        flag = true;
+        RequestQueue queue = Volley.newRequestQueue(this);
         // db gelince burasi degiscek
 
 
@@ -203,7 +296,11 @@ public class LoginActivity extends AppCompatActivity {
         else if (password.length()<6){
             password_edit.setError("Enter a valid password");
         }else {
-
+            dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+            dialog.setMessage("Yükleniyor");
+            dialog.setCancelable(false);
+            dialog.setInverseBackgroundForced(false);
+            dialog.show();
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
@@ -213,7 +310,78 @@ public class LoginActivity extends AppCompatActivity {
                                 FirebaseFirestore.getInstance().collection("User").document(auth.getCurrentUser().getEmail())
                                         .update("isOnline", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
-                                    public void onSuccess(Void unused) {
+                                    public void onSuccess(Void unused)
+                                    {
+
+                                        // Instantiate the RequestQueue.
+                                        final String URL = "http://10.2.38.96:8080/user/signin";
+                                        // Post params to be sent to the server
+                                        HashMap<String, String> params = new HashMap<String, String>();
+                                        params.put("email", email);
+                                        params.put("username", email);
+                                        params.put("password", password);
+
+                                        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                                                new Response.Listener<JSONObject>() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        JSONObject jsonObject = null;
+                                                        try {
+                                                            jsonObject = new JSONObject(String.valueOf(response));
+                                                            tokenType = jsonObject.getString("tokenType");
+                                                            token = jsonObject.getString("accessToken");
+
+                                                            if(dialog.isShowing())
+                                                            {
+                                                                dialog.dismiss();
+                                                            }
+                                                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                                            intent.putExtra("token", token);
+                                                            intent.putExtra("tokenType", tokenType);
+                                                            startActivity(intent);
+                                                            finish();
+
+                                                            //Alttaki yorumlu kod json arrayi okur
+                                                            // JSONArray jsonArray = jsonObject.getJSONArray("data");
+                                                            // for (int i = 0; i < jsonArray.length(); i++) {
+                                                            //     JSONObject jo = jsonArray.getJSONObject(i);
+                                                            //     System.out.println("Bruh: " + jo.getString("tokenType"));
+                                                            // }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                            if(dialog.isShowing())
+                                                            {
+                                                                dialog.dismiss();
+                                                            }
+                                                        }
+
+
+                                                    }
+                                                }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                if(dialog.isShowing())
+                                                {
+                                                    dialog.dismiss();
+                                                }
+                                                VolleyLog.e("Error: ", error.getMessage());
+                                                Toast.makeText(LoginActivity.this ,"Email veya şifre hatalı." , Toast.LENGTH_LONG).show();
+                                            }
+                                        }){
+
+                                            //Headera gönder
+                                            @Override
+                                            public Map<String, String> getHeaders() throws AuthFailureError {
+                                                HashMap<String, String> headers = new HashMap<String, String>();
+                                                //headers.put("Content-Type", "application/json");
+                                                headers.put("winx", "mokoko");
+                                                return headers;
+                                            }
+                                        };
+
+                                        // add the request object to the queue to be executed
+                                        queue.add(req);
 
 
                                     }
@@ -221,116 +389,43 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
 
-
+                                        if(dialog.isShowing())
+                                        {
+                                            dialog.dismiss();
+                                        }
                                     }
                                 });
-
-
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
                             } else {
                                 Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                                if(dialog.isShowing())
+                                {
+                                    dialog.dismiss();
+                                }
                             }
                         }
                     });
         }
 
 
-       
-        /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
 
-
-
-        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
-        dialog.setMessage("Yükleniyor");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
-        try
+        if(rememberMe.isChecked())
         {
-            email = email_edit.getText().toString();
-        }catch(Exception e)
-        {
-            Toast.makeText(LoginActivity.this , "Email Adresini Giriniz." , Toast.LENGTH_SHORT).show();
+            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("rememberMe","true");
+            editor.putString("email", email_edit.getText().toString());
+            editor.putString("password", password_edit.getText().toString());
+            editor.apply();
         }
-        try
+        else
         {
-            password = password_edit.getText().toString();
-        }catch(Exception e)
-        {
-            Toast.makeText(LoginActivity.this , "Şifrenizi Giriniz." , Toast.LENGTH_SHORT).show();
+            SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("rememberMe","false");
+            editor.putString("email",  "");
+            editor.putString("password","");
+            editor.apply();
         }
-
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-
-
-        final String URL = "http://10.2.38.96:8080/user/signin";
-        // Post params to be sent to the server
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("email", email);
-        params.put("username", email);
-        params.put("password", password);
-
-        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println("Response177: " + response.toString());
-                        JSONObject jsonObject = null;
-                        try {
-                            jsonObject = new JSONObject(String.valueOf(response));
-                            tokenType = jsonObject.getString("tokenType");
-                            token = jsonObject.getString("accessToken");
-                            //System.out.println("Bruh182: " + jsonObject.getString("accessToken"));
-                            //System.out.println("Bruh183: " + token);
-
-                            dialog.dismiss();
-                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-                            intent.putExtra("token", token);
-                            intent.putExtra("tokenType", tokenType);
-                            startActivity(intent);
-                            finish();
-
-                            //Alttaki yorumlu kod json arrayi okur
-                           // JSONArray jsonArray = jsonObject.getJSONArray("data");
-                           // for (int i = 0; i < jsonArray.length(); i++) {
-                           //     JSONObject jo = jsonArray.getJSONObject(i);
-                           //     System.out.println("Bruh: " + jo.getString("tokenType"));
-                           // }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            dialog.dismiss();
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-                Toast.makeText(LoginActivity.this ,"Email veya şifre hatalı." , Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        }){
-
-           //Headera gönder
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                //headers.put("Content-Type", "application/json");
-                headers.put("winx", "mokoko");
-                return headers;
-            }
-        };
-
-        // add the request object to the queue to be executed
-        queue.add(req);*/
-
 
 
     }
@@ -338,7 +433,7 @@ public class LoginActivity extends AppCompatActivity {
     public void signInBtnAction(View view)
     {
 
-        //System.out.println("ADO:" + ghostText.getText());
+
         Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
         startActivity(intent);
 
