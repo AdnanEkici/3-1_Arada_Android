@@ -106,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity{
         {
             androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(RegisterActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            //alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {
@@ -165,9 +165,16 @@ public class RegisterActivity extends AppCompatActivity{
 
     private String makeDateStringForDatabase(int day, int month, int year) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = year + "-" + month + "-" + day;
-        Date date = simpleDateFormat.parse(dateStr);
-        return dateStr;
+        if(month < 10){
+            String dateStr = year + "-" + "0" + month + "-" + day;
+            Date date = simpleDateFormat.parse(dateStr);
+            return dateStr;
+        }
+        else{
+            String dateStr = year + "-" + month + "-" + day;
+            Date date = simpleDateFormat.parse(dateStr);
+            return dateStr;
+        }
     }
 
     private String getMonthFormat(int month)
@@ -296,7 +303,7 @@ public class RegisterActivity extends AppCompatActivity{
 
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.2.38.96:8080/user/signup";
+            String URL = "http://10.2.38.162:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);

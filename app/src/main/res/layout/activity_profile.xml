@@ -121,21 +121,53 @@
                         android:textSize="14dp" />
 
                     <EditText
-                        android:id="@+id/BirthdateEditText"
+                        android:id="@+id/OldPasswordEditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/selected_rounded"
-                        android:drawableLeft="@drawable/ic_baseline_today_24"
+                        android:drawableLeft="@drawable/ic_baseline_mail_24"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green"
-                        android:hint="Birthdate"
+                        android:hint="Old password"
                         android:maxLines="1"
                         android:padding="10dp"
                         android:textColor="@color/green"
                         android:textColorHint="@color/green"
-                        android:textSize="14dp"
-                        tools:ignore="RtlHardcoded" />
+                        android:textSize="14dp" />
+
+                    <EditText
+                        android:id="@+id/NewPasswordEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/selected_rounded"
+                        android:drawableLeft="@drawable/ic_baseline_mail_24"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/green"
+                        android:hint="New password"
+                        android:maxLines="1"
+                        android:padding="10dp"
+                        android:textColor="@color/green"
+                        android:textColorHint="@color/green"
+                        android:textSize="14dp" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/BirthdayPickerButton"
+                        style="?android:spinnerStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/selected_rounded"
+                        android:drawableLeft="@drawable/ic_baseline_cake_24"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/green"
+                        android:onClick="openDatePicker"
+                        android:padding="10dp"
+                        android:text="JAN 01 2020"
+                        android:textColor="@color/green"
+                        android:textColorHint="@color/green"
+                        android:textSize="14dp" />
 
                     <RadioGroup
                         android:id="@+id/GenderPicker"
@@ -167,6 +199,18 @@
                             android:scaleX="0.9"
                             android:scaleY="0.9"
                             android:text="Male"
+                            android:textColor="@color/green" />
+
+                        <RadioButton
+                            android:id="@+id/GenderPickerOther"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="0.15"
+                            android:checked="false"
+                            android:scaleX="0.9"
+                            android:scaleY="0.9"
+                            android:text="Other"
                             android:textColor="@color/green" />
 
                     </RadioGroup>
@@ -238,9 +282,9 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="25dp"
             android:background="@android:color/transparent"
+            android:onClick="settingsButtonOnClick"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_settings_24"
-            android:onClick="settingsButton"/>
+            android:src="@drawable/ic_baseline_settings_24" />
 
 
         <com.mikhaellopez.circularimageview.CircularImageView

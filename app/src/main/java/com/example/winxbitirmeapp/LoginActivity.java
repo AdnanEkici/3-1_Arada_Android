@@ -145,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(LoginActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            //alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {
@@ -225,10 +225,6 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 });
 
-
-                                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                startActivity(intent);
-                                finish();
                             } else {
                                 Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                             }
@@ -238,7 +234,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
        
-        /*dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
+        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
 
 
 
@@ -265,10 +261,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-
-
-
-        final String URL = "http://10.2.38.96:8080/user/signin";
+        final String URL = "http://10.2.38.162:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -329,7 +322,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         // add the request object to the queue to be executed
-        queue.add(req);*/
+        queue.add(req);
 
 
 
