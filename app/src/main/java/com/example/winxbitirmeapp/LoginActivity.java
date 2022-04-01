@@ -137,10 +137,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-        // db gelince burasi degiscek
-        Intent intent = new Intent(LoginActivity.this , ToDoActivity.class);
-        startActivity(intent);
-        finish();
         String email = "";
         String password = "";
 
@@ -170,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://10.5.36.56:8080/user/signin";
+        final String URL = "http://10.2.38.96:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);

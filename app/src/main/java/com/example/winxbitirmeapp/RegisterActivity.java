@@ -163,7 +163,7 @@ public class RegisterActivity extends AppCompatActivity{
 
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.5.36.56:8080/user/signup";
+            String URL = "http://10.2.38.96:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);
@@ -178,6 +178,7 @@ public class RegisterActivity extends AppCompatActivity{
                 public void onResponse(String response) {
                     if (response.contains("200"))
                     {
+                        Toast.makeText(RegisterActivity.this , "Profiliniz Başarıyla Oluştu" , Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -190,7 +191,7 @@ public class RegisterActivity extends AppCompatActivity{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(RegisterActivity.this , "Bu email adresi kullanılmaktadır." , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this , error.getLocalizedMessage().toString() , Toast.LENGTH_SHORT).show();
                 }
             }) {
                 @Override
@@ -214,6 +215,7 @@ public class RegisterActivity extends AppCompatActivity{
                     if (response != null) {
                         responseString = String.valueOf(response.statusCode);
                         // can get more details such as response.headers
+                        System.out.println("Response: " + responseString);
                     }
                     return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
                 }

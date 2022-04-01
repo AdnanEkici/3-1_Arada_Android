@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -19,6 +20,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.example.winxbitirmeapp.SleepActivity.SleepData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 
@@ -68,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         token = intent.getStringExtra("token");
         //System.out.println("Bruh11:" + tokenType + " " + token);
         this.getUserDataFrom();
-        this.setAllTextHint();
+        //this.setAllTextHint();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -131,7 +133,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.5.36.56:8080/profile";
+        final String URL = "http://10.2.38.96:8080/profile";
       // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         //params.put("email", email);
@@ -149,7 +151,7 @@ public class ProfileActivity extends AppCompatActivity {
                             System.out.println("Bruh140:" + jsonObject);
                             name = jsonObject.getString("name");
                             surname = jsonObject.getString("surname");
-                            gender = jsonObject.getString("geder");
+                            gender = jsonObject.getString("gender");
                             email = jsonObject.getString("email");
                             birthdate = jsonObject.getString("birthDate");
 
@@ -168,6 +170,7 @@ public class ProfileActivity extends AppCompatActivity {
                            // }
 
                         } catch (JSONException e) {
+                            Toast.makeText(ProfileActivity.this , "Bir hata oluştu tekrar deneyiniz" , Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
 
