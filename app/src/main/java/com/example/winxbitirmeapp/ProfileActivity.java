@@ -156,7 +156,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://192.168.1.82:8080/profile";
+        final String URL = "http://10.2.38.96:8080/profile";
       // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         //params.put("email", email);
@@ -166,19 +166,16 @@ public class ProfileActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("He: " + response.toString());
 
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(String.valueOf(response));
-                            System.out.println("Bruh140:" + jsonObject);
                             name = jsonObject.getString("name");
                             surname = jsonObject.getString("surname");
                             gender = jsonObject.getString("gender");
                             email = jsonObject.getString("email");
                             birthdate = jsonObject.getString("birthDate");
 
-                            System.out.println("Bruh 142: " + name);
                             firstNameText.setText(name);
                             lastnameText.setText(surname);
                             emailText.setText(email);

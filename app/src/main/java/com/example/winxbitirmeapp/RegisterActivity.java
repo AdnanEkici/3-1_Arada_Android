@@ -244,9 +244,7 @@ public class RegisterActivity extends AppCompatActivity{
                                @Override
                                public void onSuccess(Void unused) {
                                    System.out.println("SUCCESSFUL ADD");
-                                   Intent intent = new Intent(RegisterActivity.this , HomeActivity.class);
-                                   startActivity(intent);
-                                   finish();
+
                                }
                            }).addOnFailureListener(new OnFailureListener() {
                                @Override
@@ -262,46 +260,10 @@ public class RegisterActivity extends AppCompatActivity{
                 });
 
 
-        //Chat icin
-       /* auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
 
-                            FirebaseUser firebaseUser = auth.getCurrentUser();
-                            //if else icine al
-
-                            assert firebaseUser != null;
-                            String userEmail = firebaseUser.getEmail();
-
-                            db = FirebaseDatabase.getInstance().getReference("Users").child(userEmail);
-
-                            HashMap<String,String> hashMap = new HashMap<>();
-                            hashMap.put("email",userEmail);
-                            hashMap.put("isOnline","1"); //logout ta 0 yap burayi
-                            System.out.println(hashMap);
-                            //username falan koymadim
-
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Intent intent = new Intent(RegisterActivity.this , HomeActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                }
-                            });
-                        }else{
-                            Toast.makeText(RegisterActivity.this,"BRUH YOU CANT REGISTER",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
-
-        /*try {
+        try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://192.168.1.82:8080/user/signup";
+            String URL = "http://10.2.38.96:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);
@@ -317,6 +279,7 @@ public class RegisterActivity extends AppCompatActivity{
                 public void onResponse(String response) {
                     if (response.contains("200"))
                     {
+                        Toast.makeText(RegisterActivity.this , "Kayıt Başarılı Lütfen Giriş Yapınız" , Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -362,7 +325,7 @@ public class RegisterActivity extends AppCompatActivity{
             requestQueue.add(stringRequest);
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
 
 
 

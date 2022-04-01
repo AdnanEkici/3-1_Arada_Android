@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F3F1"
+    tools:context=".toDoAndAchivements.ToDoActivity">
+
+
+    <TextView
+        android:id="@+id/ToDoTextViewID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/todo"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="5dp"
+        android:text="Hedeflerim"
+        android:textColor="@color/green"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@id/ToDoTextViewID"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:onClick="addTask"
+        android:src="@drawable/addtaskicon" />
+
+
+
+        <ListView
+            android:id="@+id/ToDoListViewID"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            android:layout_below="@id/ToDoTextViewID"
+            android:visibility="invisible"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.5"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+    <TextView
+        android:id="@+id/todoemptyTextID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ToDoTextViewID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="155dp"
+        android:text="Henüz Bir Hedefiniz Yok"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/DoneTextViewID"
+            android:layout_below="@id/ToDoListViewID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/done"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:text="Tamamlanan Hedeflerim"
+            android:textColor="@color/green"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/doneListViewID"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/DoneTextViewID"
+        android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/doneEmptyTextID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/DoneTextViewID"
+            android:text="Henüz Tamamlanmış Bir Hedefiniz Yok" />
+
+
+
+</RelativeLayout>

@@ -183,9 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-                            startActivity(intent);
-                            finish();
+
                         }else{
                             Toast.makeText(LoginActivity.this,"BRUH YOU CANT LOGIN",Toast.LENGTH_SHORT).show();
                         }
@@ -193,13 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
 
-        /*
-        Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-        startActivity(intent);
-        finish();
-        String email = "";
-        String password = "";
-        */
+
         dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
         dialog.setMessage("Yükleniyor");
         dialog.setCancelable(false);
@@ -225,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://192.168.1.82:8080/user/signin";
+        final String URL = "http://10.2.38.96:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
