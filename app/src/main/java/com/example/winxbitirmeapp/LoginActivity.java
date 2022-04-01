@@ -182,7 +182,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(LoginActivity.this , ToDoActivity.class);
         startActivity(intent);
 
-/*
 
         auth.signInWithEmailAndPassword(email,password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -286,7 +285,6 @@ public class LoginActivity extends AppCompatActivity {
         // add the request object to the queue to be executed
         queue.add(req);
 
-*/
 
 
     }
