@@ -13,12 +13,12 @@
         android:id="@+id/settingsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
         android:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/profilePicture"
@@ -54,10 +54,12 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="200dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_below="@+id/profilePicture">
+                android:layout_below="@+id/profilePicture"
+                android:background="@drawable/border_layout"
+                app:cardBackgroundColor="@color/beige">
 
                 <LinearLayout
                     android:layout_width="match_parent"
