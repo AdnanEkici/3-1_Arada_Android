@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -41,16 +43,18 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //bottomNavigationView = findViewById(R.id.bottomNav);
         sleepCardView = findViewById(R.id.sleepCardView);
         meditationCardView = findViewById(R.id.meditationCardView);
         chatCardView = findViewById(R.id.chatCardView);
-        //cardViewLayout = findViewById(R.id.cardViewLayout);
 
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
 
+
+        //Burada Null poiner exeption yiyorsanız adnanı arayın.
+        System.out.println("Token TEEST: " + tokenType + " " + token);
+        System.out.println("Token:  " + FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
 
 
         //bottomNavigationView.setVisibility(View.INVISIBLE);
@@ -109,10 +113,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
-        //bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.container,new SleepFragment()).commit();
-
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -141,6 +141,18 @@ public class HomeActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+    //buton metotları geçici
+    public void logout(View view)
+    {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("checkbox", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.apply();
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(HomeActivity.this , LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 
 
