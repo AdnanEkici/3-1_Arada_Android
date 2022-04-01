@@ -102,4 +102,9 @@ public class ChatActivity extends AppCompatActivity {
         finish();
     }
 
+    public void goBackToHome(View view) {
+        Intent intent = new Intent(ChatActivity.this , HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
