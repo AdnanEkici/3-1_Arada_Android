@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,7 +26,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
-import com.example.winxbitirmeapp.SleepActivity.SleepData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONException;
@@ -83,7 +81,6 @@ public class ProfileActivity extends AppCompatActivity {
         token = intent.getStringExtra("token");
         System.out.println("Bruh11:" + tokenType + " " + token);
         this.getUserDataFrom();
-
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -110,7 +107,6 @@ public class ProfileActivity extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -161,7 +157,6 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         final String URL = "http://10.2.38.96:8080/profile";
-
       // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         //params.put("email", email);
@@ -171,19 +166,16 @@ public class ProfileActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        System.out.println("He: " + response.toString());
 
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(String.valueOf(response));
-                            System.out.println("Bruh140:" + jsonObject);
                             name = jsonObject.getString("name");
                             surname = jsonObject.getString("surname");
                             gender = jsonObject.getString("gender");
                             email = jsonObject.getString("email");
                             birthdate = jsonObject.getString("birthDate");
 
-                            System.out.println("Bruh 142: " + name);
                             firstNameText.setText(name);
                             lastnameText.setText(surname);
                             emailText.setText(email);
@@ -198,7 +190,6 @@ public class ProfileActivity extends AppCompatActivity {
                            // }
 
                         } catch (JSONException e) {
-                            Toast.makeText(ProfileActivity.this , "Bir hata oluştu tekrar deneyiniz" , Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
 
