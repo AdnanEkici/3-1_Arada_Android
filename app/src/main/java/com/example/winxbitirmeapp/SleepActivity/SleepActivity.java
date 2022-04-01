@@ -2,17 +2,23 @@ package com.example.winxbitirmeapp.SleepActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -45,9 +51,13 @@ import java.util.List;
 
 public class SleepActivity extends AppCompatActivity {
 
+    private static final int MY_PERMISSIONS_RECORD_AUDIO = 1;
     private BottomNavigationView bottomNavigationView;
     private LineChart chart;
     private TextView dateView, timeView;
+    
+    private SoundMeter soundMeter;
+
     private String token;
     private String tokenType;
 
@@ -58,12 +68,14 @@ public class SleepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sleep);
         this.checkInternet();
 
-
+        soundMeter = new SoundMeter();
 
 
         this.init();
         this.initGrap();
     }
+
+
 
 
     //Life Actions
@@ -254,5 +266,53 @@ public class SleepActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+    public void startVoiceButton(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
+        }
+        else {
+            startVoiceDetection();
+        }
+
+    }
+
+    public void startVoiceDetection() {
+        //TODO: Do soundMeter.stop() control
+        soundMeter.start();
+
+        final Handler h = new Handler();
+        h.postDelayed(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+                //TODO: save sound data
+                System.out.println(soundMeter.getAmplitude());
+                h.postDelayed(this, 1000);
+            }
+        }, 1000); // 1 second delay (takes millis)
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_RECORD_AUDIO: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startVoiceDetection();
+
+                } else {
+                    //TODO: Do something on voice record permission rejection
+                }
+                return;
+            }
+
+        }
+    }
 
 }

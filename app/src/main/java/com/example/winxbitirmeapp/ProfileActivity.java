@@ -1,13 +1,20 @@
 package com.example.winxbitirmeapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +29,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +39,9 @@ import java.util.Map;
 public class ProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-    private TextView firstNameText, lastnameText, genderText, emailText, birthdateText;
+    private TextView firstNameText, lastnameText, emailText, birthdateText, genderText;
+    private RelativeLayout profileScreen;
+    private ScrollView settingsScreen;
 
     private String name = "";
     private String surname = "";
@@ -64,13 +72,45 @@ public class ProfileActivity extends AppCompatActivity {
         emailText = findViewById(R.id.EmailTextView);
         birthdateText = findViewById(R.id.BirthdateTextView);
         genderText = findViewById(R.id.GenderTextView);
+        profileScreen = findViewById(R.id.profileLayout);
+        settingsScreen = findViewById(R.id.settingsLayout);
+
+        profileScreen.setVisibility(View.VISIBLE);
+        settingsScreen.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
-        //System.out.println("Bruh11:" + tokenType + " " + token);
+        System.out.println("Bruh11:" + tokenType + " " + token);
         this.getUserDataFrom();
-        //this.setAllTextHint();
+
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void checkInternet()
+    {
+        if (!isNetworkConnected())
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(ProfileActivity.this).create();
+            alertDialog.setTitle("Bağlantı Problemi");
+            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            alertDialog.setMessage("Cihazınız internete bağlı değil.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            System.exit(0);
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -114,19 +154,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     };
 
-    private void setAllTextHint(){
-
-        //servisten gelen istek üzerindeki bilgiler ile doldurulacak
-        firstNameText.setText("Alien");
-        lastnameText.setText("Far From Earth");
-        emailText.setText("mgosmen@etu.edu.tr");
-        birthdateText.setText("14/02/1998");
-        genderText.setText("Female");
-
-    }
-
-
-
     private void getUserDataFrom()
     {
 
@@ -134,6 +161,7 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         final String URL = "http://10.2.38.96:8080/profile";
+
       // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         //params.put("email", email);
@@ -155,7 +183,7 @@ public class ProfileActivity extends AppCompatActivity {
                             email = jsonObject.getString("email");
                             birthdate = jsonObject.getString("birthDate");
 
-
+                            System.out.println("Bruh 142: " + name);
                             firstNameText.setText(name);
                             lastnameText.setText(surname);
                             emailText.setText(email);
@@ -193,22 +221,33 @@ public class ProfileActivity extends AppCompatActivity {
             }
         };
 
-// add the request object to the queue to be executed
+        // add the request object to the queue to be executed
         queue.add(req);
 
 
 
     }
 
+    public void settingsButton(View view){
+        profileScreen.setVisibility(View.INVISIBLE);
+        settingsScreen.setVisibility(View.VISIBLE);
+    }
 
+    public void profilePictureChangeButton(View view){
+        profileScreen.setVisibility(View.INVISIBLE);
+        settingsScreen.setVisibility(View.VISIBLE);
+    }
 
+    public void saveBtnAction(View view){
+        finish();
+        startActivity(getIntent());
+    }
 
-
-
-
-
-
-
+    public void cancelBtnAction(View view){
+        finish();
+        startActivity(getIntent());
+    }
 
 
 }
+

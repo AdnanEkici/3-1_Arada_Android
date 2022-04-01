@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.winxbitirmeapp">
+    package="com.example.winxbitirmeapp" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="WINX"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/logo"
+        android:label="3'ü 1 ARADA"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Winxbitirmeapp"
         android:usesCleartextTraffic="true"
-        tools:ignore="ExtraText">
+        tools:ignore="ExtraText" >
+        <activity
+            android:name=".RedirectActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChatMatchActivity"
+            android:exported="true" />
+
         <activity
             android:name=".toDoAndAchivements.ToDoActivity"
             android:exported="false" />
@@ -40,13 +48,15 @@
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+       
     </application>
 
 </manifest>

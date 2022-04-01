@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "611494184336",
+    "project_id": "winx-ff149",
+    "storage_bucket": "winx-ff149.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611494184336:android:1f6bcf4d3cf3bcade51f15",
+        "android_client_info": {
+          "package_name": "com.example.videocall"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611494184336-812mqqb3rl6i38u5gjl5jcnq9pgb551q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbe9OevBhfY7iMdkcfHYnVh_lkUFbUnlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611494184336-812mqqb3rl6i38u5gjl5jcnq9pgb551q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611494184336:android:371fef22513cb0e8e51f15",
+        "android_client_info": {
+          "package_name": "com.example.winxbitirmeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611494184336-812mqqb3rl6i38u5gjl5jcnq9pgb551q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbe9OevBhfY7iMdkcfHYnVh_lkUFbUnlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611494184336-812mqqb3rl6i38u5gjl5jcnq9pgb551q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

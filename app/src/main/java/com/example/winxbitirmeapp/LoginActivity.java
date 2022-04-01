@@ -1,10 +1,14 @@
 package com.example.winxbitirmeapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Application;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +36,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private String token = "A"; // A ve B yi sil
     private String tokenType = "B";
+
+    private FirebaseAuth auth;
 
 
 
@@ -91,10 +102,14 @@ public class LoginActivity extends AppCompatActivity {
         preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("rememberMe", "");
 
+
+        auth = FirebaseAuth.getInstance();
+
         if (checkbox.equals("true")){
            // Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
            // startActivity(intent);
            // finish();//logout button lazim
+
 
         }else {
 
@@ -121,6 +136,32 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void checkInternet()
+    {
+        if (!isNetworkConnected())
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).create();
+            alertDialog.setTitle("Bağlantı Problemi");
+            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            alertDialog.setMessage("Cihazınız internete bağlı değil.");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            System.exit(0);
+                        }
+                    });
+            alertDialog.show();
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
 
 
 
@@ -137,6 +178,30 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
+        // db gelince burasi degiscek
+
+        String email = email_edit.getText().toString();
+        String password = password_edit.getText().toString();
+
+        auth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Toast.makeText(LoginActivity.this,"BRUH YOU CANT LOGIN",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+        /*
+        Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+        startActivity(intent);
+        finish();
         String email = "";
         String password = "";
 
@@ -167,6 +232,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         final String URL = "http://10.2.38.96:8080/user/signin";
+
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -227,10 +293,13 @@ public class LoginActivity extends AppCompatActivity {
         // add the request object to the queue to be executed
         queue.add(req);
 
+
     }
 
     public void signInBtnAction(View view)
     {
+
+        //System.out.println("ADO:" + ghostText.getText());
         Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
         startActivity(intent);
 
