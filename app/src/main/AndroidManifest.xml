@@ -23,6 +23,10 @@
         <activity
             android:name=".ChatMatchActivity"
             android:exported="true" />
+
+        <activity
+            android:name=".toDoAndAchivements.ToDoActivity"
+            android:exported="false" />
         <activity
             android:name=".ChatMainActivity"
             android:exported="true" />
