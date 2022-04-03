@@ -13,16 +13,11 @@
         android:id="@+id/settingsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
-
-
-
-
+            android:layout_height="wrap_content">
 
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/profilePicture"
@@ -58,10 +53,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/profilePicture"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_below="@+id/profilePicture"
+                android:layout_marginBottom="100dp"
                 android:background="@drawable/border_layout"
                 app:cardBackgroundColor="@color/beige">
 
@@ -227,33 +223,31 @@
                         <com.google.android.material.button.MaterialButton
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="25dp"
+                            android:layout_weight=".50"
                             android:backgroundTint="@color/green"
                             android:onClick="saveBtnAction"
                             android:text="Save"
-                            android:textColor="@color/white"
-                            android:layout_weight=".50"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="10dp"                            android:layout_marginLeft="5dp"
-                            android:layout_marginBottom="25dp"/>
+                            android:textColor="@color/white" />
 
                         <com.google.android.material.button.MaterialButton
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="25dp"
+                            android:layout_weight=".50"
                             android:backgroundTint="@color/green"
                             android:onClick="cancelBtnAction"
                             android:text="Cancel"
-                            android:textColor="@color/white"
-                            android:layout_weight=".50"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginBottom="25dp"/>
+                            android:textColor="@color/white" />
 
 
                     </LinearLayout>
-
-
-
 
 
                 </LinearLayout>
@@ -274,15 +268,7 @@
         android:id="@+id/profileLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible">
-
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="75dp"
-            android:layout_alignParentEnd="true"
-            android:onClick="goTodo"
-            android:text="todoya git"
-            android:textColor="@color/black" />
+        android:visibility="visible">
 
         <ImageButton
             android:layout_width="35dp"
@@ -304,7 +290,7 @@
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="25dp"
             android:shadowColor="#AAABAB"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -332,256 +318,298 @@
             android:textStyle="bold" />
 
         <RelativeLayout
+            android:id="@+id/profileInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/bottomNav"
             android:layout_below="@id/UserNameID"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/border_layout"
+            android:layout_marginBottom="20dp"
             android:clickable="true"
             app:cardBackgroundColor="@color/beige">
+            <RelativeLayout
+                android:id="@+id/profileRelativeLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="70dp"
+                android:background="@drawable/border_layout">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:fillViewport="true"
-                android:orientation="vertical">
-
-                <RelativeLayout
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="25dp">
+                    android:layout_marginBottom="20dp"
+                    android:layout_margin="5dp"
+                    android:fillViewport="true"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="vertical">
-
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="25dp">
 
                         <LinearLayout
-                            android:id="@+id/name"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:weightSum="2">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="vertical">
+
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:id="@+id/name"
+                                android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="10dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/selected_rounded"
-                                android:orientation="vertical"
-                                android:padding="5dp">
+                                android:orientation="horizontal"
+                                android:weightSum="2">
 
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/selected_rounded"
+                                    android:orientation="vertical"
+                                    android:padding="5dp">
 
-                                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                                        android:id="@+id/SleepProgressID"
-                                        android:layout_width="0dp"
-                                        android:layout_height="1dp"
-                                        android:layout_gravity="center"
-                                        android:progress="80"
-                                        app:indicatorColor="@color/green"
-                                        app:indicatorSize="100dp"
-                                        app:trackColor="#e3e8d3"
-                                        app:trackCornerRadius="10dp"
-                                        app:trackThickness="10dp" />
+                                    <FrameLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                                            android:id="@+id/SleepProgressID"
+                                            android:layout_width="0dp"
+                                            android:layout_height="1dp"
+                                            android:layout_gravity="center"
+                                            android:progress="80"
+                                            app:indicatorColor="@color/green"
+                                            app:indicatorSize="100dp"
+                                            app:trackColor="#e3e8d3"
+                                            app:trackCornerRadius="10dp"
+                                            app:trackThickness="10dp" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:shadowColor="#AAABAB"
+                                            android:shadowDx="1"
+                                            android:shadowDy="1"
+                                            android:shadowRadius="3"
+                                            android:text="80%"
+                                            android:textColor="@color/green"
+                                            android:textSize="20dp"
+                                            android:textStyle="bold" />
+
+                                    </FrameLayout>
+
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:gravity="center"
                                         android:shadowColor="#AAABAB"
                                         android:shadowDx="1"
                                         android:shadowDy="1"
                                         android:shadowRadius="3"
-                                        android:text="80%"
+                                        android:text="Sleep Progress"
                                         android:textColor="@color/green"
-                                        android:textSize="20dp"
-                                        android:textStyle="bold" />
-
-                                </FrameLayout>
+                                        android:textColorHint="@color/green"
+                                        android:textSize="14dp" />
 
 
-                                <TextView
+                                </LinearLayout>
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:shadowColor="#AAABAB"
-                                    android:shadowDx="1"
-                                    android:shadowDy="1"
-                                    android:shadowRadius="3"
-                                    android:text="Sleep Progress"
-                                    android:textColor="@color/green"
-                                    android:textColorHint="@color/green"
-                                    android:textSize="14dp" />
+                                    android:layout_weight="1"
+                                    android:background="@drawable/selected_rounded"
+                                    android:orientation="vertical"
+                                    android:padding="5dp">
 
+                                    <FrameLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
 
-                            </LinearLayout>
+                                        <com.google.android.material.progressindicator.CircularProgressIndicator
+                                            android:id="@+id/MeditationProgressID"
+                                            android:layout_width="0dp"
+                                            android:layout_height="1dp"
+                                            android:layout_gravity="center"
+                                            android:progress="40"
+                                            app:indicatorColor="@color/green"
+                                            app:indicatorSize="100dp"
+                                            app:trackColor="#e3e8d3"
+                                            app:trackCornerRadius="10dp"
+                                            app:trackThickness="10dp" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:background="@drawable/selected_rounded"
-                                android:orientation="vertical"
-                                android:padding="5dp">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:gravity="center"
+                                            android:shadowColor="#AAABAB"
+                                            android:shadowDx="1"
+                                            android:shadowDy="1"
+                                            android:shadowRadius="3"
+                                            android:text="40%"
+                                            android:textColor="@color/green"
+                                            android:textSize="20dp"
+                                            android:textStyle="bold" />
 
-                                <FrameLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    </FrameLayout>
 
-                                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                                        android:id="@+id/MeditationProgressID"
-                                        android:layout_width="0dp"
-                                        android:layout_height="1dp"
-                                        android:layout_gravity="center"
-                                        android:progress="40"
-                                        app:indicatorColor="@color/green"
-                                        app:indicatorSize="100dp"
-                                        app:trackColor="#e3e8d3"
-                                        app:trackCornerRadius="10dp"
-                                        app:trackThickness="10dp" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:gravity="center"
                                         android:shadowColor="#AAABAB"
                                         android:shadowDx="1"
                                         android:shadowDy="1"
                                         android:shadowRadius="3"
-                                        android:text="40%"
+                                        android:text="Meditation Progress"
                                         android:textColor="@color/green"
-                                        android:textSize="20dp"
-                                        android:textStyle="bold" />
-
-                                </FrameLayout>
+                                        android:textColorHint="@color/green"
+                                        android:textSize="14dp" />
 
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:shadowColor="#AAABAB"
-                                    android:shadowDx="1"
-                                    android:shadowDy="1"
-                                    android:shadowRadius="3"
-                                    android:text="Meditation Progress"
-                                    android:textColor="@color/green"
-                                    android:textColorHint="@color/green"
-                                    android:textSize="14dp" />
-
+                                </LinearLayout>
 
                             </LinearLayout>
+
+
+                            <TextView
+                                android:id="@+id/FirstNameTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/selected_rounded"
+                                android:drawableLeft="@drawable/ic_baseline_person_24"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/green"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:text="First Name"
+                                android:textColor="@color/green"
+                                android:textColorHint="@color/green"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/LastNameTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/selected_rounded"
+                                android:drawableLeft="@drawable/ic_baseline_person_24"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/green"
+                                android:hint="Last Name"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:textColor="@color/green"
+                                android:textColorHint="@color/green"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/EmailTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/selected_rounded"
+                                android:drawableLeft="@drawable/ic_baseline_mail_24"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/green"
+                                android:hint="Email"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:textColor="@color/green"
+                                android:textColorHint="@color/green"
+                                android:textSize="14dp" />
+
+                            <TextView
+                                android:id="@+id/BirthdateTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/selected_rounded"
+                                android:drawableLeft="@drawable/ic_baseline_today_24"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/green"
+                                android:hint="Birthdate"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:textColor="@color/green"
+                                android:textColorHint="@color/green"
+                                android:textSize="14dp"
+                                tools:ignore="RtlHardcoded" />
+
+                            <TextView
+                                android:id="@+id/GenderTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/selected_rounded"
+                                android:drawableLeft="@drawable/ic_baseline_cake_24"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/green"
+                                android:hint="Gender"
+                                android:maxLines="1"
+                                android:padding="5dp"
+                                android:textColor="@color/green"
+                                android:textColorHint="@color/green"
+                                android:textSize="14dp"
+                                tools:ignore="RtlHardcoded" />
+
 
                         </LinearLayout>
+                    </RelativeLayout>
+                </ScrollView>
+
+            </RelativeLayout>
 
 
-                        <TextView
-                            android:id="@+id/FirstNameTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/selected_rounded"
-                            android:drawableLeft="@drawable/ic_baseline_person_24"
-                            android:drawablePadding="10dp"
-                            android:drawableTint="@color/green"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:text="First Name"
-                            android:textColor="@color/green"
-                            android:textColorHint="@color/green"
-                            android:textSize="14dp" />
 
-                        <TextView
-                            android:id="@+id/LastNameTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/selected_rounded"
-                            android:drawableLeft="@drawable/ic_baseline_person_24"
-                            android:drawablePadding="10dp"
-                            android:drawableTint="@color/green"
-                            android:hint="Last Name"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:textColor="@color/green"
-                            android:textColorHint="@color/green"
-                            android:textSize="14dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
 
-                        <TextView
-                            android:id="@+id/EmailTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/selected_rounded"
-                            android:drawableLeft="@drawable/ic_baseline_mail_24"
-                            android:drawablePadding="10dp"
-                            android:drawableTint="@color/green"
-                            android:hint="Email"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:textColor="@color/green"
-                            android:textColorHint="@color/green"
-                            android:textSize="14dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green"
+                    android:onClick="goTodo"
+                    android:text="TO DO"
+                    android:textColor="@color/white"
+                    android:layout_weight=".50"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"/>
 
-                        <TextView
-                            android:id="@+id/BirthdateTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/selected_rounded"
-                            android:drawableLeft="@drawable/ic_baseline_today_24"
-                            android:drawablePadding="10dp"
-                            android:drawableTint="@color/green"
-                            android:hint="Birthdate"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:textColor="@color/green"
-                            android:textColorHint="@color/green"
-                            android:textSize="14dp"
-                            tools:ignore="RtlHardcoded" />
-
-                        <TextView
-                            android:id="@+id/GenderTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:background="@drawable/selected_rounded"
-                            android:drawableLeft="@drawable/ic_baseline_cake_24"
-                            android:drawablePadding="10dp"
-                            android:drawableTint="@color/green"
-                            android:hint="Gender"
-                            android:maxLines="1"
-                            android:padding="5dp"
-                            android:textColor="@color/green"
-                            android:textColorHint="@color/green"
-                            android:textSize="14dp"
-                            tools:ignore="RtlHardcoded" />
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/green"
+                    android:onClick="cancelBtnAction"
+                    android:text="ACHIVEMENTS"
+                    android:textColor="@color/white"
+                    android:layout_weight=".50"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"/>
 
 
-                    </LinearLayout>
-                </RelativeLayout>
-            </ScrollView>
+            </LinearLayout>
         </RelativeLayout>
-
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"
@@ -606,9 +634,7 @@
                 app:backgroundTint="@color/green"
                 app:fabCustomSize="75dp"
                 app:maxImageSize="60dp"
-                app:tint="@android:color/white"
-
-                />
+                app:tint="@android:color/white"/>
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
 
