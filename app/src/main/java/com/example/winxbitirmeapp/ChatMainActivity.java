@@ -262,6 +262,13 @@ public class ChatMainActivity extends AppCompatActivity {
                                                 dialog.cancel();
                                                 //ADOS PROGRESS BAR YAP
 
+
+
+                                                Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
+
+                                                //intent.putExtra("token",token);
+                                                //intent.putExtra("tokenType",tokenType);
+                                                startActivity(intent);
                                                 db.collection("rooms").document(senderEmail+receiverEmail)
                                                         .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                                     @Override
@@ -288,12 +295,6 @@ public class ChatMainActivity extends AppCompatActivity {
                                                     }
                                                 });
 
-
-                                                Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
-
-                                                //intent.putExtra("token",token);
-                                                //intent.putExtra("tokenType",tokenType);
-                                                startActivity(intent);
                                                 finish();
                                             }
                                         });
@@ -419,6 +420,26 @@ public class ChatMainActivity extends AppCompatActivity {
                         //ADOS PROGRESS BAR YAP
 
 
+
+                        db.collection("User").document(senderEmail)
+                                .update("isMatched","0");
+                        db.collection("User").document(senderEmail)
+                                .update("chatClick","0");
+                        db.collection("User").document(senderEmail)
+                                .update("matchedEmail","-1");
+
+                        db.collection("User").document(receiverEmail)
+                                .update("isMatched","0");
+                        db.collection("User").document(receiverEmail)
+                                .update("chatClick","0");
+                        db.collection("User").document(receiverEmail)
+                                .update("matchedEmail","-1");
+
+
+                        Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
+                        //intent.putExtra("token",token);
+                        //intent.putExtra("tokenType",tokenType);
+                        startActivity(intent);
                         db.collection("rooms").document(senderEmail+receiverEmail)
                                 .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -444,25 +465,6 @@ public class ChatMainActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                        db.collection("User").document(senderEmail)
-                                .update("isMatched","0");
-                        db.collection("User").document(senderEmail)
-                                .update("chatClick","0");
-                        db.collection("User").document(senderEmail)
-                                .update("matchedEmail","-1");
-
-                        db.collection("User").document(receiverEmail)
-                                .update("isMatched","0");
-                        db.collection("User").document(receiverEmail)
-                                .update("chatClick","0");
-                        db.collection("User").document(receiverEmail)
-                                .update("matchedEmail","-1");
-
-
-                        Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
-                        //intent.putExtra("token",token);
-                        //intent.putExtra("tokenType",tokenType);
-                        startActivity(intent);
                         finish();
                     }
                 });
