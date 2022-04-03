@@ -233,7 +233,7 @@ public class LoginActivity extends AppCompatActivity {
         {
             androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(LoginActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            //alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {
@@ -395,6 +395,7 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
+
                             } else {
                                 Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                                 if(dialog.isShowing())
@@ -407,6 +408,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
+       
+        dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
 
         if(rememberMe.isChecked())
         {
@@ -426,6 +429,72 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("password","");
             editor.apply();
         }
+
+
+        // Instantiate the RequestQueue.
+        final String URL = "http://10.2.38.162:8080/user/signin";
+        // Post params to be sent to the server
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("email", email);
+        params.put("username", email);
+        params.put("password", password);
+
+        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("Response177: " + response.toString());
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(String.valueOf(response));
+                            tokenType = jsonObject.getString("tokenType");
+                            token = jsonObject.getString("accessToken");
+                            //System.out.println("Bruh182: " + jsonObject.getString("accessToken"));
+                            //System.out.println("Bruh183: " + token);
+
+                            dialog.dismiss();
+                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                            intent.putExtra("token", token);
+                            intent.putExtra("tokenType", tokenType);
+                            startActivity(intent);
+                            finish();
+
+                            //Alttaki yorumlu kod json arrayi okur
+                           // JSONArray jsonArray = jsonObject.getJSONArray("data");
+                           // for (int i = 0; i < jsonArray.length(); i++) {
+                           //     JSONObject jo = jsonArray.getJSONObject(i);
+                           //     System.out.println("Bruh: " + jo.getString("tokenType"));
+                           // }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            dialog.dismiss();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                Toast.makeText(LoginActivity.this ,"Email veya şifre hatalı." , Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        }){
+
+           //Headera gönder
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("winx", "mokoko");
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        queue.add(req);
+
 
 
     }
