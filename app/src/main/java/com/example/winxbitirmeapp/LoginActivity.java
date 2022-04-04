@@ -516,4 +516,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    public void goToForgotPassword(View view) {
+        Intent intent = new Intent(LoginActivity.this , ForgotPasswordActivity.class);
+        startActivity(intent);
+        finish();
     }
+}

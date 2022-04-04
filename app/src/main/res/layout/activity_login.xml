@@ -116,6 +116,7 @@
                         android:layout_marginBottom="10dp"
                         android:padding="5dp"
                         android:text="Forgot Password?"
+                        android:onClick="goToForgotPassword"
                         android:textColor="@color/dark_green"
                         android:textSize="11sp"
 
