@@ -1,4 +1,4 @@
-package com.example.winxbitirmeapp;
+package com.example.winxbitirmeapp.ChatActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.winxbitirmeapp.Adapters.MessageAdapter;
 import com.example.winxbitirmeapp.Models.ChatMessage;
+import com.example.winxbitirmeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -264,7 +265,7 @@ public class ChatMainActivity extends AppCompatActivity {
 
 
 
-                                                Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
+                                                Intent intent = new Intent(ChatMainActivity.this, RedirectActivity.class);
 
                                                 //intent.putExtra("token",token);
                                                 //intent.putExtra("tokenType",tokenType);
