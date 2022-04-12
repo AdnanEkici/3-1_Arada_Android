@@ -18,8 +18,10 @@ import androidx.cardview.widget.CardView;
 
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -36,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private String token;
     private String tokenType;
+    private FirebaseAuth auth;
 
 
     @Override
@@ -46,10 +49,14 @@ public class HomeActivity extends AppCompatActivity {
         sleepCardView = findViewById(R.id.sleepCardView);
         meditationCardView = findViewById(R.id.meditationCardView);
         chatCardView = findViewById(R.id.chatCardView);
-
+        auth = FirebaseAuth.getInstance();
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        String email = intent.getStringExtra("email");
+        String password = intent.getStringExtra("password");
+
+
 
 
         //Burada Null poiner exeption yiyorsanız adnanı arayın.
@@ -153,7 +160,6 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 
 
 }

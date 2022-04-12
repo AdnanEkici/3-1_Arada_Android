@@ -157,7 +157,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.2.38.96:8080/profile";
+        final String URL = "http://10.5.39.102:8080/profile";
       // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         //params.put("email", email);
