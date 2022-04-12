@@ -28,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class ChatMatchActivity extends AppCompatActivity {
+    //ados deneme
 
     ArrayList<User> userList = new ArrayList<User>(); //onlinelari cek hem de chat butonuna basmislari
     private ImageView imageAnimation;
