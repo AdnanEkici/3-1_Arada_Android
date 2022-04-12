@@ -1,4 +1,4 @@
-package com.example.winxbitirmeapp;
+package com.example.winxbitirmeapp.ChatActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -13,20 +13,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.winxbitirmeapp.Models.User;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.winxbitirmeapp.HomeActivity;
+import com.example.winxbitirmeapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Text;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -102,4 +97,9 @@ public class ChatActivity extends AppCompatActivity {
         finish();
     }
 
+    public void goBackToHome(View view) {
+        Intent intent = new Intent(ChatActivity.this , HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

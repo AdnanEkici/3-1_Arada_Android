@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

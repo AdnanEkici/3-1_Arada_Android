@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/chat_gecis_background"
     android:clipChildren="false"
-    tools:context=".ChatActivity">
+    tools:context=".ChatActivities.ChatActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,13 +18,27 @@
             android:layout_height="wrap_content"
             android:clipChildren="false">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+
+                android:layout_marginBottom="20dp"
+                android:onClick="goBackToHome"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                app:tint="@color/brown4" />
+
+
             <ImageView
                 android:id="@+id/imageID"
-                android:layout_marginTop="20dp"
-                android:layout_above="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:src="@drawable/chat_gecis"/>
+                android:layout_above="@+id/header"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/chat_gecis" />
 
 
             <TextView

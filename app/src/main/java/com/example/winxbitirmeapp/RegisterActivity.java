@@ -317,6 +317,7 @@ public class RegisterActivity extends AppCompatActivity{
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    System.out.println("Bruh" + response);
                     if (response.contains("200"))
                     {
                         Toast.makeText(RegisterActivity.this , "Kayıt Başarılı Lütfen Giriş Yapınız" , Toast.LENGTH_SHORT).show();
