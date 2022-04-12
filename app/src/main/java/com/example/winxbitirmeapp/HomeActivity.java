@@ -1,6 +1,7 @@
 package com.example.winxbitirmeapp;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 
 import androidx.annotation.NonNull;
@@ -18,11 +21,13 @@ import androidx.cardview.widget.CardView;
 
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,7 +43,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private String token;
     private String tokenType;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
+    private String email;
+    private String password;
 
 
     @Override
@@ -49,21 +56,16 @@ public class HomeActivity extends AppCompatActivity {
         sleepCardView = findViewById(R.id.sleepCardView);
         meditationCardView = findViewById(R.id.meditationCardView);
         chatCardView = findViewById(R.id.chatCardView);
-        auth = FirebaseAuth.getInstance();
+
         Intent intent = getIntent();
-        tokenType = intent.getStringExtra("tokenType");
-        token = intent.getStringExtra("token");
-        String email = intent.getStringExtra("email");
-        String password = intent.getStringExtra("password");
-
-
-
-
-        //Burada Null poiner exeption yiyorsanız adnanı arayın.
-        System.out.println("Token TEEST: " + tokenType + " " + token);
-        System.out.println("Token:  " + FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
-
-
+        Bundle extras = intent.getExtras();
+        if(extras!=null)
+        {
+            tokenType = intent.getStringExtra("tokenType");
+            token = intent.getStringExtra("token");
+            email = intent.getStringExtra("email");
+            password = intent.getStringExtra("password");
+        }
         //bottomNavigationView.setVisibility(View.INVISIBLE);
 
         sleepCardView.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +122,58 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            ProgressDialog dialog = new ProgressDialog(HomeActivity.this , R.style.AppCompatAlertDialogStyle);
+            dialog.setMessage("Yükleniyor");
+            dialog.setCancelable(false);
+            dialog.setInverseBackgroundForced(false);
+            dialog.show();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+
+                                FirebaseFirestore.getInstance().collection("User").document(mAuth.getCurrentUser().getEmail())
+                                        .update("isOnline", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused)
+                                    {
+                                        if(dialog.isShowing())
+                                        {
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                        if(dialog.isShowing())
+                                        {
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(HomeActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                                if(dialog.isShowing())
+                                {
+                                    dialog.dismiss();
+                                }
+                            }
+                        }
+                    });
+        } else {
+            // User logged in
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

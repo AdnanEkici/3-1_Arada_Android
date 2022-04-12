@@ -52,17 +52,15 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 
-
+    private String email;
+    private String password;
     private EditText email_edit , password_edit;
-    private String email, password;
-    private TextView ghostText;
     private CheckBox rememberMe;
     private SharedPreferences preferences;
     private ProgressDialog dialog;
     private String token;
     private String tokenType;
     private boolean flag = false;
-
     private FirebaseAuth auth;
 
 
@@ -109,7 +107,6 @@ public class LoginActivity extends AppCompatActivity {
             if (checkbox.equals("true"))
             {
                 rememberMe.setChecked(true);
-
                 dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
                 dialog.setMessage("Yükleniyor");
                 dialog.setCancelable(false);
@@ -254,10 +251,6 @@ public class LoginActivity extends AppCompatActivity {
     //DB Actions
 
 
-
-
-
-
     //Button Actions
 
     public static boolean isValid(String email)
@@ -275,16 +268,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-
-
-
         flag = true;
         RequestQueue queue = Volley.newRequestQueue(this);
         // db gelince burasi degiscek
 
-
-        String email = email_edit.getText().toString();
-        String password = password_edit.getText().toString();
+        email = email_edit.getText().toString();
+        password = password_edit.getText().toString();
 
         if (email.length()==0){
             email_edit.setError("Enter an email");
@@ -294,121 +283,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else if (password.length()<6){
             password_edit.setError("Enter a valid password");
-        }else {
-            dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
-            dialog.setMessage("Yükleniyor");
-            dialog.setCancelable(false);
-            dialog.setInverseBackgroundForced(false);
-            dialog.show();
-            auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-
-                                FirebaseFirestore.getInstance().collection("User").document(auth.getCurrentUser().getEmail())
-                                        .update("isOnline", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused)
-                                    {
-
-                                        // Instantiate the RequestQueue.
-                                        final String URL = "http://10.5.39.102:8080/user/signin";
-                                        // Post params to be sent to the server
-                                        HashMap<String, String> params = new HashMap<String, String>();
-                                        params.put("email", email);
-                                        params.put("username", email);
-                                        params.put("password", password);
-
-                                        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
-                                                new Response.Listener<JSONObject>() {
-                                                    @Override
-                                                    public void onResponse(JSONObject response) {
-                                                        JSONObject jsonObject = null;
-                                                        try {
-                                                            jsonObject = new JSONObject(String.valueOf(response));
-                                                            tokenType = jsonObject.getString("tokenType");
-                                                            token = jsonObject.getString("accessToken");
-                                                            System.out.println("AAA:" + token);
-                                                            if(dialog.isShowing())
-                                                            {
-                                                                dialog.dismiss();
-                                                            }
-                                                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-                                                            intent.putExtra("token", token);
-                                                            intent.putExtra("tokenType", tokenType);
-                                                            startActivity(intent);
-
-                                                            finish();
-
-                                                            //Alttaki yorumlu kod json arrayi okur
-                                                            // JSONArray jsonArray = jsonObject.getJSONArray("data");
-                                                            // for (int i = 0; i < jsonArray.length(); i++) {
-                                                            //     JSONObject jo = jsonArray.getJSONObject(i);
-                                                            //     System.out.println("Bruh: " + jo.getString("tokenType"));
-                                                            // }
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                            if(dialog.isShowing())
-                                                            {
-                                                                dialog.dismiss();
-                                                            }
-                                                        }
-
-
-                                                    }
-                                                }, new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
-                                                if(dialog.isShowing())
-                                                {
-                                                    dialog.dismiss();
-                                                }
-                                                VolleyLog.e("Error: ", error.getMessage());
-                                                Toast.makeText(LoginActivity.this ,"Email veya şifre hatalı." , Toast.LENGTH_LONG).show();
-                                            }
-                                        }){
-
-                                            //Headera gönder
-                                            @Override
-                                            public Map<String, String> getHeaders() throws AuthFailureError {
-                                                HashMap<String, String> headers = new HashMap<String, String>();
-                                                //headers.put("Content-Type", "application/json");
-                                                headers.put("winx", "mokoko");
-                                                return headers;
-                                            }
-                                        };
-
-                                        // add the request object to the queue to be executed
-                                        queue.add(req);
-
-
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-
-                                        if(dialog.isShowing())
-                                        {
-                                            dialog.dismiss();
-                                        }
-                                    }
-                                });
-
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
-                                if(dialog.isShowing())
-                                {
-                                    dialog.dismiss();
-                                }
-                            }
-                        }
-                    });
         }
-
-
-
         dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
 
         if(rememberMe.isChecked())
@@ -432,7 +307,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // Instantiate the RequestQueue.
-        final String URL = "http://10.5.39.102:8080/user/signin";
+        final String URL = "http://192.168.1.6:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -449,13 +324,13 @@ public class LoginActivity extends AppCompatActivity {
                             jsonObject = new JSONObject(String.valueOf(response));
                             tokenType = jsonObject.getString("tokenType");
                             token = jsonObject.getString("accessToken");
-                            //System.out.println("Bruh182: " + jsonObject.getString("accessToken"));
-                            //System.out.println("Bruh183: " + token);
 
                             dialog.dismiss();
                             Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
                             intent.putExtra("token", token);
                             intent.putExtra("tokenType", tokenType);
+                            intent.putExtra("email", email);
+                            intent.putExtra("password", password);
                             startActivity(intent);
                             finish();
 
@@ -501,8 +376,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signInBtnAction(View view)
     {
-
-
         Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
         startActivity(intent);
 
