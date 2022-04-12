@@ -1,4 +1,4 @@
-package com.example.winxbitirmeapp;
+package com.example.winxbitirmeapp.ChatActivities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.winxbitirmeapp.HomeActivity;
+import com.example.winxbitirmeapp.R;
 
 public class RedirectActivity extends AppCompatActivity {
 
@@ -35,7 +38,7 @@ public class RedirectActivity extends AppCompatActivity {
         {
             AlertDialog alertDialog = new AlertDialog.Builder(RedirectActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            //alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {

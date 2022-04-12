@@ -362,6 +362,7 @@ public class RegisterActivity extends AppCompatActivity{
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             String URL = "http://10.5.39.102:8080/user/signup";
+
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);
@@ -375,6 +376,7 @@ public class RegisterActivity extends AppCompatActivity{
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    System.out.println("Bruh" + response);
                     if (response.contains("200"))
                     {
                         Toast.makeText(RegisterActivity.this , "Kayıt Başarılı Lütfen Giriş Yapınız" , Toast.LENGTH_SHORT).show();

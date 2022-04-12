@@ -8,17 +8,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -118,8 +117,6 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         });
 
-
-
             }
         });
     }
@@ -183,7 +180,7 @@ public class HomeActivity extends AppCompatActivity {
         {
             AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            //alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {
@@ -210,6 +207,8 @@ public class HomeActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
         FirebaseAuth.getInstance().signOut();
+        FirebaseFirestore.getInstance().collection("User").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                .update("isOnline", "0");
         Intent intent = new Intent(HomeActivity.this , LoginActivity.class);
         startActivity(intent);
         finish();

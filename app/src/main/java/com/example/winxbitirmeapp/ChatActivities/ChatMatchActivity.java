@@ -1,4 +1,4 @@
-package com.example.winxbitirmeapp;
+package com.example.winxbitirmeapp.ChatActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,8 +15,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.winxbitirmeapp.Models.User;
+import com.example.winxbitirmeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -164,7 +164,7 @@ public class ChatMatchActivity extends AppCompatActivity {
         {
             AlertDialog alertDialog = new AlertDialog.Builder(ChatMatchActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            //alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {

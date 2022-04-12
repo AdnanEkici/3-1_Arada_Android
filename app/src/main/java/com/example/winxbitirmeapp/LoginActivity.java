@@ -284,6 +284,7 @@ public class LoginActivity extends AppCompatActivity {
         else if (password.length()<6){
             password_edit.setError("Enter a valid password");
         }
+
         dialog = new ProgressDialog(LoginActivity.this , R.style.AppCompatAlertDialogStyle);
 
         if(rememberMe.isChecked())
@@ -307,7 +308,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // Instantiate the RequestQueue.
-        final String URL = "http://192.168.1.6:8080/user/signin";
+
+        final String URL = "http://10.2.38.162:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -325,6 +327,7 @@ public class LoginActivity extends AppCompatActivity {
                             tokenType = jsonObject.getString("tokenType");
                             token = jsonObject.getString("accessToken");
 
+
                             dialog.dismiss();
                             Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
                             intent.putExtra("token", token);
@@ -335,11 +338,17 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
 
                             //Alttaki yorumlu kod json arrayi okur
+
                             // JSONArray jsonArray = jsonObject.getJSONArray("data");
                             // for (int i = 0; i < jsonArray.length(); i++) {
                             //     JSONObject jo = jsonArray.getJSONObject(i);
                             //     System.out.println("Bruh: " + jo.getString("tokenType"));
                             // }
+                           // JSONArray jsonArray = jsonObject.getJSONArray("data");
+                           // for (int i = 0; i < jsonArray.length(); i++) {
+                           //     JSONObject jo = jsonArray.getJSONObject(i);
+                           //     System.out.println("Bruh: " + jo.getString("tokenType"));
+                           // }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -358,6 +367,7 @@ public class LoginActivity extends AppCompatActivity {
         }){
 
             //Headera gönder
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -389,4 +399,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+}
+    public void goToForgotPassword(View view) {
+        Intent intent = new Intent(LoginActivity.this , ForgotPasswordActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
