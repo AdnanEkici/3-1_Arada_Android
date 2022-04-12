@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -145,6 +146,8 @@ public class HomeActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
         FirebaseAuth.getInstance().signOut();
+        FirebaseFirestore.getInstance().collection("User").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                .update("isOnline", "0");
         Intent intent = new Intent(HomeActivity.this , LoginActivity.class);
         startActivity(intent);
         finish();
