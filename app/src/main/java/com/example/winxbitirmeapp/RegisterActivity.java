@@ -35,6 +35,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -155,6 +156,14 @@ public class RegisterActivity extends AppCompatActivity{
         radioGroup = findViewById(R.id.GenderPicker);
 
         auth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

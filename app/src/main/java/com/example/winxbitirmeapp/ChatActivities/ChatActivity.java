@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.R;
+import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,10 +33,14 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private TextView textID;
 
+    private String token;
+    private String tokenType;
+
 
 
     //Bu metot oncreatete setcontentview'ın hemen altda çağrılmalı
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +51,21 @@ public class ChatActivity extends AppCompatActivity {
         textID = (TextView)findViewById(R.id.textID);
         Intent intent = getIntent();
         String counter = intent.getStringExtra("onlineNumber");
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
         textID.setText("Online users: " + counter);
+
+        System.out.println("Önemli Token Chat::::" + token + "  " + tokenType);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ChatActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -93,12 +112,16 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         Intent intent = new Intent(ChatActivity.this , ChatMatchActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
         startActivity(intent);
         finish();
     }
 
     public void goBackToHome(View view) {
         Intent intent = new Intent(ChatActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
         startActivity(intent);
         finish();
     }

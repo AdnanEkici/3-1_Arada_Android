@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
+import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.MeditationActivity;
 import com.example.winxbitirmeapp.ProfileActivity;
 import com.example.winxbitirmeapp.R;
@@ -61,9 +62,21 @@ public class SleepActivity extends AppCompatActivity {
 
         this.init();
         this.initGrap();
+
+
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(SleepActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
+    }
 
 
     //Life Actions

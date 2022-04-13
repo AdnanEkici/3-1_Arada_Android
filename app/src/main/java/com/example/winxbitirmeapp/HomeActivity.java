@@ -120,6 +120,8 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
     @Override

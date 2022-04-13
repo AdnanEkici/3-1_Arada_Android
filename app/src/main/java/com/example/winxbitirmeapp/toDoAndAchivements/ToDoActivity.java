@@ -27,6 +27,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Adapters.QuestionnaireAdapter;
 import com.example.winxbitirmeapp.Adapters.ToDoListAdapter;
 import com.example.winxbitirmeapp.CustomListView.SwipeListViewTouchListener;
+import com.example.winxbitirmeapp.HomeActivity;
+import com.example.winxbitirmeapp.MeditationActivity;
 import com.example.winxbitirmeapp.Models.ToDoModel;
 import com.example.winxbitirmeapp.R;
 
@@ -136,9 +138,18 @@ public class ToDoActivity extends AppCompatActivity{
         todoListView.setOnTouchListener(touchListener);
         todoListView.setOnScrollListener(touchListener.makeScrollListener());
 
-
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ToDoActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
+    }
 
     private void init()
     {

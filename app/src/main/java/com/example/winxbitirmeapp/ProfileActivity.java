@@ -76,6 +76,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         this.init();
+
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
     //Private Actions
@@ -112,6 +114,16 @@ public class ProfileActivity extends AppCompatActivity {
         token = intent.getStringExtra("token");
         System.out.println("Bruh11:" + tokenType + " " + token);
         this.getUserDataFrom();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ProfileActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
