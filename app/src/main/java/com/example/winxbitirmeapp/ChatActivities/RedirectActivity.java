@@ -16,19 +16,29 @@ import com.example.winxbitirmeapp.R;
 
 public class RedirectActivity extends AppCompatActivity {
 
+    private String token;
+    private String tokenType;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_redirect);
-
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent(RedirectActivity.this , HomeActivity.class);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
                 startActivity(intent);
                 finish();
             }
         }, 3000);
+
+        System.out.println("Önemli Token::::redir" + token + "  " + tokenType);
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

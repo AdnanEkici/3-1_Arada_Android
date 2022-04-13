@@ -25,31 +25,19 @@ import java.util.Map;
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     private EditText forgotEmail;
-    private String token;
-    private String tokenType;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-
         forgotEmail = (EditText) findViewById(R.id.forgotPassEmailEditText);
-
-        Intent intent = getIntent();
-        tokenType = intent.getStringExtra("tokenType");
-        token = intent.getStringExtra("token");
     }
 
     public void sendEmailAddress(View view) {
         String str_email = forgotEmail.getText().toString();
 
-        // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://192.168.1.106:8080/forgotPass?email=" + str_email;
-        // Post params to be sent to the server
-        System.out.println("51.SATIR FORGOT " + tokenType);
-        System.out.println(token);
+        final String URL = "http://10.5.37.112:8080/user/forgotPass?email=" + str_email;
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", str_email);
 
@@ -61,15 +49,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(String.valueOf(response));
-                            System.out.println("FORGOTPASSWORD 64");
-                            System.out.println(jsonObject);
-                            //Alttaki yorumlu kod json arrayi okur
-                            // JSONArray jsonArray = jsonObject.getJSONArray("data");
-                            // for (int i = 0; i < jsonArray.length(); i++)
-                            //{
-                            //     JSONObject jo = jsonArray.getJSONObject(i);
-                            //     System.out.println("Bruh: " + jo.getString("tokenType"));
-                            // }
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -85,17 +65,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         }){
 
-            /*//Headera gönder
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                //headers.put("Content-Type", "application/json");
-                headers.put("Authorization", tokenType + " " + token);
-                return headers;
-            }*/
         };
-
-        // add the request object to the queue to be executed
         queue.add(req);
 
     }

@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.Models.User;
 import com.example.winxbitirmeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,6 +36,8 @@ public class ChatMatchActivity extends AppCompatActivity {
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 2500; //Delay for 15 seconds.  One second = 1000 milliseconds.
+    private String token;
+    private String tokenType;
 
 
     @Override
@@ -42,120 +45,26 @@ public class ChatMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_match);
         init();
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+        System.out.println("Önemli Token:::: chatMAtch" + token + "  " + tokenType);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ChatMatchActivity.this , ChatActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
     }
 
     private void init(){
 
         imageAnimation = findViewById(R.id.animationImage);
         imageAnimation.setAnimation(AnimationUtils.loadAnimation(this,R.anim.shake_animation));
-
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(ChatMatchActivity.this , ChatMainActivity.class);
-                String rec = "";
-                if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("ados@gmail.com"))
-                    rec = "busra@gmail.com";
-                else
-                    rec = "ados@gmail.com";
-                intent.putExtra("rec",rec);
-                startActivity(intent);
-                finish();
-            }
-        }, 5000);*/
-
-
-
-
-/*
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("***********************************************************************");
-                userList = new ArrayList<>();
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                DocumentReference docRef = db.collection("User").document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists()) {
-                                System.out.println("Document var mi 72 " + document.getString("isMatched"));
-                                if (document.getString("isMatched").equals("1")){
-                                    System.out.println("is matched 1 74");
-                                    Intent intent = new Intent(ChatMatchActivity.this , ChatMainActivity.class);
-                                    intent.putExtra("matchedEmail",document.getString("matchedEmail"));
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
-
-                        }
-
-                    }
-                });
-
-                db.collection("User")
-                        .whereEqualTo("chatClick", "1")
-                        .whereEqualTo("isMatched","0")
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete( Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot document : task.getResult()) {
-                                        if (!FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(document.getString("email"))){
-                                            User user= new User(document.getString("email"),document.getString("chatClick"),document.getString("isMatched"));
-                                            userList.add(user);
-                                        }
-
-                                    }
-                                    if (userList.size()>0) {
-                                        int random = (int) (Math.random() * userList.size());
-                                        DocumentReference docRef = db.collection("User").document(userList.get(random).getUserMatchMail());
-                                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @Override
-                                            public void onComplete( Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    DocumentSnapshot document = task.getResult();
-                                                    if (document.exists()) {
-                                                        if (document.getString("chatClick").equals("1") && document.getString("isMatched").equals("0")){
-                                                            db.collection("User").document(userList.get(random).getUserMatchMail())
-                                                                    .update("isMatched","1");
-                                                            db.collection("User").document(userList.get(random).getUserMatchMail())
-                                                                    .update("matchedEmail",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-                                                            db.collection("User").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
-                                                                    .update("isMatched","1");
-                                                            db.collection("User").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
-                                                                    .update("matchedEmail",userList.get(random).getUserMatchMail());
-
-
-                                                            Intent intent = new Intent(ChatMatchActivity.this , ChatMainActivity.class);
-                                                            intent.putExtra("matchedEmail",userList.get(random).getUserMatchMail());
-                                                            startActivity(intent);
-                                                            finish();
-                                                        }
-
-                                                    }
-                                                } else {
-                                                    //progress end
-                                                }
-                                            }
-                                        });
-                                    }
-                                } else {
-
-                                }
-                            }
-                        });
-            }
-        }, 2500);*/
-
-
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -205,6 +114,8 @@ public class ChatMatchActivity extends AppCompatActivity {
                                 if (document.getString("isMatched").equals("1") && !document.getString("matchedEmail").equals("-1")){
                                     Intent intent = new Intent(ChatMatchActivity.this , ChatMainActivity.class);
                                     intent.putExtra("matchedEmail",document.getString("matchedEmail"));
+                                    intent.putExtra("token", token);
+                                    intent.putExtra("tokenType", tokenType);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -252,6 +163,8 @@ public class ChatMatchActivity extends AppCompatActivity {
 
                                                             Intent intent = new Intent(ChatMatchActivity.this , ChatMainActivity.class);
                                                             intent.putExtra("matchedEmail",userList.get(random).getUserMatchMail());
+                                                            intent.putExtra("token", token);
+                                                            intent.putExtra("tokenType", tokenType);
                                                             startActivity(intent);
                                                             finish();
                                                         }

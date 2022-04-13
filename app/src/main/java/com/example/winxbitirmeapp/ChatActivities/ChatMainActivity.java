@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.winxbitirmeapp.Adapters.MessageAdapter;
+import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.Models.ChatMessage;
 import com.example.winxbitirmeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -56,6 +57,8 @@ public class ChatMainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView nameOfChatter ;
     String reportText;
+    private String token;
+    private String tokenType;
 
 
 
@@ -76,6 +79,9 @@ public class ChatMainActivity extends AppCompatActivity {
                 messageText.setText("");
             }
         });
+            Intent intent = getIntent();
+            tokenType = intent.getStringExtra("tokenType");
+            token = intent.getStringExtra("token");
 
         FirebaseFirestore.getInstance().collection("rooms").document(senderEmail+receiverEmail)
                 .collection("messages").get()
@@ -88,7 +94,7 @@ public class ChatMainActivity extends AppCompatActivity {
                     }
                 });
 
-
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
     /*private void logoutChat() {
@@ -141,6 +147,16 @@ public class ChatMainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ChatMainActivity.this , ChatActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
+    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     private void checkInternet()
     {
@@ -185,6 +201,7 @@ public class ChatMainActivity extends AppCompatActivity {
                 "AnonymousDeer " ,
                 "AnonymousDinosaur" ,
                 "AnonymousDog" ,
+                "AnonymusBruh",
                 "AnonymousDolphin " ,
                 "AnonymousDonkey " ,
                 "AnonymousDuck" ,
@@ -438,8 +455,8 @@ public class ChatMainActivity extends AppCompatActivity {
 
 
                         Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
-                        //intent.putExtra("token",token);
-                        //intent.putExtra("tokenType",tokenType);
+                        intent.putExtra("token",token);
+                        intent.putExtra("tokenType",tokenType);
                         startActivity(intent);
                         db.collection("rooms").document(senderEmail+receiverEmail)
                                 .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

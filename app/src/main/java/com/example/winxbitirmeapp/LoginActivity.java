@@ -56,16 +56,11 @@ public class LoginActivity extends AppCompatActivity {
     private String password;
     private EditText email_edit , password_edit;
     private CheckBox rememberMe;
-    private SharedPreferences preferences;
     private ProgressDialog dialog;
     private String token;
     private String tokenType;
     private boolean flag = false;
     private FirebaseAuth auth;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -76,27 +71,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-
-    //Life Actions
-
-
-
-
-
-    //Public Actions
-
-
-
-
-
-    //Private Actions
     private void init()
     {
         email_edit = findViewById(R.id.LoginEditTextEmailID);
         password_edit = findViewById(R.id.LoginEditTextPasswordID);
         rememberMe = findViewById(R.id.rememberMe);
-        preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
         String checkbox = preferences.getString("rememberMe", "");
 
 
@@ -149,6 +129,8 @@ public class LoginActivity extends AppCompatActivity {
                                                                 Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
                                                                 intent.putExtra("token", token);
                                                                 intent.putExtra("tokenType", tokenType);
+                                                                intent.putExtra("email", emailFromPref);
+                                                                intent.putExtra("password", passFromPref);
                                                                 startActivity(intent);
                                                                 finish();
 
@@ -220,8 +202,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-
-
     @SuppressLint("UseCompatLoadingForDrawables")
     private void checkInternet()
     {
@@ -242,16 +222,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isNetworkConnected() {
+    private boolean isNetworkConnected()
+    {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
-
-    //DB Actions
-
-
-    //Button Actions
 
     public static boolean isValid(String email)
     {
@@ -309,7 +285,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
 
-        final String URL = "http://10.2.38.162:8080/user/signin";
+        final String URL = "http://10.5.39.102:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -388,6 +364,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(LoginActivity.this , RegisterActivity.class);
         startActivity(intent);
+        finish();
 
     }
 
@@ -398,11 +375,10 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-
-}
-    public void goToForgotPassword(View view) {
+    public void goToForgotPassword(View view)
+    {
         Intent intent = new Intent(LoginActivity.this , ForgotPasswordActivity.class);
         startActivity(intent);
-        finish();
     }
+
 }
