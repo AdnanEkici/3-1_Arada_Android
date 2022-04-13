@@ -71,7 +71,6 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green"
                         android:hint="Email"
-                        android:text="busra@gmail.com"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:textColor="@color/green"

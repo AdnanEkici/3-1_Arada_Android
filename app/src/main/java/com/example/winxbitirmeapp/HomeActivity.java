@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -202,13 +203,15 @@ public class HomeActivity extends AppCompatActivity {
     //buton metotları geçici
     public void logout(View view)
     {
+        System.out.println("Email: " + email);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("checkbox", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
         editor.apply();
-        FirebaseAuth.getInstance().signOut();
-        FirebaseFirestore.getInstance().collection("User").document(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+
+        FirebaseFirestore.getInstance().collection("User").document(email)
                 .update("isOnline", "0");
+        FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(HomeActivity.this , LoginActivity.class);
         startActivity(intent);
         finish();

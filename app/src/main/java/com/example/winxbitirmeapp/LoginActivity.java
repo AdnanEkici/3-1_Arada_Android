@@ -149,6 +149,8 @@ public class LoginActivity extends AppCompatActivity {
                                                                 Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
                                                                 intent.putExtra("token", token);
                                                                 intent.putExtra("tokenType", tokenType);
+                                                                intent.putExtra("email", emailFromPref);
+                                                                intent.putExtra("password", passFromPref);
                                                                 startActivity(intent);
                                                                 finish();
 
@@ -309,7 +311,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
 
-        final String URL = "http://10.2.38.162:8080/user/signin";
+        final String URL = "http://10.5.39.102:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -399,7 +401,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-}
     public void goToForgotPassword(View view) {
         Intent intent = new Intent(LoginActivity.this , ForgotPasswordActivity.class);
         startActivity(intent);
