@@ -41,15 +41,22 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SleepActivity extends AppCompatActivity {
@@ -145,19 +152,16 @@ public class SleepActivity extends AppCompatActivity {
             {
                 //TODO: save sound data
                 Double sou = soundMeter.getAmplitude();
-                //System.out.println(sou);
-                soundData.add(new SleepDataModel(new Date() , sou));
-                System.out.println("DATE: " + new Date());
+                System.out.println("Ses: " + sou);
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
+                OffsetDateTime odt = OffsetDateTime.parse(new Date().toString(), dtf);
+                soundData.add(new SleepDataModel(odt.toString() , sou));
+                //System.out.println("DATE: " + new Date());
                 h.postDelayed(this, 1000);
             }
         };
 
-        //Date currentTime = Calendar.getInstance().getTime();
-        //Wed Jan 26 20:39:35 GMT+03:00 2022
-        //String dateAndTime = currentTime.toString().substring(0 , 10);
-        //dateView.setText(dateAndTime);
-        //dateAndTime = currentTime.toString().substring(11 , 19);
-        //timeView.setText(dateAndTime);
+
 
     }
 
@@ -292,8 +296,30 @@ public class SleepActivity extends AppCompatActivity {
 
         final String URL = "http://10.5.37.112:8080/sleep";
 
-        HashMap<String, ArrayList<SleepDataModel>> params = new HashMap<>();
-        params.put("soundData", soundData);
+        Gson gson = new Gson();
+
+        String listString = gson.toJson(
+                soundData,
+                new TypeToken<ArrayList<SleepDataModel>>() {}.getType());
+
+        try {
+            JSONArray jsonArray =  new JSONArray(listString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        JSONArray jsonArr = null;
+        try {
+            jsonArr = new JSONArray(listString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        System.out.println("ADOOOO: " + jsonArr);
+        HashMap<String, JSONArray> params = new HashMap<>();
+        params.put("model", jsonArr);
 
         JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {

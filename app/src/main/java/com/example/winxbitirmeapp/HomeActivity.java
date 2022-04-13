@@ -1,26 +1,29 @@
 package com.example.winxbitirmeapp;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-import androidx.appcompat.app.AlertDialog;
-
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -36,6 +39,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private String token;
     private String tokenType;
+    private FirebaseAuth mAuth;
+    private String email;
+    private String password;
 
 
     @Override
@@ -48,14 +54,14 @@ public class HomeActivity extends AppCompatActivity {
         chatCardView = findViewById(R.id.chatCardView);
 
         Intent intent = getIntent();
-        tokenType = intent.getStringExtra("tokenType");
-        token = intent.getStringExtra("token");
-
-
-        //Burada Null poiner exeption yiyorsanız adnanı arayın.
-        System.out.println("Token TEEST: " + tokenType + " " + token);
-
-
+        Bundle extras = intent.getExtras();
+        if(extras!=null)
+        {
+            tokenType = intent.getStringExtra("tokenType");
+            token = intent.getStringExtra("token");
+            email = intent.getStringExtra("email");
+            password = intent.getStringExtra("password");
+        }
         //bottomNavigationView.setVisibility(View.INVISIBLE);
 
         sleepCardView.setOnClickListener(new View.OnClickListener() {
@@ -108,10 +114,62 @@ public class HomeActivity extends AppCompatActivity {
                             }
                         });
 
-
-
             }
         });
+
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            ProgressDialog dialog = new ProgressDialog(HomeActivity.this , R.style.AppCompatAlertDialogStyle);
+            dialog.setMessage("Yükleniyor");
+            dialog.setCancelable(false);
+            dialog.setInverseBackgroundForced(false);
+            dialog.show();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+
+                                FirebaseFirestore.getInstance().collection("User").document(mAuth.getCurrentUser().getEmail())
+                                        .update("isOnline", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused)
+                                    {
+                                        if(dialog.isShowing())
+                                        {
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                        if(dialog.isShowing())
+                                        {
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(HomeActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                                if(dialog.isShowing())
+                                {
+                                    dialog.dismiss();
+                                }
+                            }
+                        }
+                    });
+        } else {
+            // User logged in
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -143,16 +201,19 @@ public class HomeActivity extends AppCompatActivity {
     //buton metotları geçici
     public void logout(View view)
     {
+        System.out.println("Email: " + email);
         SharedPreferences pref = getApplicationContext().getSharedPreferences("checkbox", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
         editor.apply();
+
+        FirebaseFirestore.getInstance().collection("User").document(email)
+                .update("isOnline", "0");
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(HomeActivity.this , LoginActivity.class);
         startActivity(intent);
         finish();
     }
-
 
 
 }

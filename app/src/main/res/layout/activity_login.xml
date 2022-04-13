@@ -89,7 +89,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green"
                         android:hint="Password"
-                        android:text="123456789"
+                        android:text="12345678"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="5dp"
