@@ -403,10 +403,10 @@
         <GridLayout
             android:id="@+id/SleepActivityGLID"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_below="@id/SleepActivityChartID"
             android:layout_marginStart="7dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:columnCount="2"
             android:rowCount="3">
 
@@ -480,82 +480,8 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_rowWeight="1"
-                android:background="@color/white"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Menu4" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Menu3" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
         </GridLayout>
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_below="@id/SleepActivityGLID"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:textColor="#D03030"
-            android:text="Alarm Kur" />
-
 
     </RelativeLayout>
-
 
 </ScrollView>
