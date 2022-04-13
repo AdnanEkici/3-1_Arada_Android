@@ -420,7 +420,6 @@ public class ChatMainActivity extends AppCompatActivity {
                 });
     }
 
-
     public void goBackToHome(View view) {
         MaterialAlertDialogBuilder builder1 = new MaterialAlertDialogBuilder(ChatMainActivity.this);
         builder1.setBackground(getResources().getDrawable(R.drawable.alert_dialog_bg,null));
