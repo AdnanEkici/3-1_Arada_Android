@@ -145,8 +145,9 @@ public class SleepActivity extends AppCompatActivity {
             {
                 //TODO: save sound data
                 Double sou = soundMeter.getAmplitude();
-                System.out.println(sou);
+                //System.out.println(sou);
                 soundData.add(new SleepDataModel(new Date() , sou));
+                System.out.println("DATE: " + new Date());
                 h.postDelayed(this, 1000);
             }
         };
@@ -289,7 +290,7 @@ public class SleepActivity extends AppCompatActivity {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.5.39.181:8080/sleep";
+        final String URL = "http://10.5.37.112:8080/sleep";
 
         HashMap<String, ArrayList<SleepDataModel>> params = new HashMap<>();
         params.put("soundData", soundData);
@@ -334,8 +335,7 @@ public class SleepActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case MY_PERMISSIONS_RECORD_AUDIO: {

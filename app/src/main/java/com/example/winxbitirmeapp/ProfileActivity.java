@@ -431,6 +431,7 @@ public class ProfileActivity extends AppCompatActivity {
         bdate[2] = Integer.parseInt(parts[2]); //year
         return bdate;
     }
+
     public void goTodo(View view)
     {
         Intent intent = new Intent(ProfileActivity.this , ToDoActivity.class);
