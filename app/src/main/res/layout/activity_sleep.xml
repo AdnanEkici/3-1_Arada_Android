@@ -467,10 +467,12 @@
                     android:orientation="vertical">
 
 
-                    <ImageView
+                    <Button
+                        android:id="@+id/StopButton"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:src="@color/black" />
+                        android:src="@color/black"
+                        android:onClick="stopVoiceButton"/>
 
                     <TextView
                         android:layout_width="wrap_content"

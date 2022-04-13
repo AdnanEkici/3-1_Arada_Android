@@ -54,7 +54,6 @@ public class HomeActivity extends AppCompatActivity {
 
         //Burada Null poiner exeption yiyorsanız adnanı arayın.
         System.out.println("Token TEEST: " + tokenType + " " + token);
-        System.out.println("Token:  " + FirebaseAuth.getInstance().getCurrentUser().getEmail().toString());
 
 
         //bottomNavigationView.setVisibility(View.INVISIBLE);

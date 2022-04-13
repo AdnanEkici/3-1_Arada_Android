@@ -16,38 +16,41 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.ChatActivity;
 import com.example.winxbitirmeapp.MeditationActivity;
+import com.example.winxbitirmeapp.Models.SleepDataModel;
 import com.example.winxbitirmeapp.ProfileActivity;
-import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.w3c.dom.Text;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SleepActivity extends AppCompatActivity {
 
@@ -61,6 +64,12 @@ public class SleepActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
 
+    private ArrayList<SleepDataModel> soundData;
+
+    private final Handler h = new Handler();
+    private Runnable r;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,13 +79,9 @@ public class SleepActivity extends AppCompatActivity {
 
         soundMeter = new SoundMeter();
 
-
         this.init();
         this.initGrap();
     }
-
-
-
 
     //Life Actions
 
@@ -119,17 +124,10 @@ public class SleepActivity extends AppCompatActivity {
 
     //Grafiği başlatır dataları yükler.
 
-
-
     //Public Actions
 
-
-
-
-
     //Private Actions
-    private void init()
-    {
+    private void init() {
         chart = (LineChart) findViewById(R.id.SleepActivityChartID); // Önemsiz dese bile bu activityde viewları cast et.
         bottomNavigationView = findViewById(R.id.bottomNav);// <--  Bu hariç
         bottomNavigationView.setSelectedItemId(R.id.sleep);
@@ -139,6 +137,19 @@ public class SleepActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        soundData = new ArrayList<>();
+        r = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                //TODO: save sound data
+                Double sou = soundMeter.getAmplitude();
+                System.out.println(sou);
+                soundData.add(new SleepDataModel(new Date() , sou));
+                h.postDelayed(this, 1000);
+            }
+        };
 
         //Date currentTime = Calendar.getInstance().getTime();
         //Wed Jan 26 20:39:35 GMT+03:00 2022
@@ -149,8 +160,7 @@ public class SleepActivity extends AppCompatActivity {
 
     }
 
-    private void initGrap()
-    {
+    private void initGrap() {
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         List<String> xAxisValues = new ArrayList<>(Arrays.asList("PZT", "SAL", "ÇAR", "PER", "CUM", "CMT","PAZ"));
@@ -231,19 +241,11 @@ public class SleepActivity extends AppCompatActivity {
 
     //DB Actions
 
-
-
-
-
-
     //Button Actions
-
-
 
     //Check Internet
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void checkInternet()
-    {
+    private void checkInternet() {
         if (!isNetworkConnected())
         {
             AlertDialog alertDialog = new AlertDialog.Builder(SleepActivity.this).create();
@@ -260,6 +262,7 @@ public class SleepActivity extends AppCompatActivity {
             alertDialog.show();
         }
     }
+
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -276,22 +279,58 @@ public class SleepActivity extends AppCompatActivity {
 
     }
 
+    public void stopVoiceButton(View view){
+        soundMeter.stop();
+        h.removeCallbacks(r);
+        postData();
+    }
+
+    private void postData(){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        final String URL = "http://10.5.39.181:8080/sleep";
+
+        HashMap<String, ArrayList<SleepDataModel>> params = new HashMap<>();
+        params.put("soundData", soundData);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,URL, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(String.valueOf(response));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }){
+
+            //Headera gönder
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("Authorization", tokenType + " " + token);
+                return headers;
+            }
+        };
+
+        queue.add(req);
+    }
+
     public void startVoiceDetection() {
         //TODO: Do soundMeter.stop() control
         soundMeter.start();
-
-        final Handler h = new Handler();
-        h.postDelayed(new Runnable()
-        {
-
-            @Override
-            public void run()
-            {
-                //TODO: save sound data
-                System.out.println(soundMeter.getAmplitude());
-                h.postDelayed(this, 1000);
-            }
-        }, 1000); // 1 second delay (takes millis)
+        h.postDelayed(r , 1000); // 1 second delay (takes millis)
     }
 
     @Override
