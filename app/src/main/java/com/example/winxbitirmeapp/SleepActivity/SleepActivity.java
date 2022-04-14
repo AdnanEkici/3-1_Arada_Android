@@ -56,7 +56,6 @@ public class SleepActivity extends AppCompatActivity {
     private LineChart chart;
     private TextView dateView, timeView;
     
-    private SoundMeter soundMeter;
 
     private String token;
     private String tokenType;
@@ -68,14 +67,9 @@ public class SleepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sleep);
         this.checkInternet();
 
-        soundMeter = new SoundMeter();
-
-
         this.init();
         this.initGrap();
     }
-
-
 
 
     //Life Actions
@@ -125,8 +119,6 @@ public class SleepActivity extends AppCompatActivity {
 
 
 
-
-
     //Private Actions
     private void init()
     {
@@ -159,11 +151,10 @@ public class SleepActivity extends AppCompatActivity {
         LineDataSet set1;
 
         set1 = new LineDataSet(incomeEntries, "Uyku Kalitesi");
-        set1.setColor(Color.rgb(65, 168, 121));
-        set1.setValueTextColor(Color.rgb(55, 70, 73));
+        set1.setColor(ContextCompat.getColor(SleepActivity.this,R.color.green));
         dataSets.add(set1);
 
-//customization
+        //customization
 
         chart.setExtraBottomOffset(1);
         chart.fitScreen();
@@ -174,12 +165,13 @@ public class SleepActivity extends AppCompatActivity {
         chart.setPinchZoom(false);
         chart.setDoubleTapToZoomEnabled(false);
         chart.setDrawGridBackground(false);
-//to hide background lines
+
+        //to hide background lines
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisRight().setDrawGridLines(false);
 
-//to hide right Y and top X border
+        //to hide right Y and top X border
         YAxis rightYAxis = chart.getAxisRight();
         rightYAxis.setEnabled(false);
 
@@ -195,22 +187,21 @@ public class SleepActivity extends AppCompatActivity {
         set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set1.setDrawFilled(true);
         set1.setFillColor(ContextCompat.getColor(SleepActivity.this,R.color.green));
-        set1.setLineWidth(4f);
+        set1.setLineWidth(2f);
         set1.setCircleRadius(3f);
+        set1.setCircleColor(-7829368);
+        set1.setCircleHoleColor(-7829368);
         set1.setDrawValues(false);
 
         chart.setViewPortOffsets(0f, 0f, 0f, 0f);
 
-//String setter in x-Axis
+        //String setter in x-Axis
         chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
         LineData data = new LineData(dataSets);
         chart.setData(data);
         chart.invalidate();
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-
-
-
 
     }
 
@@ -237,6 +228,46 @@ public class SleepActivity extends AppCompatActivity {
 
 
     //Button Actions
+
+    public void startVoiceButtonAction(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
+        }
+        else {
+            Intent intent = new Intent(SleepActivity.this , SleepCounterActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
+
+    public void sundayButtonAction(View view) {
+        System.out.println("1");
+    }
+    public void mondayButtonAction(View view) {
+        System.out.println("2");
+
+    }
+    public void tuesdayButtonAction(View view) {
+        System.out.println("3");
+
+    }
+    public void wednesdayButtonAction(View view) {
+        System.out.println("4");
+
+    }
+    public void thursdayButtonAction(View view) {
+        System.out.println("5");
+
+    }
+    public void fridayButtonAction(View view) {
+        System.out.println("6");
+
+    }
+    public void saturdayButtonAction(View view) {
+        System.out.println("7");
+
+    }
 
 
 
@@ -266,53 +297,10 @@ public class SleepActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
-    public void startVoiceButton(View view) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
-        }
-        else {
-            startVoiceDetection();
-        }
 
-    }
 
-    public void startVoiceDetection() {
-        //TODO: Do soundMeter.stop() control
-        soundMeter.start();
 
-        final Handler h = new Handler();
-        h.postDelayed(new Runnable()
-        {
 
-            @Override
-            public void run()
-            {
-                //TODO: save sound data
-                System.out.println(soundMeter.getAmplitude());
-                h.postDelayed(this, 1000);
-            }
-        }, 1000); // 1 second delay (takes millis)
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case MY_PERMISSIONS_RECORD_AUDIO: {
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startVoiceDetection();
-
-                } else {
-                    //TODO: Do something on voice record permission rejection
-                }
-                return;
-            }
-
-        }
-    }
 
 }

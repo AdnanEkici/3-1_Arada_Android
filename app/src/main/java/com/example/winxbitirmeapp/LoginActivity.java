@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
                                       {
 
                                           // Instantiate the RequestQueue.
-                                          final String URL = "http://10.2.38.96:8080/user/signin";
+                                          final String URL = "http://192.168.1.47:8080/user/signin";
                                           // Post params to be sent to the server
                                           HashMap<String, String> params = new HashMap<String, String>();
                                           params.put("email", emailFromPref);
@@ -276,9 +276,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
-
-
-
         flag = true;
         RequestQueue queue = Volley.newRequestQueue(this);
         // db gelince burasi degiscek
@@ -314,7 +311,7 @@ public class LoginActivity extends AppCompatActivity {
                                     {
 
                                         // Instantiate the RequestQueue.
-                                        final String URL = "http://10.2.38.96:8080/user/signin";
+                                        final String URL = "http://192.168.1.47:8080/user/signin";
                                         // Post params to be sent to the server
                                         HashMap<String, String> params = new HashMap<String, String>();
                                         params.put("email", email);
@@ -432,7 +429,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         // Instantiate the RequestQueue.
-        final String URL = "http://10.2.38.162:8080/user/signin";
+        final String URL = "http://192.168.1.47:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);

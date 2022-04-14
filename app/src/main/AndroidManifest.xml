@@ -39,6 +39,9 @@
             android:name=".SleepActivity.SleepActivity"
             android:exported="true" />
         <activity
+            android:name=".SleepActivity.SleepCounterActivity"
+            android:exported="true" />
+        <activity
             android:name=".ChatActivity"
             android:exported="true" />
         <activity android:name=".Questionnaires.QuestionnaireActivity" />
