@@ -16,31 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/beige">
-            <TextView
-                android:id="@+id/testoId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                android:textColor="@color/dark_green"
-                android:layout_marginTop="15dp"
-                android:text="Questioannaire"/>
-            <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@+id/testoId"
-            android:layout_marginHorizontal="10dp"
-            android:background="@android:color/darker_gray" />
             <RelativeLayout
                 android:id="@+id/FirstQuestionnaireFirstContainerID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:layout_marginVertical="15dp"
-                android:layout_below="@id/testoId"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/soft_green_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
 
                     android:id="@+id/FirstQuestionnaireFirstQuestionID"
@@ -50,14 +33,14 @@
                     android:layout_margin="5dp"
                     android:textSize="20sp"
                     android:textColor="@color/white"
-                    android:text="I am life of the party" />
+                    android:text="I start conversations" />
 
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireFirstItemRadioGroupID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/FirstQuestionnaireFirstQuestionID"
-                    
+
                     android:orientation="vertical">
 
                     <RadioButton
@@ -101,10 +84,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireFirstContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/soft_brown_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/SecondQuestionnaireSecondQuestionID"
                     android:layout_width="match_parent"
@@ -113,7 +96,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="5dp"
-                    android:text="I feel little concern for others." />
+                    android:text="I am not interested in other people's problems." />
 
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireSecondItemRadioGroupID"
@@ -163,10 +146,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireSecondContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/gray_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/FirstQuestionnaireThirdQuestionID"
                     android:layout_width="match_parent"
@@ -175,7 +158,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="5dp"
-                    android:text="I am always prepared." />
+                    android:text="I get chores done right away." />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireThirdItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -226,11 +209,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireThirdContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:textSize="20sp"
                 android:padding="10dp"
                 android:layout_marginVertical="7dp"
-                android:background="@drawable/soft_green_border_layout">
+                android:background="@drawable/border_layout">
 
                 <TextView
                     android:id="@+id/FirstQuestionnaireFourthQuestionID"
@@ -240,7 +223,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="5dp"
-                    android:text="I get stressed out easily." />
+                    android:text="I am easily disturbed" />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireFourthItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -291,10 +274,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireFourthContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/soft_brown_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/FirstQuestionnaireFifthQuestionID"
                     android:layout_width="match_parent"
@@ -303,7 +286,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="5dp"
-                    android:text="I have a rich vocabulary." />
+                    android:text="I have excellent ideas." />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireFifthItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -352,10 +335,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireFifthContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/gray_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/FirstQuestionnaireSixthQuestionID"
                     android:layout_width="match_parent"
@@ -364,7 +347,7 @@
                     android:textSize="20sp"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/white"
-                    android:text="I don't talk a lot." />
+                    android:text="I have little to say." />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireSixthItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -413,10 +396,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireSixthContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/soft_green_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/FirstQuestionnaireSeventhQuestionID"
                     android:layout_width="match_parent"
@@ -425,7 +408,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="5dp"
-                    android:text="I am interested in people." />
+                    android:text="I have a soft heart." />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireSeventhItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -474,10 +457,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireSeventhContainerID"
-                android:layout_marginHorizontal="50dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/soft_brown_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/FirstQuestionnaireEighthQuestionID"
                     android:layout_width="match_parent"
@@ -486,7 +469,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="5dp"
-                    android:text="I leave my belongings around." />
+                    android:text="I often forget to put things back in their proper place." />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireEighthItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -535,10 +518,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireEighthContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/gray_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/FirstQuestionnaireNinethQuestionID"
                     android:layout_width="match_parent"
@@ -547,7 +530,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="5dp"
-                    android:text="I am relaxed most of the time." />
+                    android:text="I get upset easily." />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireNinethItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -596,10 +579,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/FirstQuestionnaireNinethContainerID"
-                android:layout_marginHorizontal="40dp"
+                android:layout_marginHorizontal="15dp"
                 android:layout_marginVertical="7dp"
                 android:padding="10dp"
-                android:background="@drawable/soft_green_border_layout">
+                android:background="@drawable/border_layout">
                 <TextView
                     android:id="@+id/FirstQuestionnaireTenthQuestionID"
                     android:layout_width="match_parent"
@@ -608,7 +591,7 @@
                     android:textSize="20sp"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/white"
-                    android:text="I have difficulty understanding abstract ideas." />
+                    android:text="I do not have a good imagination." />
                 <RadioGroup
                     android:id="@+id/FirstQuestionnaireTenthItemRadioGroupID"
                     android:layout_width="match_parent"
@@ -651,8 +634,6 @@
                         android:buttonTint="@color/white"
                         android:text="Completely Disagree" />
                 </RadioGroup>
-
-
             </RelativeLayout>
             <Button
                 android:id="@+id/FirstQuestionnaireNextButtonID"

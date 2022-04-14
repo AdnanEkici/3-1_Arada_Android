@@ -9,25 +9,39 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
 
-import java.io.Serializable;
-import java.util.ArrayList;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-public class first_questionnaire_questions extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class fifth_questionnaire_questions extends AppCompatActivity {
 
     private ArrayList<String> answers;
     private ArrayList<RadioGroup> radioGroups;
     private ArrayList<RelativeLayout> containers;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_questionnaire_questions);
+        Bundle extra = getIntent().getBundleExtra("answers");
+        answers = (ArrayList<String>) extra.getSerializable("object");
+        setContentView(R.layout.activity_second_questionnaire_questions);
         this.init();
 
 
@@ -43,10 +57,6 @@ public class first_questionnaire_questions extends AppCompatActivity {
     //private metotlar
     private void init()
     {
-        this.answers = new ArrayList<>();
-        for (int i = 0; i < 50; i++){
-            answers.add("");
-        }
         containers = new ArrayList<>();
         radioGroups = new ArrayList<RadioGroup>(25);
         radioGroups.add(findViewById(R.id.FirstQuestionnaireFirstItemRadioGroupID));
@@ -130,49 +140,68 @@ public class first_questionnaire_questions extends AppCompatActivity {
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        Button next = findViewById(R.id.FirstQuestionnaireNextButtonID);
-        next.setOnClickListener(new NextPageOnClickListener());
 
     }
-    class NextPageOnClickListener implements View.OnClickListener{
 
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(first_questionnaire_questions.this,second_questionnaire_questions.class);
-            Bundle extra = new Bundle();
-            extra.putSerializable("object",answers);
-            intent.putExtra("answers",extra);
-            startActivity(intent);
-        }
+    public void sendAnswer()
+    {
+        final String URL = "10.2.40.85";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        // Post params to be sent to the server
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("email", "test8@gmail.com");
+
+        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println("Response158: " + response.toString());
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(String.valueOf(response));
+
+
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                Toast.makeText(fifth_questionnaire_questions.this ,"Email veya şifre hatalı." , Toast.LENGTH_LONG).show();
+            }
+        }){
+
+            //Headera gönder
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("winx", "mokoko");
+                return headers;
+            }
+        };
+
+        // add the request object to the queue to be executed
+        queue.add(req);
     }
+
+
     class FadeOnCheckedListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             radioGroup.setVisibility(View.GONE);
             for (int y = 0; y < radioGroups.size(); y++){
-                if (radioGroups.get(y).equals(radioGroup)){
-                    switch (i%5){
-                        case 0:
-                            answers.set(y,"Completely Agree");
-                            break;
-                        case 1:
-                            answers.set(y,"Agree");
-                            break;
-                        case 2:
-                            answers.set(y,"Nor Agree Nor Disagree");
-                            break;
-                        case 3:
-                            answers.set(y,"Disagree");
-                            break;
-                        case 4:
-                            answers.set(y,"Completely Disagree");
-                            break;
-                    }
-                    if (y != radioGroups.size() -1){
-                        radioGroups.get(y+1).setVisibility(View.VISIBLE);
-                    }
+                if (y!= radioGroups.size() -1  && radioGroups.get(y).equals(radioGroup)) {
+                    radioGroups.get(y+1).setVisibility(View.VISIBLE);
                 }
-
             }
         }
     }

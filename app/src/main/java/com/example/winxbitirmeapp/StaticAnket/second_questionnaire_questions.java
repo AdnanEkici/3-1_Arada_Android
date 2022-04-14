@@ -9,25 +9,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class first_questionnaire_questions extends AppCompatActivity {
+public class second_questionnaire_questions extends AppCompatActivity {
 
-    private ArrayList<String> answers;
+
     private ArrayList<RadioGroup> radioGroups;
     private ArrayList<RelativeLayout> containers;
+    private ArrayList<String> answers;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_questionnaire_questions);
+        Bundle extra = getIntent().getBundleExtra("answers");
+        answers = (ArrayList<String>) extra.getSerializable("object");
+        setContentView(R.layout.activity_second_questionnaire_questions);
         this.init();
 
 
@@ -43,10 +43,6 @@ public class first_questionnaire_questions extends AppCompatActivity {
     //private metotlar
     private void init()
     {
-        this.answers = new ArrayList<>();
-        for (int i = 0; i < 50; i++){
-            answers.add("");
-        }
         containers = new ArrayList<>();
         radioGroups = new ArrayList<RadioGroup>(25);
         radioGroups.add(findViewById(R.id.FirstQuestionnaireFirstItemRadioGroupID));
@@ -138,8 +134,7 @@ public class first_questionnaire_questions extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(first_questionnaire_questions.this,second_questionnaire_questions.class);
-            Bundle extra = new Bundle();
+            Intent intent = new Intent(second_questionnaire_questions.this,third_questionnaire_questions.class);            Bundle extra = new Bundle();
             extra.putSerializable("object",answers);
             intent.putExtra("answers",extra);
             startActivity(intent);

@@ -18,6 +18,18 @@
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText">
         <activity
+            android:name=".StaticAnket.fifth_questionnaire_questions"
+            android:exported="false" />
+        <activity
+            android:name=".StaticAnket.fourth_questionnaire_questions"
+            android:exported="false" />
+        <activity
+            android:name=".StaticAnket.third_questionnaire_questions"
+            android:exported="false" />
+        <activity
+            android:name=".StaticAnket.second_questionnaire_questions"
+            android:exported="false" />
+        <activity
             android:name=".StaticAnket.first_questionnaire_questions"
             android:exported="false" />
         <activity
