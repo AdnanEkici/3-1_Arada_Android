@@ -10,7 +10,68 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.net.ConnectivityManager;
+import android.icu.text.SimpleDateFormat;
+import android.os.Bundle;
+import android.telephony.ClosedSubscriberGroupInfo;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLOutput;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.regex.Pattern;
+import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+
+import android.net.ConnectivityManager;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.telephony.ClosedSubscriberGroupInfo;
 import android.util.Log;
@@ -50,8 +111,11 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLOutput;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.regex.Pattern;
+import java.util.Date;
 
 
 public class RegisterActivity extends AppCompatActivity{
@@ -64,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity{
 
     private FirebaseAuth auth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String dateForDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -93,6 +158,14 @@ public class RegisterActivity extends AppCompatActivity{
         auth = FirebaseAuth.getInstance();
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
     private void checkInternet()
     {
@@ -100,7 +173,7 @@ public class RegisterActivity extends AppCompatActivity{
         {
             androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(RegisterActivity.this).create();
             alertDialog.setTitle("Bağlantı Problemi");
-            alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
+            //alertDialog.setIcon(getResources().getDrawable(R.drawable.nonnet));
             alertDialog.setMessage("Cihazınız internete bağlı değil.");
             alertDialog.setButton(androidx.appcompat.app.AlertDialog.BUTTON_NEUTRAL, "Tamam",
                     new DialogInterface.OnClickListener() {
@@ -128,9 +201,13 @@ public class RegisterActivity extends AppCompatActivity{
             {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
+                //System.out.println("date ---> " + date);
+                try {
+                    dateForDatabase = makeDateStringForDatabase(day, month, year);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 dateButton.setText(date);
-
-                //date ----> day month year
             }
         };
 
@@ -151,6 +228,20 @@ public class RegisterActivity extends AppCompatActivity{
     private String makeDateString(int day, int month, int year)
     {
         return getMonthFormat(month) + " " + day + " " + year;
+    }
+
+    private String makeDateStringForDatabase(int day, int month, int year) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        if(month < 10){
+            String dateStr = year + "-" + "0" + month + "-" + day;
+            Date date = simpleDateFormat.parse(dateStr);
+            return dateStr;
+        }
+        else{
+            String dateStr = year + "-" + month + "-" + day;
+            Date date = simpleDateFormat.parse(dateStr);
+            return dateStr;
+        }
     }
 
     private String getMonthFormat(int month)
@@ -189,6 +280,20 @@ public class RegisterActivity extends AppCompatActivity{
         datePickerDialog.show();
     }
 
+
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&-]+)@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
     //Button Action
     public void registerBtn(View view)//Kontrolleri failsafeleri yapılmalıdır.
     {
@@ -201,6 +306,23 @@ public class RegisterActivity extends AppCompatActivity{
         int genid=radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) findViewById(genid);
         String gender=radioButton.getText().toString();
+
+        if (name.length()==0){
+            firstNameText.setError("Enter name");
+        }
+        else if (surname.length()==0){
+            lastnameText.setError("Enter surname");
+        }
+        else if (email.length()==0){
+            emailText.setError("Enter an email");
+        }
+        else if (!isValid(email)){
+            emailText.setError("Enter a valid email");
+        }
+        else if (password.length()<6){
+            passwordText.setError("Enter a valid password");
+        }
+        //BURAYA DEVAM ET KONTROLLERE HATA OLDUGU ICIN KONTROL EDEMEDIM
 
 
 
@@ -219,25 +341,24 @@ public class RegisterActivity extends AppCompatActivity{
                             hashMap.put("chatClick","0"); //logout ta 0 yap burayi
                             hashMap.put("isMatched","0"); //logout ta 0 yap burayi
                             hashMap.put("matchedEmail","-1");
+                            hashMap.put("isOnline","0");
 
                             //username falan koymadim
 
-                           FirebaseFirestore.getInstance().collection("User")
-                                   .document(userEmail)
-                                   .set(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                               @Override
-                               public void onSuccess(Void unused) {
-                                   System.out.println("SUCCESSFUL ADD");
-                                   Intent intent = new Intent(RegisterActivity.this , HomeActivity.class);
-                                   startActivity(intent);
-                                   finish();
-                               }
-                           }).addOnFailureListener(new OnFailureListener() {
-                               @Override
-                               public void onFailure(@NonNull Exception e) {
-                                   System.out.println("FAILED TO ADD");
-                               }
-                           });
+                            FirebaseFirestore.getInstance().collection("User")
+                                    .document(userEmail)
+                                    .set(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    System.out.println("SUCCESSFUL ADD");
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    System.out.println("FAILED TO ADD");
+                                }
+                            });
 
                         }else{
                             Toast.makeText(RegisterActivity.this,"BRUH YOU CANT REGISTER",Toast.LENGTH_SHORT).show();
@@ -246,46 +367,11 @@ public class RegisterActivity extends AppCompatActivity{
                 });
 
 
-        //Chat icin
-       /* auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
 
-                            FirebaseUser firebaseUser = auth.getCurrentUser();
-                            //if else icine al
-
-                            assert firebaseUser != null;
-                            String userEmail = firebaseUser.getEmail();
-
-                            db = FirebaseDatabase.getInstance().getReference("Users").child(userEmail);
-
-                            HashMap<String,String> hashMap = new HashMap<>();
-                            hashMap.put("email",userEmail);
-                            hashMap.put("isOnline","1"); //logout ta 0 yap burayi
-                            System.out.println(hashMap);
-                            //username falan koymadim
-
-                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Intent intent = new Intent(RegisterActivity.this , HomeActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                }
-                            });
-                        }else{
-                            Toast.makeText(RegisterActivity.this,"BRUH YOU CANT REGISTER",Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });*/
-
-        /*try {
+        try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.5.36.56:8080/user/signup";
+            String URL = "http://10.2.37.139:8080/user/signup";
+
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);
@@ -293,13 +379,16 @@ public class RegisterActivity extends AppCompatActivity{
             jsonBody.put("name", name);
             jsonBody.put("surname", surname);
             jsonBody.put("gender", gender.toUpperCase());
+            jsonBody.put("birthDate", dateForDatabase);
             final String requestBody = jsonBody.toString();
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    System.out.println("Bruh" + response);
                     if (response.contains("200"))
                     {
+                        Toast.makeText(RegisterActivity.this , "Kayıt Başarılı Lütfen Giriş Yapınız" , Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -335,6 +424,7 @@ public class RegisterActivity extends AppCompatActivity{
                     String responseString = "";
                     if (response != null) {
                         responseString = String.valueOf(response.statusCode);
+                        //System.out.println("response -----> " + responseString);
                         // can get more details such as response.headers
                     }
                     return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
@@ -344,7 +434,7 @@ public class RegisterActivity extends AppCompatActivity{
             requestQueue.add(stringRequest);
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
 
 
 
@@ -352,4 +442,8 @@ public class RegisterActivity extends AppCompatActivity{
     }
 
 
+    public void gotoSignIn(View view) {
+        Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
+        startActivity(intent);
+    }
 }

@@ -33,13 +33,22 @@
             android:name=".StaticAnket.first_questionnaire_questions"
             android:exported="false" />
         <activity
-            android:name=".RedirectActivity"
+            android:name=".toDoAndAchivements.AchivementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".ChatMatchActivity"
+            android:name=".ChatActivities.RedirectActivity"
             android:exported="true" />
         <activity
-            android:name=".ChatMainActivity"
+            android:name=".toDoAndAchivements.ToDoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChatActivities.ChatMatchActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChatActivities.ChatMainActivity"
             android:exported="true" />
         <activity
             android:name=".ProfileActivity"
@@ -51,7 +60,7 @@
             android:name=".SleepActivity.SleepActivity"
             android:exported="true" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".ChatActivities.ChatActivity"
             android:exported="true" />
         <activity android:name=".Questionnaires.QuestionnaireActivity" />
         <activity android:name=".LoginActivity" />
