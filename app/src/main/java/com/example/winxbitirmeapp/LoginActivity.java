@@ -62,8 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private String tokenType;
     private boolean flag = false;
     private FirebaseAuth auth;
-    private final String URL = "http://10.2.37.139:8080/user/signin";
-
+    private final String URL = "http://10.2.40.85:8080/user/signin";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -129,7 +128,8 @@ public class LoginActivity extends AppCompatActivity {
                                                                 token = jsonObject.getString("accessToken");
 
                                                                 dialog.dismiss();
-                                                                Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                                                //Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                                                Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
                                                                 intent.putExtra("token", token);
                                                                 intent.putExtra("tokenType", tokenType);
                                                                 intent.putExtra("email", emailFromPref);
@@ -247,6 +247,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
+        // db gelince burasi degiscek // SİL BENİ
         flag = true;
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -285,9 +286,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        // Instantiate the RequestQueue.
-
-        // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
         params.put("username", email);
@@ -366,13 +364,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
 
-    }
-
-    public void moveQuestions(View view)
-    {
-        Intent intent = new Intent(LoginActivity.this , QuestionnaireActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     public void goToForgotPassword(View view)

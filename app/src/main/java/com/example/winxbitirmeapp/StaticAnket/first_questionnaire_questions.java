@@ -47,6 +47,7 @@ public class first_questionnaire_questions extends AppCompatActivity {
         }
 
         System.out.println("ANKET 1: "+ email + " " + password);
+
         //Buradan -- yaz
     }
 

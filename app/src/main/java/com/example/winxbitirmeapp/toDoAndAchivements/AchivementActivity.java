@@ -47,6 +47,7 @@ public class AchivementActivity extends AppCompatActivity {
     private ListView achievementListView;
     private AchievementAdapter achievementAdapter;
     public static Context context;
+    private final String URL = "http://10.2.37.139:8080/achievement";
 
 
     @Override
@@ -74,7 +75,7 @@ public class AchivementActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.2.37.139:8080/achievement";
+
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
         params.put("none", "none");

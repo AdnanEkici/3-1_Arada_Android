@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -42,6 +43,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
     public static Context context;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -65,9 +67,6 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
         //Buradan -- yaz
         System.out.println("ANKET 5: "+ email + " " + password);
     }
-
-
-
 
 
 
@@ -156,6 +155,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
         iterate = findViewById(R.id.FirstQuestionnaireTenthContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
+
         Button next = findViewById(R.id.FirstQuestionnaireNextButtonID);
         next.setOnClickListener(new NextPageOnClickListener());
 
@@ -224,7 +224,6 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
 
         }
     }
-
 
 
     class FadeOnCheckedListener implements RadioGroup.OnCheckedChangeListener {

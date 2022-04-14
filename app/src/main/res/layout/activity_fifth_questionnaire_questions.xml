@@ -645,6 +645,7 @@
                 android:layout_centerHorizontal="true"
                 android:onClick="sendAnswer"
                 android:text="NEXT" />
+
         </RelativeLayout>
 
     </ScrollView>

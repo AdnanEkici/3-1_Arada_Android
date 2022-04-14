@@ -47,6 +47,7 @@ public class second_questionnaire_questions extends AppCompatActivity {
         }
 
         System.out.println("ANKET 2: "+ email + " " + password);
+
         //Buradan -- yaz
     }
 

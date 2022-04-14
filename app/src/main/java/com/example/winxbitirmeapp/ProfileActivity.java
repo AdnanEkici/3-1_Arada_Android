@@ -67,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
 
+    final String URL = "http://10.2.37.139:8080/profile";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -300,7 +302,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String URL = "http://10.2.37.139:8080/profile";
+
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);

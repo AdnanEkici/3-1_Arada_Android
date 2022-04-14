@@ -48,6 +48,7 @@ public class fourth_questionnaire_questions extends AppCompatActivity {
 
         //Buradan -- yaz
         System.out.println("ANKET 4: "+ email + " " + password);
+
     }
 
 
