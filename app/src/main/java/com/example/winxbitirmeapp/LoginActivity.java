@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         this.init();
 
+
     }
 
     private void init()
@@ -303,7 +304,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             dialog.dismiss();
-                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
                             intent.putExtra("token", token);
                             intent.putExtra("tokenType", tokenType);
                             intent.putExtra("email", email);
@@ -312,17 +313,16 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
 
                             //Alttaki yorumlu kod json arrayi okur
-
                             // JSONArray jsonArray = jsonObject.getJSONArray("data");
                             // for (int i = 0; i < jsonArray.length(); i++) {
                             //     JSONObject jo = jsonArray.getJSONObject(i);
                             //     System.out.println("Bruh: " + jo.getString("tokenType"));
                             // }
-                           // JSONArray jsonArray = jsonObject.getJSONArray("data");
-                           // for (int i = 0; i < jsonArray.length(); i++) {
-                           //     JSONObject jo = jsonArray.getJSONObject(i);
-                           //     System.out.println("Bruh: " + jo.getString("tokenType"));
-                           // }
+                            // JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            // for (int i = 0; i < jsonArray.length(); i++) {
+                            //     JSONObject jo = jsonArray.getJSONObject(i);
+                            //     System.out.println("Bruh: " + jo.getString("tokenType"));
+                            // }
 
                         } catch (JSONException e) {
                             e.printStackTrace();

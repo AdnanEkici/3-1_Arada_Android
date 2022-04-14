@@ -2,9 +2,12 @@ package com.example.winxbitirmeapp.StaticAnket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -36,7 +39,9 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
     private String tokenType;
     private String email;
     private String password;
-    private final String URL = "http://10.2.40.85:8080/question/submitAnswers";
+    private final String URL = "http://10.2.37.139:8080/question/submitAnswers";
+    public static Context context;
+
 
 
     @Override
@@ -47,6 +52,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
         answers = (ArrayList<String>) extra.getSerializable("object");
         setContentView(R.layout.activity_second_questionnaire_questions);
         this.init();
+        context = getApplicationContext();
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if(extras!=null)
@@ -59,11 +65,8 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
 
 
         //Buradan -- yaz
+        System.out.println("ANKET 5: "+ email + " " + password);
     }
-
-
-    //Button metotları
-
 
 
 
@@ -153,60 +156,73 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
+        Button next = findViewById(R.id.FirstQuestionnaireNextButtonID);
+        next.setOnClickListener(new NextPageOnClickListener());
 
     }
+    class NextPageOnClickListener implements View.OnClickListener{
 
-    public void sendAnswer()
-    {
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        // Post params to be sent to the server
-        HashMap<String, ArrayList<String>> params = new HashMap<>();
-        params.put("payload", answers);
-
-        JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println("Response158: " + response.toString());
-                        JSONObject jsonObject = null;
-                        try {
-                            jsonObject = new JSONObject(String.valueOf(response));
+        @Override
+        public void onClick(View view) {
 
 
-                            Intent intent = new Intent(fifth_questionnaire_questions.this , HomeActivity.class);
-                            intent.putExtra("token", token);
-                            intent.putExtra("tokenType", tokenType);
-                            intent.putExtra("email", email);
-                            intent.putExtra("password", password);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+            System.out.println("BURADAYIM");
+            RequestQueue queue = Volley.newRequestQueue(context);
+            // Post params to be sent to the server
+            HashMap<String, ArrayList<String>> params = new HashMap<>();
+            params.put("payload", answers);
+
+            JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            System.out.println("Response158: " + response.toString());
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(String.valueOf(response));
+
+
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
                         }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error)
+                {
+                    VolleyLog.e("Error: ", error.getMessage());
+                }
+            }){
+
+                //Headera gönder
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", tokenType + " " + token);
+                    return headers;
+                }
+            };
+
+            // add the request object to the queue to be executed
+            queue.add(req);
+
+            Intent intent = new Intent(fifth_questionnaire_questions.this,HomeActivity.class);            Bundle extra = new Bundle();
+            extra.putSerializable("object",answers);
+            intent.putExtra("token", token);
+            intent.putExtra("tokenType", tokenType);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
+            startActivity(intent);
 
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-                Toast.makeText(fifth_questionnaire_questions.this ,"Email veya şifre hatalı." , Toast.LENGTH_LONG).show();
-            }
-        }){
-
-            //Headera gönder
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                //headers.put("Content-Type", "application/json");
-                headers.put("winx", "mokoko");
-                return headers;
-            }
-        };
-
-        // add the request object to the queue to be executed
-        queue.add(req);
+        }
     }
 
 
