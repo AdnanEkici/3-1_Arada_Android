@@ -46,7 +46,7 @@ public class second_questionnaire_questions extends AppCompatActivity {
             password = intent.getStringExtra("password");
         }
 
-
+        System.out.println("ANKET 2: "+ email + " " + password);
         //Buradan -- yaz
     }
 

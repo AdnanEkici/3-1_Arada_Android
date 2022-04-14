@@ -636,14 +636,15 @@
                 </RadioGroup>
 
             </RelativeLayout>
+
             <Button
-                android:id="@+id/FirstQuestionnaireNextButtonID"
+                android:id="@+id/DummyIDCHANGEMELATER"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
+                android:layout_below="@id/FirstQuestionnaireTenthContainerID"
                 android:layout_centerHorizontal="true"
                 android:onClick="sendAnswer"
-                android:layout_below="@id/FirstQuestionnaireTenthContainerID"
-                android:text="NEXT"/>
+                android:text="NEXT" />
         </RelativeLayout>
 
     </ScrollView>

@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         this.init();
 
+
     }
 
     private void init()
