@@ -214,7 +214,7 @@ public class ToDoActivity extends AppCompatActivity{
     {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.5.39.102:8080/profile/todo";
+        final String URL = "http://10.2.37.139:8080/profile/todo";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
         params.put("none", "none");
