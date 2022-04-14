@@ -2,9 +2,11 @@ package com.example.winxbitirmeapp.toDoAndAchivements;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,8 +20,10 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.winxbitirmeapp.Adapters.AchievementAdapter;
 import com.example.winxbitirmeapp.Adapters.ToDoListAdapter;
 import com.example.winxbitirmeapp.LoginActivity;
+import com.example.winxbitirmeapp.Models.AchievementModel;
 import com.example.winxbitirmeapp.Models.ToDoModel;
 import com.example.winxbitirmeapp.R;
 import com.example.winxbitirmeapp.RegisterActivity;
@@ -29,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,12 +43,18 @@ public class AchivementActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
 
+    private ArrayList<AchievementModel> achievementModelArrayList;
+    private ListView achievementListView;
+    private AchievementAdapter achievementAdapter;
+    public static Context context;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achivement);
 
-
+        context = getApplicationContext();
         this.init();
         this.getAchievement();
     }
@@ -53,6 +64,8 @@ public class AchivementActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        achievementModelArrayList = new ArrayList<>(10);
+        achievementListView = findViewById(R.id.AchievementsListViewID);
     }
 
 
@@ -78,8 +91,14 @@ public class AchivementActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++)
                             {
                                 JSONObject jo = jsonArray.getJSONObject(i);
+
                                 System.out.println("DATA FROM ACH: " + i + " " +jo.getString("id") + " " + jo.getString("email") + " " + jo.getString("achievementType") + " " +
-                                        jo.getString("description") + " " + jo.getString("percentage") + " " + jo.getString("goal") + " " + jo.getString("occured") + " " + jo.getString("completed") + " ");
+                                jo.getString("description") + " " + jo.getString("percentage") + " " + jo.getString("goal") + " " + jo.getString("occurred") + " " + jo.getString("completed") + " ");
+
+                                achievementModelArrayList.add( new AchievementModel(jo.getString("id") , jo.getString("email") , jo.getString("achievementType"),jo.getString("description"), jo.getString("percentage") , jo.getString("goal") , jo.getString("occurred"), jo.getString("completed")));
+
+                                achievementAdapter = new AchievementAdapter(context , achievementModelArrayList);
+                                achievementListView.setAdapter(achievementAdapter);
 
                             }
 
