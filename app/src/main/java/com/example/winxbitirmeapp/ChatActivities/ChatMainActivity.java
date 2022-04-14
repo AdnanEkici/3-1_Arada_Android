@@ -38,6 +38,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,6 +63,7 @@ public class ChatMainActivity extends AppCompatActivity {
     private String tokenType;
     private String email;
     private String password;
+    private Instant start = Instant.now();
 
 
 
@@ -69,6 +72,7 @@ public class ChatMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main);
         init();
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -460,7 +464,10 @@ public class ChatMainActivity extends AppCompatActivity {
                         db.collection("User").document(receiverEmail)
                                 .update("matchedEmail","-1");
 
-
+                        Instant end = Instant.now();
+                        Duration timeElapsed = Duration.between(start, end);
+                        long minutes = (timeElapsed.toMillis() / 1000) / 60;
+                        System.out.println("Time taken: " + minutes +" dk");
                         Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
                         intent.putExtra("token", token);
                         intent.putExtra("tokenType", tokenType);
