@@ -61,7 +61,7 @@ public class AchivementActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.5.37.112:8080/achievement";
+        final String URL = "http://10.2.37.139:8080/achievement";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
         params.put("none", "none");
@@ -78,13 +78,14 @@ public class AchivementActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++)
                             {
                                 JSONObject jo = jsonArray.getJSONObject(i);
-                                System.out.println("ARRAY: " + jo.toString());
-
+                                System.out.println("DATA FROM ACH: " + i + " " +jo.getString("id") + " " + jo.getString("email") + " " + jo.getString("achievementType") + " " +
+                                        jo.getString("description") + " " + jo.getString("percentage") + " " + jo.getString("goal") + " " + jo.getString("occured") + " " + jo.getString("completed") + " ");
 
                             }
 
 
                         } catch (JSONException e) {
+                            System.out.println("Json ERR ACH: " + e.getLocalizedMessage());
                             e.printStackTrace();
                         }
 

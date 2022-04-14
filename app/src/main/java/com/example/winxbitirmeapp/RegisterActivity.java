@@ -370,7 +370,7 @@ public class RegisterActivity extends AppCompatActivity{
 
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://10.5.37.112:8080/user/signup";
+            String URL = "http://10.2.37.139:8080/user/signup";
 
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);

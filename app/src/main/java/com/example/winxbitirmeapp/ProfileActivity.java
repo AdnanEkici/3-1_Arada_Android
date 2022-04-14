@@ -199,7 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://10.2.37.139:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);
@@ -300,7 +300,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://10.2.37.139:8080/profile";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
