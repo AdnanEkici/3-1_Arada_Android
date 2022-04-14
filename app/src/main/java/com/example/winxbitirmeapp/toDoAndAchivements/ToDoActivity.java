@@ -56,7 +56,7 @@ public class ToDoActivity extends AppCompatActivity{
     private String token;
     public static Context context;
 
-    final String URL = "http://10.5.39.102:8080/profile/todo";
+    final String URL = "http://10.2.37.139:8080/profile/todo";
 
 
     @SuppressLint("ClickableViewAccessibility")

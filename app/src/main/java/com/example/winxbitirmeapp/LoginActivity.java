@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private String tokenType;
     private boolean flag = false;
     private FirebaseAuth auth;
-    private final String URL = "http://10.2.40.85:8080/user/signin";
+    private final String URL = "http://10.2.37.139:8080/user/signin";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
