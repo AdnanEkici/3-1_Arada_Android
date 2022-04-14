@@ -31,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.StaticAnket.first_questionnaire_questions;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -61,13 +62,14 @@ public class LoginActivity extends AppCompatActivity {
     private String tokenType;
     private boolean flag = false;
     private FirebaseAuth auth;
-
+    private final String URL = "http://10.2.37.139:8080/user/signin";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         this.init();
+
 
     }
 
@@ -108,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                                         {
 
                                             // Instantiate the RequestQueue.
-                                            final String URL = "http://10.2.36.78:8080/user/signin";
                                             // Post params to be sent to the server
                                             HashMap<String, String> params = new HashMap<String, String>();
                                             params.put("email", emailFromPref);
@@ -126,7 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                                                                 token = jsonObject.getString("accessToken");
 
                                                                 dialog.dismiss();
-                                                                Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                                                //Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                                                Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
                                                                 intent.putExtra("token", token);
                                                                 intent.putExtra("tokenType", tokenType);
                                                                 intent.putExtra("email", emailFromPref);
@@ -244,9 +246,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
+        // db gelince burasi degiscek // SİL BENİ
         flag = true;
         RequestQueue queue = Volley.newRequestQueue(this);
-        // db gelince burasi degiscek
 
         email = email_edit.getText().toString();
         password = password_edit.getText().toString();
@@ -283,10 +285,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
 
-        // Instantiate the RequestQueue.
 
-        final String URL = "http://10.2.37.108:8080/user/signin";
-        // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
         params.put("username", email);
@@ -305,7 +304,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             dialog.dismiss();
-                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
                             intent.putExtra("token", token);
                             intent.putExtra("tokenType", tokenType);
                             intent.putExtra("email", email);
@@ -314,17 +313,16 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
 
                             //Alttaki yorumlu kod json arrayi okur
-
                             // JSONArray jsonArray = jsonObject.getJSONArray("data");
                             // for (int i = 0; i < jsonArray.length(); i++) {
                             //     JSONObject jo = jsonArray.getJSONObject(i);
                             //     System.out.println("Bruh: " + jo.getString("tokenType"));
                             // }
-                           // JSONArray jsonArray = jsonObject.getJSONArray("data");
-                           // for (int i = 0; i < jsonArray.length(); i++) {
-                           //     JSONObject jo = jsonArray.getJSONObject(i);
-                           //     System.out.println("Bruh: " + jo.getString("tokenType"));
-                           // }
+                            // JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            // for (int i = 0; i < jsonArray.length(); i++) {
+                            //     JSONObject jo = jsonArray.getJSONObject(i);
+                            //     System.out.println("Bruh: " + jo.getString("tokenType"));
+                            // }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -366,13 +364,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
 
-    }
-
-    public void moveQuestions(View view)
-    {
-        Intent intent = new Intent(LoginActivity.this , QuestionnaireActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     public void goToForgotPassword(View view)

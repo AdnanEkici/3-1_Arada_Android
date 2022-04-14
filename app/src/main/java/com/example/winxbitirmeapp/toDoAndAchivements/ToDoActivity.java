@@ -30,6 +30,7 @@ import com.example.winxbitirmeapp.CustomListView.SwipeListViewTouchListener;
 import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.MeditationActivity;
 import com.example.winxbitirmeapp.Models.ToDoModel;
+import com.example.winxbitirmeapp.ProfileActivity;
 import com.example.winxbitirmeapp.R;
 
 import org.json.JSONArray;
@@ -54,6 +55,9 @@ public class ToDoActivity extends AppCompatActivity{
     private String tokenType;
     private String token;
     public static Context context;
+
+    final String URL = "http://10.2.37.139:8080/profile/todo";
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -144,7 +148,7 @@ public class ToDoActivity extends AppCompatActivity{
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(ToDoActivity.this , HomeActivity.class);
+        Intent intent = new Intent(ToDoActivity.this , ProfileActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
         startActivity(intent);
@@ -161,7 +165,6 @@ public class ToDoActivity extends AppCompatActivity{
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
-        System.out.println("Bruh11:" + tokenType + " " + token);
 
         tasks = new ArrayList<>(10);
         dones = new ArrayList<>(10);
@@ -214,7 +217,8 @@ public class ToDoActivity extends AppCompatActivity{
     {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.2.36.78:8080/profile/todo";
+
+
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
         params.put("none", "none");
@@ -300,7 +304,7 @@ public class ToDoActivity extends AppCompatActivity{
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.2.36.78:8080/profile/todo";
+
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
         params.put("task", taskModel.getTask());
@@ -355,7 +359,8 @@ public class ToDoActivity extends AppCompatActivity{
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.2.36.78:8080/profile/todo";
+
+        final String URL = "http://10.2.37.139:8080/profile/todo";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
         params.put("task", taskModel.getTask());

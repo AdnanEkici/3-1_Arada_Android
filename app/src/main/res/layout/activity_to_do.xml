@@ -111,7 +111,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/DoneTextViewID"
             android:padding="10dp"
-
+            android:divider="@null"
             android:dividerHeight="0dp"
             android:visibility="invisible" />
 

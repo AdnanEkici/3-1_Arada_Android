@@ -3,16 +3,21 @@ package com.example.winxbitirmeapp.Models;
 public class AchievementModel
 {
 
-    private long id;
+
+    private String id;
     private String email;
     private String achievementType;
-    private String description;
+    private String description; private String percentage;
+    private String isCompleted;
+    private String goal;
+    private String occurred;
 
-    public long getId() {
+
+    public String getId() {
         return id;
     }
 
-    public AchievementModel(long id, String email, String achievementType, String description, double percentage, boolean isCompleted, long goal, long occurred) {
+    public AchievementModel(String id, String email, String achievementType, String description, String percentage, String isCompleted, String goal, String occurred) {
         this.id = id;
         this.email = email;
         this.achievementType = achievementType;
@@ -23,7 +28,8 @@ public class AchievementModel
         this.occurred = occurred;
     }
 
-    public void setId(long id) {
+
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -51,42 +57,40 @@ public class AchievementModel
         this.description = description;
     }
 
-    public double getPercentage() {
+
+    public String getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(double percentage) {
+    public void setPercentage(String percentage) {
         this.percentage = percentage;
     }
 
-    public boolean isCompleted() {
+    public String isCompleted() {
         return isCompleted;
     }
 
-    public void setCompleted(boolean completed) {
+    public void setCompleted(String completed) {
         isCompleted = completed;
     }
 
-    public long getGoal() {
+    public String getGoal() {
         return goal;
     }
 
-    public void setGoal(long goal) {
+    public void setGoal(String goal) {
         this.goal = goal;
     }
 
-    public long getOccurred() {
+    public String getOccurred() {
         return occurred;
     }
 
-    public void setOccurred(long occurred) {
+    public void setOccurred(String occurred) {
         this.occurred = occurred;
     }
 
-    private double percentage;
-    private boolean isCompleted;
-    private long goal;
-    private long occurred;
+
 
 
 

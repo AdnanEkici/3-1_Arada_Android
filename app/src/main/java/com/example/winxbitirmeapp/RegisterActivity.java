@@ -130,6 +130,9 @@ public class RegisterActivity extends AppCompatActivity{
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String dateForDatabase;
 
+    private final String URL = "http://10.2.37.139:8080/user/signup";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

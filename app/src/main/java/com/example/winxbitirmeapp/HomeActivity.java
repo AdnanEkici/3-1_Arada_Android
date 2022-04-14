@@ -62,14 +62,10 @@ public class HomeActivity extends AppCompatActivity {
         chatCardView = findViewById(R.id.chatCardView);
 
         Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if(extras!=null)
-        {
-            tokenType = intent.getStringExtra("tokenType");
-            token = intent.getStringExtra("token");
-            email = intent.getStringExtra("email");
-            password = intent.getStringExtra("password");
-        }
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
         //bottomNavigationView.setVisibility(View.INVISIBLE);
 
         sleepCardView.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +122,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         System.out.println("Önemli Token::::" + token + "  " + tokenType);
+
     }
 
     @Override
@@ -214,7 +211,6 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         editor.clear();
         editor.apply();
-
         FirebaseFirestore.getInstance().collection("User").document(email)
                 .update("isOnline", "0");
         FirebaseAuth.getInstance().signOut();
