@@ -600,7 +600,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/green"
-                    android:onClick="cancelBtnAction"
+                    android:onClick="gotoAchievements"
                     android:text="ACHIVEMENTS"
                     android:textColor="@color/white"
                     android:layout_weight=".50"

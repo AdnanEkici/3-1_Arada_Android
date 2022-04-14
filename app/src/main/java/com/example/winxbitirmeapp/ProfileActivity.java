@@ -33,6 +33,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.example.winxbitirmeapp.toDoAndAchivements.AchivementActivity;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -112,7 +113,6 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
-        System.out.println("Bruh11:" + tokenType + " " + token);
         this.getUserDataFrom();
     }
 
@@ -199,7 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://10.2.37.139:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);
@@ -300,7 +300,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://10.2.37.139:8080/profile";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -451,6 +451,14 @@ public class ProfileActivity extends AppCompatActivity {
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
         startActivity(intent);
+    }
+
+    public void gotoAchievements(View view)
+    {
+        Intent intentt = new Intent(ProfileActivity.this , AchivementActivity.class);
+        intentt.putExtra("token", token);
+        intentt.putExtra("tokenType", tokenType);
+        startActivity(intentt);
     }
 
 }

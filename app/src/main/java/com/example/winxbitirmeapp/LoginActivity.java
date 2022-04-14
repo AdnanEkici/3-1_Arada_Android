@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private String tokenType;
     private boolean flag = false;
     private FirebaseAuth auth;
+    private final String URL = "http://10.2.37.139:8080/user/signin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -108,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                                         {
 
                                             // Instantiate the RequestQueue.
-                                            final String URL = "http://10.5.39.102:8080/user/signin";
+
                                             // Post params to be sent to the server
                                             HashMap<String, String> params = new HashMap<String, String>();
                                             params.put("email", emailFromPref);
@@ -246,7 +247,6 @@ public class LoginActivity extends AppCompatActivity {
     {
         flag = true;
         RequestQueue queue = Volley.newRequestQueue(this);
-        // db gelince burasi degiscek
 
         email = email_edit.getText().toString();
         password = password_edit.getText().toString();
@@ -285,7 +285,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
 
-        final String URL = "http://10.5.39.102:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
