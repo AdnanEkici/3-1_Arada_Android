@@ -35,6 +35,65 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLOutput;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.regex.Pattern;
+import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+
+import android.net.ConnectivityManager;
+import android.icu.text.SimpleDateFormat;
+import android.os.Bundle;
+import android.telephony.ClosedSubscriberGroupInfo;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -97,6 +156,14 @@ public class RegisterActivity extends AppCompatActivity{
         radioGroup = findViewById(R.id.GenderPicker);
 
         auth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(RegisterActivity.this , LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -217,7 +284,7 @@ public class RegisterActivity extends AppCompatActivity{
     public static boolean isValid(String email)
     {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                "[a-zA-Z0-9_+&*-]+)*@" +
+                "[a-zA-Z0-9_+&-]+)@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
 
@@ -278,20 +345,20 @@ public class RegisterActivity extends AppCompatActivity{
 
                             //username falan koymadim
 
-                           FirebaseFirestore.getInstance().collection("User")
-                                   .document(userEmail)
-                                   .set(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
-                               @Override
-                               public void onSuccess(Void unused) {
-                                   System.out.println("SUCCESSFUL ADD");
+                            FirebaseFirestore.getInstance().collection("User")
+                                    .document(userEmail)
+                                    .set(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    System.out.println("SUCCESSFUL ADD");
 
-                               }
-                           }).addOnFailureListener(new OnFailureListener() {
-                               @Override
-                               public void onFailure(@NonNull Exception e) {
-                                   System.out.println("FAILED TO ADD");
-                               }
-                           });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    System.out.println("FAILED TO ADD");
+                                }
+                            });
 
                         }else{
                             Toast.makeText(RegisterActivity.this,"BRUH YOU CANT REGISTER",Toast.LENGTH_SHORT).show();
@@ -303,7 +370,8 @@ public class RegisterActivity extends AppCompatActivity{
 
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
-            String URL = "http://192.168.1.47:8080/user/signup";
+
+            String URL = "http://10.2.36.78:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);
@@ -317,6 +385,7 @@ public class RegisterActivity extends AppCompatActivity{
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+                    System.out.println("Bruh" + response);
                     if (response.contains("200"))
                     {
                         Toast.makeText(RegisterActivity.this , "Kayıt Başarılı Lütfen Giriş Yapınız" , Toast.LENGTH_SHORT).show();

@@ -16,37 +16,26 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.example.winxbitirmeapp.ChatActivity;
+import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
+import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.MeditationActivity;
 import com.example.winxbitirmeapp.ProfileActivity;
-import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class SleepActivity extends AppCompatActivity {
@@ -69,9 +58,20 @@ public class SleepActivity extends AppCompatActivity {
 
         this.init();
         this.initGrap();
+
+
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
-
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(SleepActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
+    }
     //Life Actions
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -12,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -25,11 +26,18 @@ public class MeditationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditation);
-
-
         this.init();
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(MeditationActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
+    }
 
     private void init()
     {

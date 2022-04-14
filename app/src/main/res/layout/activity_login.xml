@@ -76,6 +76,7 @@
                         android:padding="5dp"
                         android:textColor="@color/green"
                         android:textColorHint="@color/green"
+                        android:text="adnanekici@gmail.com"
                         android:textSize="14sp" />
 
                     <EditText
@@ -117,6 +118,7 @@
                         android:layout_marginBottom="10dp"
                         android:padding="5dp"
                         android:text="Forgot Password?"
+                        android:onClick="goToForgotPassword"
                         android:textColor="@color/dark_green"
                         android:textSize="11sp"
 
