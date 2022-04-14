@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.winxbitirmeapp.LoginActivity;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
 
@@ -22,6 +23,12 @@ public class first_questionnaire_questions extends AppCompatActivity {
     private ArrayList<String> answers;
     private ArrayList<RadioGroup> radioGroups;
     private ArrayList<RelativeLayout> containers;
+
+    private String token;
+    private String tokenType;
+    private String email;
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -29,6 +36,15 @@ public class first_questionnaire_questions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_questionnaire_questions);
         this.init();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras!=null)
+        {
+            tokenType = intent.getStringExtra("tokenType");
+            token = intent.getStringExtra("token");
+            email = intent.getStringExtra("email");
+            password = intent.getStringExtra("password");
+        }
 
 
         //Buradan -- yaz
@@ -140,6 +156,10 @@ public class first_questionnaire_questions extends AppCompatActivity {
         public void onClick(View view) {
             Intent intent = new Intent(first_questionnaire_questions.this,second_questionnaire_questions.class);
             Bundle extra = new Bundle();
+            intent.putExtra("token", token);
+            intent.putExtra("tokenType", tokenType);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
             extra.putSerializable("object",answers);
             intent.putExtra("answers",extra);
             startActivity(intent);

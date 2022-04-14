@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -18,7 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.R;
 
 import org.json.JSONException;
@@ -34,6 +32,12 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
     private ArrayList<RadioGroup> radioGroups;
     private ArrayList<RelativeLayout> containers;
 
+    private String token;
+    private String tokenType;
+    private String email;
+    private String password;
+    private final String URL = "http://10.2.40.85:8080/question/submitAnswers";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +47,15 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
         answers = (ArrayList<String>) extra.getSerializable("object");
         setContentView(R.layout.activity_second_questionnaire_questions);
         this.init();
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras!=null)
+        {
+            tokenType = intent.getStringExtra("tokenType");
+            token = intent.getStringExtra("token");
+            email = intent.getStringExtra("email");
+            password = intent.getStringExtra("password");
+        }
 
 
         //Buradan -- yaz
@@ -145,11 +158,11 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
 
     public void sendAnswer()
     {
-        final String URL = "10.2.40.85";
+
         RequestQueue queue = Volley.newRequestQueue(this);
         // Post params to be sent to the server
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("email", "test8@gmail.com");
+        HashMap<String, ArrayList<String>> params = new HashMap<>();
+        params.put("payload", answers);
 
         JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
@@ -161,8 +174,11 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
                             jsonObject = new JSONObject(String.valueOf(response));
 
 
-
-
+                            Intent intent = new Intent(fifth_questionnaire_questions.this , HomeActivity.class);
+                            intent.putExtra("token", token);
+                            intent.putExtra("tokenType", tokenType);
+                            intent.putExtra("email", email);
+                            intent.putExtra("password", password);
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -20,6 +20,12 @@ public class third_questionnaire_questions extends AppCompatActivity {
     private ArrayList<String> answers;
     private ArrayList<RadioGroup> radioGroups;
     private ArrayList<RelativeLayout> containers;
+
+    private String token;
+    private String tokenType;
+    private String email;
+    private String password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -28,7 +34,15 @@ public class third_questionnaire_questions extends AppCompatActivity {
         answers = (ArrayList<String>) extra.getSerializable("object");
         setContentView(R.layout.activity_second_questionnaire_questions);
         this.init();
-
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if(extras!=null)
+        {
+            tokenType = intent.getStringExtra("tokenType");
+            token = intent.getStringExtra("token");
+            email = intent.getStringExtra("email");
+            password = intent.getStringExtra("password");
+        }
 
         //Buradan -- yaz
     }
@@ -136,6 +150,10 @@ public class third_questionnaire_questions extends AppCompatActivity {
             Intent intent = new Intent(third_questionnaire_questions.this,fourth_questionnaire_questions.class);
             Bundle extra = new Bundle();
             extra.putSerializable("object",answers);
+            intent.putExtra("token", token);
+            intent.putExtra("tokenType", tokenType);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
             intent.putExtra("answers",extra);
             startActivity(intent);
         }
