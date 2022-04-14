@@ -1,4 +1,4 @@
-package com.example.winxbitirmeapp;
+package com.example.winxbitirmeapp.ChatActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -19,7 +19,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.winxbitirmeapp.Adapters.MessageAdapter;
+import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.Models.ChatMessage;
+import com.example.winxbitirmeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -55,6 +57,8 @@ public class ChatMainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView nameOfChatter ;
     String reportText;
+    private String token;
+    private String tokenType;
 
 
 
@@ -75,6 +79,9 @@ public class ChatMainActivity extends AppCompatActivity {
                 messageText.setText("");
             }
         });
+            Intent intent = getIntent();
+            tokenType = intent.getStringExtra("tokenType");
+            token = intent.getStringExtra("token");
 
         FirebaseFirestore.getInstance().collection("rooms").document(senderEmail+receiverEmail)
                 .collection("messages").get()
@@ -82,15 +89,15 @@ public class ChatMainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()){
-                            logoutChat();
                             readMessages();
                         }
                     }
                 });
 
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
-    private void logoutChat() {
+    /*private void logoutChat() {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -116,7 +123,7 @@ public class ChatMainActivity extends AppCompatActivity {
                     }
                 });
 
-    }
+    }*/
 
     private void init() {
 
@@ -138,6 +145,16 @@ public class ChatMainActivity extends AppCompatActivity {
         messageAdapter = new MessageAdapter(ChatMainActivity.this,mChat);
         recyclerView.setAdapter(messageAdapter);
 
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ChatMainActivity.this , ChatActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -184,6 +201,7 @@ public class ChatMainActivity extends AppCompatActivity {
                 "AnonymousDeer " ,
                 "AnonymousDinosaur" ,
                 "AnonymousDog" ,
+                "AnonymusBruh",
                 "AnonymousDolphin " ,
                 "AnonymousDonkey " ,
                 "AnonymousDuck" ,
@@ -238,6 +256,89 @@ public class ChatMainActivity extends AppCompatActivity {
     private void sendMessage(String sender, String receiver, String message) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
+        db.collection("User")
+                .whereEqualTo("email",firebaseUser.getEmail())
+                .whereEqualTo("matchedEmail","-1")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+
+                                MaterialAlertDialogBuilder builder1 = new MaterialAlertDialogBuilder(ChatMainActivity.this);
+                                builder1.setBackground(getResources().getDrawable(R.drawable.alert_dialog_bg,null));
+
+                                builder1.setCancelable(false);
+
+                                builder1.setNeutralButton(
+                                        "Home Ekranına Git",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                                //ADOS PROGRESS BAR YAP
+
+
+
+                                                Intent intent = new Intent(ChatMainActivity.this, RedirectActivity.class);
+
+                                                //intent.putExtra("token",token);
+                                                //intent.putExtra("tokenType",tokenType);
+                                                startActivity(intent);
+                                                db.collection("rooms").document(senderEmail+receiverEmail)
+                                                        .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                                document.getReference().delete();
+                                                            }
+                                                        } else {
+                                                        }
+                                                    }
+                                                });
+
+                                                db.collection("rooms").document(receiverEmail+senderEmail)
+                                                        .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                                document.getReference().delete();
+                                                            }
+                                                        } else {
+                                                        }
+                                                    }
+                                                });
+
+                                                finish();
+                                            }
+                                        });
+
+
+
+                                TextView message = new TextView(ChatMainActivity.this);
+                                // You Can Customise your Title here
+                                message.setText("Sohbet Arkadaşınız Konuşmayı sonlandırdı.");
+                                message.setTextColor(getColor(R.color.dark_green));
+                                message.setTextSize(15);
+                                builder1.setCustomTitle(message);
+
+                                AlertDialog alert11 = builder1.create();
+                                alert11.show();
+
+                                alert11.getButton(alert11.BUTTON_NEUTRAL).setTextColor(getColor(R.color.brown4));
+
+                            }
+                        }else{
+
+                        }
+                    }
+                });
+
+
         Date date = new Date();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
@@ -269,6 +370,27 @@ public class ChatMainActivity extends AppCompatActivity {
                         if (e != null) {
                             return;
                         }
+
+                        /*db.collection("User")
+                                .whereEqualTo("email",firebaseUser.getEmail())
+                                .whereEqualTo("chatClick", "0")
+                                .whereEqualTo("isMatched","0")
+                                .whereEqualTo("matchedEmail","-1")
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()){
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }else{
+
+                                        }
+                                    }
+                                });*/
 
 
                         mChat.clear();
@@ -315,6 +437,15 @@ public class ChatMainActivity extends AppCompatActivity {
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         //ADOS PROGRESS BAR YAP
 
+
+
+                        db.collection("User").document(senderEmail)
+                                .update("isMatched","0");
+                        db.collection("User").document(senderEmail)
+                                .update("chatClick","0");
+                        db.collection("User").document(senderEmail)
+                                .update("matchedEmail","-1");
+
                         db.collection("User").document(receiverEmail)
                                 .update("isMatched","0");
                         db.collection("User").document(receiverEmail)
@@ -323,6 +454,10 @@ public class ChatMainActivity extends AppCompatActivity {
                                 .update("matchedEmail","-1");
 
 
+                        Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
+                        intent.putExtra("token",token);
+                        intent.putExtra("tokenType",tokenType);
+                        startActivity(intent);
                         db.collection("rooms").document(senderEmail+receiverEmail)
                                 .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -348,20 +483,6 @@ public class ChatMainActivity extends AppCompatActivity {
                                 }
                             }
                         });
-
-                        db.collection("User").document(senderEmail)
-                                .update("isMatched","0");
-                        db.collection("User").document(senderEmail)
-                                .update("chatClick","0");
-                        db.collection("User").document(senderEmail)
-                                .update("matchedEmail","-1");
-
-
-
-                        Intent intent = new Intent(ChatMainActivity.this,HomeActivity.class);
-                        //intent.putExtra("token",token);
-                        //intent.putExtra("tokenType",tokenType);
-                        startActivity(intent);
                         finish();
                     }
                 });

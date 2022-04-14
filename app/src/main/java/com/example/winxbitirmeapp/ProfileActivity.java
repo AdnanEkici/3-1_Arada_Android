@@ -31,6 +31,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.SleepActivity.SleepActivity;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -75,6 +76,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         this.init();
+
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
     //Private Actions
@@ -111,6 +114,16 @@ public class ProfileActivity extends AppCompatActivity {
         token = intent.getStringExtra("token");
         System.out.println("Bruh11:" + tokenType + " " + token);
         this.getUserDataFrom();
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ProfileActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -184,8 +197,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://10.2.36.78:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);
@@ -286,7 +298,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://192.168.1.47:8080/profile";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);

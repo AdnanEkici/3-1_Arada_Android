@@ -71,11 +71,12 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green"
                         android:hint="Email"
-                        android:text="mgos@gmail.com"
+                        android:text="melissa@gmail.com"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:textColor="@color/green"
                         android:textColorHint="@color/green"
+                        android:text="adnanekici@gmail.com"
                         android:textSize="14sp" />
 
                     <EditText
@@ -89,7 +90,7 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green"
                         android:hint="Password"
-                        android:text="12345678"
+                        android:text="123456789"
                         android:inputType="textPassword"
                         android:maxLines="1"
                         android:padding="5dp"
@@ -117,6 +118,7 @@
                         android:layout_marginBottom="10dp"
                         android:padding="5dp"
                         android:text="Forgot Password?"
+                        android:onClick="goToForgotPassword"
                         android:textColor="@color/dark_green"
                         android:textSize="11sp"
 

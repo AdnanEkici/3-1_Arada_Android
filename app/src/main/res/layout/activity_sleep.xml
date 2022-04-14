@@ -124,7 +124,9 @@
                         app:indicatorSize="40dp"
                         app:trackColor="#e3e8d3"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="5dp" />
+                        app:trackThickness="5dp"
+                        android:clickable="true"
+                        android:onClick="sundayButtonAction"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -164,7 +166,9 @@
                         app:indicatorSize="40dp"
                         app:trackColor="#e3e8d3"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="5dp" />
+                        app:trackThickness="5dp"
+                        android:clickable="true"
+                        android:onClick="mondayButtonAction"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -204,7 +208,9 @@
                         app:indicatorSize="40dp"
                         app:trackColor="#e3e8d3"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="5dp" />
+                        app:trackThickness="5dp"
+                        android:clickable="true"
+                        android:onClick="tuesdayButtonAction"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -244,7 +250,9 @@
                         app:indicatorSize="40dp"
                         app:trackColor="#e3e8d3"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="5dp" />
+                        app:trackThickness="5dp"
+                        android:clickable="true"
+                        android:onClick="wednesdayButtonAction"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -284,7 +292,9 @@
                         app:indicatorSize="40dp"
                         app:trackColor="#e3e8d3"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="5dp" />
+                        app:trackThickness="5dp"
+                        android:clickable="true"
+                        android:onClick="thursdayButtonAction"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -324,7 +334,9 @@
                         app:indicatorSize="40dp"
                         app:trackColor="#e3e8d3"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="5dp" />
+                        app:trackThickness="5dp"
+                        android:clickable="true"
+                        android:onClick="fridayButtonAction"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -364,7 +376,9 @@
                         app:indicatorSize="40dp"
                         app:trackColor="#e3e8d3"
                         app:trackCornerRadius="10dp"
-                        app:trackThickness="5dp" />
+                        app:trackThickness="5dp"
+                        android:clickable="true"
+                        android:onClick="saturdayButtonAction"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -394,170 +408,28 @@
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/SleepActivityChartID"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_below="@id/days"
-            android:layout_marginStart="7dp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp" />
 
-        <GridLayout
-            android:id="@+id/SleepActivityGLID"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/SleepActivityChartID"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="15dp"
-            android:columnCount="2"
-            android:rowCount="3">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical">
-
-
-                    <Button
-                        android:id="@+id/SleepActicityCardImage1ID"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@color/black"
-                        android:onClick="startVoiceButton"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="9dp"
-                        android:text="Menu1" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="0"
-                android:layout_rowWeight="1"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                android:background="@color/white"
-                app:cardElevation="12dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical">
-
-
-                    <Button
-                        android:id="@+id/StopButton"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@color/black"
-                        android:onClick="stopVoiceButton"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Menu2" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:layout_rowWeight="1"
-                android:background="@color/white"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Menu4" />
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_row="1"
-                android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:layout_rowWeight="1"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_gravity="fill"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="10dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Menu3" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </GridLayout>
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="60dp"
-            android:layout_below="@id/SleepActivityGLID"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/stopButton"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:textColor="#D03030"
-            android:text="Alarm Kur" />
+            android:layout_marginTop="50dp"
+            android:backgroundTint="@color/green"
+            android:layout_below="@+id/SleepActivityChartID"
+            android:text="START SLEEP"
+            android:textColor="@color/white"
+            android:onClick="startVoiceButtonAction"/>
 
 
     </RelativeLayout>
-
 
 </ScrollView>

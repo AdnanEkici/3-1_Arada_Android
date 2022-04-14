@@ -29,6 +29,8 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.ChatActivity;
+import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
+import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.MeditationActivity;
 import com.example.winxbitirmeapp.Models.SleepDataModel;
 import com.example.winxbitirmeapp.ProfileActivity;
@@ -55,6 +57,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -66,7 +70,6 @@ public class SleepActivity extends AppCompatActivity {
     private LineChart chart;
     private TextView dateView, timeView;
     
-    private SoundMeter soundMeter;
 
     private String token;
     private String tokenType;
@@ -88,8 +91,19 @@ public class SleepActivity extends AppCompatActivity {
 
         this.init();
         this.initGrap();
+
+        System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(SleepActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
+    }
     //Life Actions
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -160,9 +174,6 @@ public class SleepActivity extends AppCompatActivity {
                 h.postDelayed(this, 1000);
             }
         };
-
-
-
     }
 
     private void initGrap() {
@@ -174,11 +185,10 @@ public class SleepActivity extends AppCompatActivity {
         LineDataSet set1;
 
         set1 = new LineDataSet(incomeEntries, "Uyku Kalitesi");
-        set1.setColor(Color.rgb(65, 168, 121));
-        set1.setValueTextColor(Color.rgb(55, 70, 73));
+        set1.setColor(ContextCompat.getColor(SleepActivity.this,R.color.green));
         dataSets.add(set1);
 
-//customization
+        //customization
 
         chart.setExtraBottomOffset(1);
         chart.fitScreen();
@@ -189,12 +199,13 @@ public class SleepActivity extends AppCompatActivity {
         chart.setPinchZoom(false);
         chart.setDoubleTapToZoomEnabled(false);
         chart.setDrawGridBackground(false);
-//to hide background lines
+
+        //to hide background lines
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisLeft().setDrawGridLines(false);
         chart.getAxisRight().setDrawGridLines(false);
 
-//to hide right Y and top X border
+        //to hide right Y and top X border
         YAxis rightYAxis = chart.getAxisRight();
         rightYAxis.setEnabled(false);
 
@@ -210,22 +221,21 @@ public class SleepActivity extends AppCompatActivity {
         set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         set1.setDrawFilled(true);
         set1.setFillColor(ContextCompat.getColor(SleepActivity.this,R.color.green));
-        set1.setLineWidth(4f);
+        set1.setLineWidth(2f);
         set1.setCircleRadius(3f);
+        set1.setCircleColor(-7829368);
+        set1.setCircleHoleColor(-7829368);
         set1.setDrawValues(false);
 
         chart.setViewPortOffsets(0f, 0f, 0f, 0f);
 
-//String setter in x-Axis
+        //String setter in x-Axis
         chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
         LineData data = new LineData(dataSets);
         chart.setData(data);
         chart.invalidate();
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
-
-
-
 
     }
 
@@ -247,6 +257,48 @@ public class SleepActivity extends AppCompatActivity {
     //DB Actions
 
     //Button Actions
+
+    public void startVoiceButtonAction(View view) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
+        }
+        else {
+            Intent intent = new Intent(SleepActivity.this , SleepCounterActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
+
+    public void sundayButtonAction(View view) {
+        System.out.println("1");
+    }
+    public void mondayButtonAction(View view) {
+        System.out.println("2");
+
+    }
+    public void tuesdayButtonAction(View view) {
+        System.out.println("3");
+
+    }
+    public void wednesdayButtonAction(View view) {
+        System.out.println("4");
+
+    }
+    public void thursdayButtonAction(View view) {
+        System.out.println("5");
+
+    }
+    public void fridayButtonAction(View view) {
+        System.out.println("6");
+
+    }
+    public void saturdayButtonAction(View view) {
+        System.out.println("7");
+
+    }
+
+
 
     //Check Internet
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -274,22 +326,14 @@ public class SleepActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
-    public void startVoiceButton(View view) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
-        }
-        else {
-            startVoiceDetection();
-        }
 
-    }
+    
 
     public void stopVoiceButton(View view){
         soundMeter.stop();
         h.removeCallbacks(r);
         postData();
     }
-
     private void postData(){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -376,8 +420,8 @@ public class SleepActivity extends AppCompatActivity {
                 }
                 return;
             }
-
         }
     }
+
 
 }

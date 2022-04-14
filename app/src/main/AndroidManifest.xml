@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.winxbitirmeapp" >
+    package="com.example.winxbitirmeapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -11,23 +11,26 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:label="3'ü 1 ARADA"
+        android:label="3&apos;ü 1 ARADA"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Winxbitirmeapp"
         android:usesCleartextTraffic="true"
-        tools:ignore="ExtraText" >
+        tools:ignore="ExtraText">
         <activity
-            android:name=".RedirectActivity"
+            android:name=".ForgotPasswordActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChatActivities.RedirectActivity"
             android:exported="true" />
         <activity
             android:name=".toDoAndAchivements.ToDoActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatMatchActivity"
+            android:name=".ChatActivities.ChatMatchActivity"
             android:exported="true" />
         <activity
-            android:name=".ChatMainActivity"
+            android:name=".ChatActivities.ChatMainActivity"
             android:exported="true" />
         <activity
             android:name=".ProfileActivity"
@@ -39,7 +42,10 @@
             android:name=".SleepActivity.SleepActivity"
             android:exported="true" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".SleepActivity.SleepCounterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChatActivities.ChatActivity"
             android:exported="true" />
         <activity android:name=".Questionnaires.QuestionnaireActivity" />
         <activity android:name=".LoginActivity" />
@@ -47,15 +53,13 @@
         <activity android:name=".HomeActivity" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-       
     </application>
 
 </manifest>
