@@ -59,6 +59,8 @@ public class ChatMainActivity extends AppCompatActivity {
     String reportText;
     private String token;
     private String tokenType;
+    private String email;
+    private String password;
 
 
 
@@ -79,10 +81,11 @@ public class ChatMainActivity extends AppCompatActivity {
                 messageText.setText("");
             }
         });
-            Intent intent = getIntent();
-            tokenType = intent.getStringExtra("tokenType");
-            token = intent.getStringExtra("token");
-
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
         FirebaseFirestore.getInstance().collection("rooms").document(senderEmail+receiverEmail)
                 .collection("messages").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -95,6 +98,7 @@ public class ChatMainActivity extends AppCompatActivity {
                 });
 
         System.out.println("Önemli Token::::" + token + "  " + tokenType);
+
     }
 
     /*private void logoutChat() {
@@ -153,6 +157,8 @@ public class ChatMainActivity extends AppCompatActivity {
         Intent intent = new Intent(ChatMainActivity.this , ChatActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
         startActivity(intent);
         finish();
     }
@@ -284,8 +290,10 @@ public class ChatMainActivity extends AppCompatActivity {
 
                                                 Intent intent = new Intent(ChatMainActivity.this, RedirectActivity.class);
 
-                                                //intent.putExtra("token",token);
-                                                //intent.putExtra("tokenType",tokenType);
+                                                intent.putExtra("token", token);
+                                                intent.putExtra("tokenType", tokenType);
+                                                intent.putExtra("email", email);
+                                                intent.putExtra("password", password);
                                                 startActivity(intent);
                                                 db.collection("rooms").document(senderEmail+receiverEmail)
                                                         .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -454,8 +462,10 @@ public class ChatMainActivity extends AppCompatActivity {
 
 
                         Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
-                        intent.putExtra("token",token);
-                        intent.putExtra("tokenType",tokenType);
+                        intent.putExtra("token", token);
+                        intent.putExtra("tokenType", tokenType);
+                        intent.putExtra("email", email);
+                        intent.putExtra("password", password);
                         startActivity(intent);
                         db.collection("rooms").document(senderEmail+receiverEmail)
                                 .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

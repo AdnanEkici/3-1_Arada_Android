@@ -51,6 +51,8 @@ public class SleepCounterActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
     private final String URL = "http://10.2.37.108:8080/sleep";
+    private String email;
+    private String password;
 
 
 
@@ -65,6 +67,7 @@ public class SleepCounterActivity extends AppCompatActivity {
 
 
         this.init();
+
 
     }
 
@@ -86,6 +89,8 @@ public class SleepCounterActivity extends AppCompatActivity {
         Intent intent = new Intent(SleepCounterActivity.this , SleepActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
         startActivity(intent);
         finish();
     }
@@ -96,6 +101,8 @@ public class SleepCounterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
 
         soundData = new ArrayList<>();
         r = new Runnable()

@@ -74,6 +74,8 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this , SleepActivity.class);
                 intent.putExtra("token", token);
                 intent.putExtra("tokenType", tokenType);
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
                 startActivity(intent);
                 //bottomNavigationView.setVisibility(View.VISIBLE);
 
@@ -86,6 +88,8 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this , MeditationActivity.class);
                 intent.putExtra("token", token);
                 intent.putExtra("tokenType", tokenType);
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
                 startActivity(intent);
 
             }
@@ -112,6 +116,9 @@ public class HomeActivity extends AppCompatActivity {
                                     intent.putExtra("onlineNumber",""+counter);
                                     intent.putExtra("token", token);
                                     intent.putExtra("tokenType", tokenType);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("password", password);
+
                                     startActivity(intent);
                                     finish();
                                 }
