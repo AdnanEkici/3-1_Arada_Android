@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                                         {
 
                                             // Instantiate the RequestQueue.
-                                            final String URL = "http://10.2.37.139:8080/user/signin";
+                                            final String URL = "http://10.2.36.78:8080/user/signin";
                                             // Post params to be sent to the server
                                             HashMap<String, String> params = new HashMap<String, String>();
                                             params.put("email", emailFromPref);
@@ -285,7 +285,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
 
-        final String URL = "http://10.2.37.139:8080/user/signin";
+        final String URL = "http://10.2.37.108:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);

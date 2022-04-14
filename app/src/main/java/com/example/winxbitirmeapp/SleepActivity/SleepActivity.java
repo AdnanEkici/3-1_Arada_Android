@@ -28,7 +28,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.winxbitirmeapp.ChatActivity;
 import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.MeditationActivity;
@@ -66,19 +65,13 @@ import java.util.Map;
 public class SleepActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSIONS_RECORD_AUDIO = 1;
+    private SoundMeter soundMeter;
     private BottomNavigationView bottomNavigationView;
     private LineChart chart;
     private TextView dateView, timeView;
-    
 
     private String token;
     private String tokenType;
-
-    private ArrayList<SleepDataModel> soundData;
-
-    private final Handler h = new Handler();
-    private Runnable r;
-
 
 
     @Override
@@ -87,23 +80,13 @@ public class SleepActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sleep);
         this.checkInternet();
 
-        soundMeter = new SoundMeter();
-
         this.init();
         this.initGrap();
 
         System.out.println("Önemli Token::::" + token + "  " + tokenType);
     }
 
-    @Override
-    public void onBackPressed()
-    {
-        Intent intent = new Intent(SleepActivity.this , HomeActivity.class);
-        intent.putExtra("token", token);
-        intent.putExtra("tokenType", tokenType);
-        startActivity(intent);
-        finish();
-    }
+
     //Life Actions
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -158,22 +141,7 @@ public class SleepActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
-        soundData = new ArrayList<>();
-        r = new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                //TODO: save sound data
-                Double sou = soundMeter.getAmplitude();
-                System.out.println("Ses: " + sou);
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM d H:m:s O u", Locale.ENGLISH);
-                OffsetDateTime odt = OffsetDateTime.parse(new Date().toString(), dtf);
-                soundData.add(new SleepDataModel(odt.toString() , sou));
-                //System.out.println("DATE: " + new Date());
-                h.postDelayed(this, 1000);
-            }
-        };
+
     }
 
     private void initGrap() {
@@ -258,16 +226,18 @@ public class SleepActivity extends AppCompatActivity {
 
     //Button Actions
 
-    public void startVoiceButtonAction(View view) {
+    public void startSleepButtonAction(View view) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
         }
-        else {
+        else
+        {
             Intent intent = new Intent(SleepActivity.this , SleepCounterActivity.class);
+            intent.putExtra("token", token);
+            intent.putExtra("tokenType", tokenType);
             startActivity(intent);
             finish();
         }
-
     }
 
     public void sundayButtonAction(View view) {
@@ -298,8 +268,6 @@ public class SleepActivity extends AppCompatActivity {
 
     }
 
-
-
     //Check Internet
     @SuppressLint("UseCompatLoadingForDrawables")
     private void checkInternet() {
@@ -326,57 +294,50 @@ public class SleepActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case MY_PERMISSIONS_RECORD_AUDIO: {
 
-    
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-    public void stopVoiceButton(View view){
-        soundMeter.stop();
-        h.removeCallbacks(r);
-        postData();
+                    Intent intent = new Intent(SleepActivity.this , SleepCounterActivity.class);
+                    intent.putExtra("token", token);
+                    intent.putExtra("tokenType", tokenType);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    //TODO: Do something on voice record permission rejection
+                }
+                return;
+            }
+        }
     }
-    private void postData(){
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SleepActivity.this , HomeActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        startActivity(intent);
+        finish();
+    }
+
+
+    //Devam edilecek
+    private void getData(){
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.5.37.112:8080/sleep";
-
-        Gson gson = new Gson();
-
-        String listString = gson.toJson(
-                soundData,
-                new TypeToken<ArrayList<SleepDataModel>>() {}.getType());
-
-        try {
-            JSONArray jsonArray =  new JSONArray(listString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
-        JSONArray jsonArr = null;
-        try {
-            jsonArr = new JSONArray(listString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        System.out.println("ADOOOO: " + jsonArr);
-        HashMap<String, JSONArray> params = new HashMap<>();
-        params.put("model", jsonArr);
-
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,URL, new JSONObject(params),
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,"sleep/mobile", null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-                        JSONObject jsonObject = null;
-                        try {
-                            jsonObject = new JSONObject(String.valueOf(response));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        //aa
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -389,7 +350,6 @@ public class SleepActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                //headers.put("Content-Type", "application/json");
                 headers.put("Authorization", tokenType + " " + token);
                 return headers;
             }
@@ -397,31 +357,5 @@ public class SleepActivity extends AppCompatActivity {
 
         queue.add(req);
     }
-
-    public void startVoiceDetection() {
-        //TODO: Do soundMeter.stop() control
-        soundMeter.start();
-        h.postDelayed(r , 1000); // 1 second delay (takes millis)
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case MY_PERMISSIONS_RECORD_AUDIO: {
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startVoiceDetection();
-
-                } else {
-                    //TODO: Do something on voice record permission rejection
-                }
-                return;
-            }
-        }
-    }
-
 
 }
