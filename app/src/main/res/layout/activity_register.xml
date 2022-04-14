@@ -73,7 +73,6 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green"
                         android:hint="First Name"
-                        android:text="Adnan"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:textColor="@color/green"
@@ -82,7 +81,6 @@
 
                     <EditText
                         android:id="@+id/LastNameEditText"
-                        android:text="Ekici"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -113,7 +111,6 @@
                         android:hint="Email"
                         android:maxLines="1"
                         android:padding="5dp"
-                        android:text="adnanekici@gmail.com"
                         android:textColor="@color/green"
                         android:textColorHint="@color/green"
                         android:textSize="14dp" />

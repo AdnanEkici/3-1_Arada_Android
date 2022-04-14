@@ -71,7 +71,6 @@
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/green"
                         android:hint="Email"
-                        android:text="melissa@gmail.com"
                         android:maxLines="1"
                         android:padding="5dp"
                         android:textColor="@color/green"
@@ -142,19 +141,6 @@
                         android:text="Don't have an account?"
                         android:textColor="@color/dark_green"
                         android:textSize="11sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:onClick="moveQuestions"
-                        android:padding="5dp"
-                        android:text="Go to questionnaire"
-                        android:textColor="@color/dark_green"
-                        android:textSize="11sp" />
-
 
                 </LinearLayout>
 
