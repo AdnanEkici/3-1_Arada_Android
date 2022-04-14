@@ -200,7 +200,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 //headers.put("Content-Type", "application/json");
-                headers.put("winx", "mokoko");
+                headers.put("Authorization", tokenType + " " + token);
                 return headers;
             }
         };
