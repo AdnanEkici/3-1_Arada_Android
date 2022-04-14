@@ -25,6 +25,7 @@ import com.example.winxbitirmeapp.Adapters.ToDoListAdapter;
 import com.example.winxbitirmeapp.LoginActivity;
 import com.example.winxbitirmeapp.Models.AchievementModel;
 import com.example.winxbitirmeapp.Models.ToDoModel;
+import com.example.winxbitirmeapp.ProfileActivity;
 import com.example.winxbitirmeapp.R;
 import com.example.winxbitirmeapp.RegisterActivity;
 
@@ -48,6 +49,8 @@ public class AchivementActivity extends AppCompatActivity {
     private AchievementAdapter achievementAdapter;
     public static Context context;
     private final String URL = "http://10.2.37.139:8080/achievement";
+    private String email;
+    private String password;
 
 
     @Override
@@ -58,6 +61,23 @@ public class AchivementActivity extends AppCompatActivity {
         context = getApplicationContext();
         this.init();
         this.getAchievement();
+        Intent intent = getIntent();
+        tokenType = intent.getStringExtra("tokenType");
+        token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(AchivementActivity.this , ProfileActivity.class);
+        intent.putExtra("token", token);
+        intent.putExtra("tokenType", tokenType);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
+        startActivity(intent);
+        finish();
     }
 
     private void init()

@@ -38,6 +38,8 @@ public class ChatMatchActivity extends AppCompatActivity {
     int delay = 2500; //Delay for 15 seconds.  One second = 1000 milliseconds.
     private String token;
     private String tokenType;
+    private String email;
+    private String password;
 
 
     @Override
@@ -48,6 +50,8 @@ public class ChatMatchActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
         System.out.println("Önemli Token:::: chatMAtch" + token + "  " + tokenType);
     }
 
@@ -57,6 +61,8 @@ public class ChatMatchActivity extends AppCompatActivity {
         Intent intent = new Intent(ChatMatchActivity.this , ChatActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
         startActivity(intent);
         finish();
     }
@@ -116,6 +122,8 @@ public class ChatMatchActivity extends AppCompatActivity {
                                     intent.putExtra("matchedEmail",document.getString("matchedEmail"));
                                     intent.putExtra("token", token);
                                     intent.putExtra("tokenType", tokenType);
+                                    intent.putExtra("email", email);
+                                    intent.putExtra("password", password);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -165,6 +173,8 @@ public class ChatMatchActivity extends AppCompatActivity {
                                                             intent.putExtra("matchedEmail",userList.get(random).getUserMatchMail());
                                                             intent.putExtra("token", token);
                                                             intent.putExtra("tokenType", tokenType);
+                                                            intent.putExtra("email", email);
+                                                            intent.putExtra("password", password);
                                                             startActivity(intent);
                                                             finish();
                                                         }

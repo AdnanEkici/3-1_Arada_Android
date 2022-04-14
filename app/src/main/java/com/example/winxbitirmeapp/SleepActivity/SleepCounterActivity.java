@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.EditText;
@@ -33,9 +34,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -51,6 +55,10 @@ public class SleepCounterActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
     private final String URL = "http://10.2.37.108:8080/sleep";
+    private String email;
+    private String password;
+    private Instant start = Instant.now();
+
 
 
 
@@ -62,8 +70,6 @@ public class SleepCounterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sleepcounter);
 
         soundMeter = new SoundMeter();
-
-
         this.init();
 
     }
@@ -83,9 +89,17 @@ public class SleepCounterActivity extends AppCompatActivity {
         soundMeter.stop();
         h.removeCallbacks(r);
         postData();
+
+        Instant end = Instant.now();
+        Duration timeElapsed = Duration.between(start, end);
+        long minutes = (timeElapsed.toMillis() / 1000) / 60;
+        System.out.println("Time taken: "+ minutes +" dk");
+
         Intent intent = new Intent(SleepCounterActivity.this , SleepActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
         startActivity(intent);
         finish();
     }
@@ -96,6 +110,8 @@ public class SleepCounterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
 
         soundData = new ArrayList<>();
         r = new Runnable()
@@ -125,7 +141,12 @@ public class SleepCounterActivity extends AppCompatActivity {
         soundMeter.stop();
         h.removeCallbacks(r);
         postData();
-        System.out.println("HI");
+
+        Instant end = Instant.now();
+        Duration timeElapsed = Duration.between(start, end);
+        long minutes = (timeElapsed.toMillis() / 1000) / 60;
+        System.out.println("Time taken: "+ minutes +" dk");
+
        Intent intent = new Intent(SleepCounterActivity.this , SleepActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);

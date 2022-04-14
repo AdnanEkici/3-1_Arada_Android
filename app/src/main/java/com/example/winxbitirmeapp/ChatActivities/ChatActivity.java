@@ -35,6 +35,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private String token;
     private String tokenType;
+    private String email;
+    private String password;
 
 
 
@@ -51,8 +53,11 @@ public class ChatActivity extends AppCompatActivity {
         textID = (TextView)findViewById(R.id.textID);
         Intent intent = getIntent();
         String counter = intent.getStringExtra("onlineNumber");
+
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
         textID.setText("Online users: " + counter);
 
         System.out.println("Önemli Token Chat::::" + token + "  " + tokenType);

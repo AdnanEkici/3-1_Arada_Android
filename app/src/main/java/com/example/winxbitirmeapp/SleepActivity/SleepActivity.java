@@ -28,10 +28,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.winxbitirmeapp.Adapters.ToDoListAdapter;
 import com.example.winxbitirmeapp.ChatActivities.ChatActivity;
 import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.MeditationActivity;
 import com.example.winxbitirmeapp.Models.SleepDataModel;
+import com.example.winxbitirmeapp.Models.ToDoModel;
 import com.example.winxbitirmeapp.ProfileActivity;
 import com.example.winxbitirmeapp.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -72,6 +74,10 @@ public class SleepActivity extends AppCompatActivity {
 
     private String token;
     private String tokenType;
+    private String email;
+    private String password;
+
+    private final static String URL = "http://10.2.37.108:8080/sleep/mobile";
 
 
     @Override
@@ -84,6 +90,7 @@ public class SleepActivity extends AppCompatActivity {
         this.initGrap();
 
         System.out.println("Önemli Token::::" + token + "  " + tokenType);
+        this.getData();
     }
 
 
@@ -100,24 +107,33 @@ public class SleepActivity extends AppCompatActivity {
                     intent = new Intent(SleepActivity.this , SleepActivity.class);
                     intent.putExtra("token", token);
                     intent.putExtra("tokenType", tokenType);
+                    intent.putExtra("email", email);
+                    intent.putExtra("password", password);
+
                     startActivity(intent);
                     break;
                 case R.id.yoga:
                     intent = new Intent(SleepActivity.this , MeditationActivity.class);
                     intent.putExtra("token", token);
                     intent.putExtra("tokenType", tokenType);
+                    intent.putExtra("email", email);
+                    intent.putExtra("password", password);
                     startActivity(intent);
                     break;
                 case R.id.chat:
                     intent = new Intent(SleepActivity.this , ChatActivity.class);
                     intent.putExtra("token", token);
                     intent.putExtra("tokenType", tokenType);
+                    intent.putExtra("email", email);
+                    intent.putExtra("password", password);
                     startActivity(intent);
                     break;
                 case R.id.profile:
                     intent = new Intent(SleepActivity.this , ProfileActivity.class);
                     intent.putExtra("token", token);
                     intent.putExtra("tokenType", tokenType);
+                    intent.putExtra("email", email);
+                    intent.putExtra("password", password);
                     startActivity(intent);
                     break;
             }
@@ -141,6 +157,8 @@ public class SleepActivity extends AppCompatActivity {
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
 
     }
 
@@ -235,6 +253,8 @@ public class SleepActivity extends AppCompatActivity {
             Intent intent = new Intent(SleepActivity.this , SleepCounterActivity.class);
             intent.putExtra("token", token);
             intent.putExtra("tokenType", tokenType);
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
             startActivity(intent);
             finish();
         }
@@ -321,6 +341,8 @@ public class SleepActivity extends AppCompatActivity {
         Intent intent = new Intent(SleepActivity.this , HomeActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
         startActivity(intent);
         finish();
     }
@@ -328,21 +350,40 @@ public class SleepActivity extends AppCompatActivity {
 
     //Devam edilecek
     private void getData(){
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
+         RequestQueue queue = Volley.newRequestQueue(this);
+        // Post params to be sent to the server
+        HashMap<String, String> params = new HashMap<>();
+        params.put("none", "none");
 
-
-
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,"sleep/mobile", null,
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET,URL, new JSONObject(params),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //aa
+                        JSONObject jsonObject = null;
+
+                        try {
+                            jsonObject = new JSONObject(String.valueOf(response));
+                            JSONArray jsonArray = jsonObject.getJSONArray("list");
+                            for (int i = 0; i < jsonArray.length(); i++)
+                            {
+                                JSONObject jo = jsonArray.getJSONObject(i);
+
+                                System.out.println("SLEEP GET: " + jo.toString());
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                System.out.println("ERRRRROR: " + error.getLocalizedMessage());
             }
         }){
 
@@ -350,6 +391,7 @@ public class SleepActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json");
                 headers.put("Authorization", tokenType + " " + token);
                 return headers;
             }

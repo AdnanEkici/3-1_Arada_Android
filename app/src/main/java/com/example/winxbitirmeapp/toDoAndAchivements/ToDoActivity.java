@@ -56,6 +56,9 @@ public class ToDoActivity extends AppCompatActivity{
     private String token;
     public static Context context;
 
+    private String email;
+    private String password;
+
     final String URL = "http://10.2.37.139:8080/profile/todo";
 
 
@@ -151,6 +154,8 @@ public class ToDoActivity extends AppCompatActivity{
         Intent intent = new Intent(ToDoActivity.this , ProfileActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
+        intent.putExtra("email", email);
+        intent.putExtra("password", password);
         startActivity(intent);
         finish();
     }
@@ -165,6 +170,8 @@ public class ToDoActivity extends AppCompatActivity{
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
         token = intent.getStringExtra("token");
+        email = intent.getStringExtra("email");
+        password = intent.getStringExtra("password");
 
         tasks = new ArrayList<>(10);
         dones = new ArrayList<>(10);
