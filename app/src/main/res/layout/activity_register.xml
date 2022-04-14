@@ -215,11 +215,6 @@
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/GhostTextViewID"
-                android:layout_width="10dp"
-                android:visibility="invisible"
-                android:layout_height="10dp"/>
 
         </RelativeLayout>
     </ScrollView>
