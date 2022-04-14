@@ -3,6 +3,7 @@ package com.example.winxbitirmeapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,10 +23,17 @@ public class MeditationActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
 
+    private CardView forestCardView;
+    private CardView beachCardView;
+    private CardView snowCardView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meditation);
+        checkInternet();
+        isNetworkConnected();
+
         this.init();
     }
 
@@ -45,6 +53,10 @@ public class MeditationActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.yoga);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+
+        forestCardView = findViewById(R.id.forestCardView);
+        beachCardView = findViewById(R.id.beachCardView);
+        snowCardView = findViewById(R.id.snowCardView);
 
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");

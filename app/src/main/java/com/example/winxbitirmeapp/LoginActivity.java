@@ -67,6 +67,8 @@ public class LoginActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        checkInternet();
+        isNetworkConnected();
         this.init();
 
     }
@@ -108,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                                         {
 
                                             // Instantiate the RequestQueue.
-                                            final String URL = "http://10.5.39.102:8080/user/signin";
+                                            final String URL = "http://10.5.37.190:8080/user/signin";
                                             // Post params to be sent to the server
                                             HashMap<String, String> params = new HashMap<String, String>();
                                             params.put("email", emailFromPref);
@@ -285,7 +287,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Instantiate the RequestQueue.
 
-        final String URL = "http://10.5.39.102:8080/user/signin";
+        final String URL = "http://10.5.37.190:8080/user/signin";
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);

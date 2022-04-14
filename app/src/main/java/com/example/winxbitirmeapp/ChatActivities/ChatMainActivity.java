@@ -66,6 +66,8 @@ public class ChatMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main);
+        checkInternet();
+        isNetworkConnected();
         init();
 
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -150,11 +152,96 @@ public class ChatMainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        Intent intent = new Intent(ChatMainActivity.this , ChatActivity.class);
-        intent.putExtra("token", token);
-        intent.putExtra("tokenType", tokenType);
-        startActivity(intent);
-        finish();
+        MaterialAlertDialogBuilder builder1 = new MaterialAlertDialogBuilder(ChatMainActivity.this);
+        builder1.setBackground(getResources().getDrawable(R.drawable.alert_dialog_bg,null));
+
+        builder1.setCancelable(true);
+
+
+
+        builder1.setPositiveButton(
+                "Evet",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        //ADOS PROGRESS BAR YAP
+
+
+
+                        db.collection("User").document(senderEmail)
+                                .update("isMatched","0");
+                        db.collection("User").document(senderEmail)
+                                .update("chatClick","0");
+                        db.collection("User").document(senderEmail)
+                                .update("matchedEmail","-1");
+
+                        db.collection("User").document(receiverEmail)
+                                .update("isMatched","0");
+                        db.collection("User").document(receiverEmail)
+                                .update("chatClick","0");
+                        db.collection("User").document(receiverEmail)
+                                .update("matchedEmail","-1");
+
+
+                        Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
+                        intent.putExtra("token",token);
+                        intent.putExtra("tokenType",tokenType);
+                        startActivity(intent);
+                        db.collection("rooms").document(senderEmail+receiverEmail)
+                                .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        document.getReference().delete();
+                                    }
+                                } else {
+                                }
+                            }
+                        });
+
+                        db.collection("rooms").document(receiverEmail+senderEmail)
+                                .collection("messages").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        document.getReference().delete();
+                                    }
+                                } else {
+                                }
+                            }
+                        });
+                        finish();
+                    }
+                });
+
+
+        builder1.setNegativeButton(
+                "Hayır",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+
+
+        TextView message = new TextView(this);
+        // You Can Customise your Title here
+        message.setText("Konuşmayı sonlandırmak istiyor musunuz ?");
+        message.setTextColor(getColor(R.color.dark_green));
+        message.setTextSize(15);
+        builder1.setCustomTitle(message);
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+
+        alert11.getButton(alert11.BUTTON_NEGATIVE).setTextColor(getColor(R.color.dark_green));
+        alert11.getButton(alert11.BUTTON_POSITIVE).setTextColor(getColor(R.color.brown4));
+
+
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

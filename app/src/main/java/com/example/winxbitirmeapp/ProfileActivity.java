@@ -70,6 +70,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        checkInternet();
+        isNetworkConnected();
 
         bottomNavigationView = findViewById(R.id.bottomNav);
         bottomNavigationView.setSelectedItemId(R.id.profile);
@@ -199,7 +201,7 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://10.5.37.190:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);
@@ -300,7 +302,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String URL = "http://10.2.38.162:8080/profile";
+        final String URL = "http://10.5.37.190:8080/profile";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);

@@ -38,7 +38,6 @@ public class HomeActivity extends AppCompatActivity {
     private CardView sleepCardView;
     private CardView meditationCardView;
     private CardView chatCardView;
-    private RelativeLayout cardViewLayout;
 
 
     private String token;
@@ -52,7 +51,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        checkInternet();
+        isNetworkConnected();
         sleepCardView = findViewById(R.id.sleepCardView);
         meditationCardView = findViewById(R.id.meditationCardView);
         chatCardView = findViewById(R.id.chatCardView);
@@ -106,7 +106,6 @@ public class HomeActivity extends AppCompatActivity {
                                     int counter = 0;
                                     for (QueryDocumentSnapshot document : task.getResult()) {
                                         counter++;
-
                                     }
 
                                     intent.putExtra("onlineNumber",""+counter);

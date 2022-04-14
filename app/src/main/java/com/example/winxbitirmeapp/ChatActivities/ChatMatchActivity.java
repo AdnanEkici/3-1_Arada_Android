@@ -44,6 +44,8 @@ public class ChatMatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_match);
+        checkInternet();
+        isNetworkConnected();
         init();
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
