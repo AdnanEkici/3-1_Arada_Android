@@ -32,6 +32,7 @@ public class QuestionnaireActivity extends AppCompatActivity {
     private ImageView logo;
     private ArrayList<Integer> selectedAnswers;
     private ArrayList<String> questions;
+    private ArrayList<RadioGroup> radioGroups;
     private ListView questionlistView;
     private String token;
     private String tokenType;
@@ -41,9 +42,8 @@ public class QuestionnaireActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionnaire);
         this.checkInternet();
+        System.out.println("AD");
         this.init();
-
-
 
     }
 
@@ -62,28 +62,14 @@ public class QuestionnaireActivity extends AppCompatActivity {
     //Private Actions
     private void init()
     {
-        questionlistView = findViewById(R.id.QuestionnaireListViewID);
-        logo = findViewById(R.id.QuestionnaireBackgroundLogoID);
-        logo.setAlpha(10); //value: [0-255]. Where 0 is fully transparent and 255 is fully opaque.
-        questions = new ArrayList<>(10);
-        questions.add("Soru1 :");
-        questions.add("Soru2 :");
-        questions.add("Soru3 :");
-        questions.add("Soru4 :");
-        questions.add("Soru5 :");
-        questions.add("Soru6 :");
-        questions.add("Soru7 :");
-        questions.add("Soru8 :");
-        questions.add("Soru9 :");
-        questions.add("Soru10 :");
-        selectedAnswers = new ArrayList<Integer>(questions.size());
-        for (int i = 0; i < questions.size(); i++) {
-            selectedAnswers.add(-1);
+
+    }
+
+    public void nextQuestion(int i){
+        radioGroups.get(i).setVisibility(View.GONE);
+        if (i < 9){
+            radioGroups.get(i+1).setVisibility(View.VISIBLE);
         }
-        QuestionnaireAdapter adapter = new QuestionnaireAdapter(this , this.questions , selectedAnswers);
-        questionlistView.setAdapter(adapter);
-
-
     }
 
 

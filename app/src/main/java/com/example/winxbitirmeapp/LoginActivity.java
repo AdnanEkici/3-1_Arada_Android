@@ -31,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
+import com.example.winxbitirmeapp.StaticAnket.first_questionnaire_questions;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -245,6 +246,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginBtnAction(View view)
     {
+
+                                                //Bulunduğum sayfa   //Gitmek istediğim
+        Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
+        startActivity(intent);
+        finish();
+
+        // db gelince burasi degiscek // SİL BENİ
         flag = true;
         RequestQueue queue = Volley.newRequestQueue(this);
 
