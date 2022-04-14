@@ -217,7 +217,7 @@ public class ToDoActivity extends AppCompatActivity{
     {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.2.37.139:8080/profile/todo";
+
 
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
@@ -304,7 +304,7 @@ public class ToDoActivity extends AppCompatActivity{
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        final String URL = "http://10.2.37.139:8080/profile/todo";
+
         // Post params to be sent to the server
         HashMap<String, String> params = new HashMap<>();
         params.put("task", taskModel.getTask());
@@ -358,6 +358,7 @@ public class ToDoActivity extends AppCompatActivity{
     {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
+
 
         final String URL = "http://10.2.37.139:8080/profile/todo";
         // Post params to be sent to the server

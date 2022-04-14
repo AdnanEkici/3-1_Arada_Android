@@ -201,6 +201,7 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
+
         final String URL = "http://10.2.37.139:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
@@ -447,6 +448,7 @@ public class ProfileActivity extends AppCompatActivity {
         bdate[2] = Integer.parseInt(parts[2]); //year
         return bdate;
     }
+
     public void goTodo(View view)
     {
         Intent intent = new Intent(ProfileActivity.this , ToDoActivity.class);

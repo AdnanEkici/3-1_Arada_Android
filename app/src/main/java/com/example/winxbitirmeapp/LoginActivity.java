@@ -110,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
                                         {
 
                                             // Instantiate the RequestQueue.
-
                                             // Post params to be sent to the server
                                             HashMap<String, String> params = new HashMap<String, String>();
                                             params.put("email", emailFromPref);
@@ -284,6 +283,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("password","");
             editor.apply();
         }
+
 
 
         HashMap<String, String> params = new HashMap<String, String>();

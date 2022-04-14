@@ -3,6 +3,7 @@ package com.example.winxbitirmeapp.Models;
 public class AchievementModel
 {
 
+
     private String id;
     private String email;
     private String achievementType;
@@ -26,6 +27,7 @@ public class AchievementModel
         this.goal = goal;
         this.occurred = occurred;
     }
+
 
     public void setId(String id) {
         this.id = id;
@@ -54,6 +56,7 @@ public class AchievementModel
     public void setDescription(String description) {
         this.description = description;
     }
+
 
     public String getPercentage() {
         return percentage;
