@@ -77,7 +77,7 @@ public class SleepActivity extends AppCompatActivity {
     private String email;
     private String password;
 
-    private final static String URL = "http://10.2.37.108:8080/sleep/mobile";
+    private final static String URL = "http://10.2.37.44:8080/sleep/mobile";
 
 
     @Override
@@ -368,7 +368,7 @@ public class SleepActivity extends AppCompatActivity {
                             {
                                 JSONObject jo = jsonArray.getJSONObject(i);
 
-                                System.out.println("SLEEP GET: " + jo.toString());
+                                System.out.println("SLEEP GET  ------->    " + jo.toString());
 
                             }
 

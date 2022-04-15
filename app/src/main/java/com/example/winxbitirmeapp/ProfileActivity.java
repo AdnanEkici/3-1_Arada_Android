@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
 
-    final String URL = "http://10.2.37.139:8080/profile";
+    final String URL = "http://10.2.37.44:8080/profile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +100,6 @@ public class ProfileActivity extends AppCompatActivity {
         emailTextSettings = findViewById(R.id.EmailEditText);
         femaleButton = findViewById(R.id.GenderPickerFemale);
         maleButton = findViewById(R.id.GenderPickerMale);
-        otherButton = findViewById(R.id.GenderPickerOther);
         oldPassword = findViewById(R.id.OldPasswordEditText);
         newPassword = findViewById(R.id.NewPasswordEditText);
 
@@ -202,7 +201,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        final String URL = "http://10.2.37.139:8080/profile";
+        final String URL = "http://10.2.37.44:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);
@@ -221,7 +220,7 @@ public class ProfileActivity extends AppCompatActivity {
                             surname = jsonObject.getString("surname");
                             gender = jsonObject.getString("gender");
                             email = jsonObject.getString("email");
-                            birthdate = jsonObject.getString("birthDate").replace('-' , '/');
+                            birthdate = jsonObject.getString("birthDate").replace('-' , '/').substring(0,10);
 
                             firstNameText.setText(name);
                             lastnameText.setText(surname);
@@ -441,8 +440,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public int[] parseDate(String date) {
+
         int bdate [] = new int[3];
-        String[] parts = date.split("/");
+        String[] parts = date.substring(0,10).split("/");
         bdate[0]= Integer.parseInt(parts[0]); //day
         bdate[1] = Integer.parseInt(parts[1]); //month
         bdate[2] = Integer.parseInt(parts[2]); //year

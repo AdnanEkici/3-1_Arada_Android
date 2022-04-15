@@ -201,17 +201,6 @@
                             android:text="Male"
                             android:textColor="@color/green" />
 
-                        <RadioButton
-                            android:id="@+id/GenderPickerOther"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_weight="0.15"
-                            android:checked="false"
-                            android:scaleX="0.9"
-                            android:scaleY="0.9"
-                            android:text="Other"
-                            android:textColor="@color/green" />
 
                     </RadioGroup>
 

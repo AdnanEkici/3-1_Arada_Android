@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     private String tokenType;
     private boolean flag = false;
     private FirebaseAuth auth;
-    private final String URL = "http://10.2.37.139:8080/user/signin";
+    private final String URL = "http://10.2.37.44:8080/user/signin";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -304,7 +304,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             dialog.dismiss();
-                            Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
+                            Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
                             intent.putExtra("token", token);
                             intent.putExtra("tokenType", tokenType);
                             intent.putExtra("email", email);

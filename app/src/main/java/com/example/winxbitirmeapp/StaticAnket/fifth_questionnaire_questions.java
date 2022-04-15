@@ -39,7 +39,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
     private String tokenType;
     private String email;
     private String password;
-    private final String URL = "http://10.2.37.139:8080/question/submitAnswers";
+    private final String URL = "http://10.2.37.44:8080/question/submitAnswers";
     public static Context context;
 
 

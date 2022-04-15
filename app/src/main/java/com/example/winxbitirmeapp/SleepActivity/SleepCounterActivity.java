@@ -54,7 +54,7 @@ public class SleepCounterActivity extends AppCompatActivity {
     private ArrayList<SleepDataModel> soundData;
     private String token;
     private String tokenType;
-    private final String URL = "http://10.2.37.108:8080/sleep";
+    private final String URL = "http://10.2.37.44:8080/sleep";
     private String email;
     private String password;
     private Instant start = Instant.now();
