@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
-import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
 
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ public class third_questionnaire_questions extends AppCompatActivity {
         }
 
         System.out.println("ANKET 3: "+ email + " " + password);
-
         //Buradan -- yaz
     }
 

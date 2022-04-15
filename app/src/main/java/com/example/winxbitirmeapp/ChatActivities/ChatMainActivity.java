@@ -18,9 +18,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.winxbitirmeapp.Adapters.MessageAdapter;
 import com.example.winxbitirmeapp.HomeActivity;
 import com.example.winxbitirmeapp.Models.ChatMessage;
+import com.example.winxbitirmeapp.Models.ToDoModel;
 import com.example.winxbitirmeapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +47,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -45,6 +57,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ChatMainActivity extends AppCompatActivity {
 
@@ -64,6 +77,8 @@ public class ChatMainActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Instant start = Instant.now();
+
+    private final static String URL = "";
 
 
 
@@ -542,6 +557,7 @@ public class ChatMainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 reportText = editText.getText().toString();
+                sendReportTo(reportText);
                 dialogInterface.cancel();
 
             }
@@ -568,4 +584,59 @@ public class ChatMainActivity extends AppCompatActivity {
 
 
     }
+
+    private void sendReportTo(String report)
+    {
+
+            // Instantiate the RequestQueue.
+            RequestQueue queue = Volley.newRequestQueue(this);
+            // Post params to be sent to the server
+            HashMap<String, String> params = new HashMap<>();
+            params.put("senderEmail", senderEmail);
+            params.put("report", report);
+            params.put("receiverEmail", receiverEmail);
+
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,URL, new JSONObject(params),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(String.valueOf(response));
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                }
+            }){
+
+                //Headera gönder
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", tokenType + " " + token);
+                    return headers;
+                }
+            };
+
+            // add the request object to the queue to be executed
+            queue.add(req);
+
+
+    }
+
+
+
+
+
+
 }
