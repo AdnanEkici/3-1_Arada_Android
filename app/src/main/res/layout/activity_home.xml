@@ -38,8 +38,7 @@
                     android:layout_width="170dp"
                     android:layout_height="170dp"
                     android:layout_gravity="start"
-                    android:src="@drawable/sleep2"
-                    />
+                    android:src="@drawable/sleep2" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,21 +103,21 @@
                 app:cardMaxElevation="12dp"
                 app:cardPreventCornerOverlap="true">
 
-            <ImageView
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:layout_gravity="start"
-                android:src="@drawable/chat2" />
+                <ImageView
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_gravity="start"
+                    android:src="@drawable/chat2" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical"
-                android:paddingEnd="20dp"
-                android:text="CHAT"
-                android:textColor="@color/white"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:paddingEnd="20dp"
+                    android:text="CHAT"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
 
 
             </androidx.cardview.widget.CardView>

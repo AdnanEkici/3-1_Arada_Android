@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -201,7 +200,7 @@ public class ProfileActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
 
-        final String URL = "http://10.5.37.190:8080/profile";
+        final String URL = "http://192.168.1.101:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);
@@ -302,7 +301,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        final String URL = "http://10.5.37.190:8080/profile";
+        final String URL = "http://192.168.1.101:8080/profile";
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
