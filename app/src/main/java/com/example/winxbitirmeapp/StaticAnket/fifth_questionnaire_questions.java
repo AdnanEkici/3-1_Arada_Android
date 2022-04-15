@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class fifth_questionnaire_questions extends AppCompatActivity {
 
-    private ArrayList<String> answers;
+    private ArrayList<HashMap<String,String>> answerForm;
     private ArrayList<RadioGroup> radioGroups;
     private ArrayList<RelativeLayout> containers;
 
@@ -49,7 +49,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         Bundle extra = getIntent().getBundleExtra("answers");
-        answers = (ArrayList<String>) extra.getSerializable("object");
+        answerForm = (ArrayList<HashMap<String,String>>) extra.getSerializable("object");
         setContentView(R.layout.activity_second_questionnaire_questions);
         this.init();
         context = getApplicationContext();
@@ -73,86 +73,137 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
     //private metotlar
     private void init()
     {
+
+        HashMap<String,String> answer = new HashMap<>();
+        answer.put("questionBody","I don't mind being the center of attention.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I feel others' emotions.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I follow a schedule.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I get irritated easily.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I spend time reflecting on things.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I am quiet around strangers.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I make people feel at ease.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I am exacting in my work.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I often feel blue.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
+        answer = new HashMap<>();
+        answer.put("questionBody","I am full of ideas.");
+        answer.put("answer","");
+        answerForm.add(answer);
+
         containers = new ArrayList<>();
         radioGroups = new ArrayList<RadioGroup>(25);
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireFirstItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireFirstItemRadioGroupID));
 
         radioGroups.get(0).setVisibility(View.VISIBLE);
         radioGroups.get(0).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        RelativeLayout iterate = findViewById(R.id.FirstQuestionnaireFirstContainerID);
+        RelativeLayout iterate = findViewById(R.id.FifthQuestionnaireFirstContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireSecondItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireSecondItemRadioGroupID));
         radioGroups.get(1).setVisibility(View.GONE);
         radioGroups.get(1).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireSecondContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireSecondContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireThirdItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireThirdItemRadioGroupID));
         radioGroups.get(2).setVisibility(View.GONE);
         radioGroups.get(2).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireThirdContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireThirdContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireFourthItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireFourthItemRadioGroupID));
         radioGroups.get(3).setVisibility(View.GONE);
         radioGroups.get(3).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireFourthContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireFourthContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireFifthItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireFifthItemRadioGroupID));
         radioGroups.get(4).setVisibility(View.GONE);
         radioGroups.get(4).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireFifthContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireFifthContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireSixthItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireSixthItemRadioGroupID));
         radioGroups.get(5).setVisibility(View.GONE);
         radioGroups.get(5).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireSixthContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireSixthContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireSeventhItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireSeventhItemRadioGroupID));
         radioGroups.get(6).setVisibility(View.GONE);
         radioGroups.get(6).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireSeventhContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireSeventhContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireEighthItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireEighthItemRadioGroupID));
         radioGroups.get(7).setVisibility(View.GONE);
         radioGroups.get(7).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireEighthContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireEighthContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireNinethItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireNinethItemRadioGroupID));
         radioGroups.get(8).setVisibility(View.GONE);
         radioGroups.get(8).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireNinethContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireNinethContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        radioGroups.add(findViewById(R.id.FirstQuestionnaireTenthItemRadioGroupID));
+        radioGroups.add(findViewById(R.id.FifthQuestionnaireTenthItemRadioGroupID));
         radioGroups.get(9).setVisibility(View.GONE);
         radioGroups.get(9).setOnCheckedChangeListener(new FadeOnCheckedListener());
 
-        iterate = findViewById(R.id.FirstQuestionnaireTenthContainerID);
+        iterate = findViewById(R.id.FifthQuestionnaireTenthContainerID);
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
@@ -170,8 +221,8 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
             System.out.println("BURADAYIM");
             RequestQueue queue = Volley.newRequestQueue(context);
             // Post params to be sent to the server
-            HashMap<String, ArrayList<String>> params = new HashMap<>();
-            params.put("payload", answers);
+            HashMap<String, ArrayList<HashMap<String,String>>> params = new HashMap<>();
+            params.put("payload", answerForm);
 
             JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
                     new Response.Listener<JSONObject>() {
@@ -214,7 +265,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
             queue.add(req);
 
             Intent intent = new Intent(fifth_questionnaire_questions.this,HomeActivity.class);            Bundle extra = new Bundle();
-            extra.putSerializable("object",answers);
+            extra.putSerializable("object",answerForm);
             intent.putExtra("token", token);
             intent.putExtra("tokenType", tokenType);
             intent.putExtra("email", email);
@@ -224,15 +275,32 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
 
         }
     }
-
-
     class FadeOnCheckedListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
             radioGroup.setVisibility(View.GONE);
             for (int y = 0; y < radioGroups.size(); y++){
-                if (y!= radioGroups.size() -1  && radioGroups.get(y).equals(radioGroup)) {
-                    radioGroups.get(y+1).setVisibility(View.VISIBLE);
+                if (radioGroups.get(y).equals(radioGroup)){
+                    switch (i%5){
+                        case 0:
+                            answerForm.get(y).put("answer","Completely Agree");
+                            break;
+                        case 1:
+                            answerForm.get(y).put("answer","Agree");
+                            break;
+                        case 2:
+                            answerForm.get(y).put("answer","Nor Agree Nor Disagree");
+                            break;
+                        case 3:
+                            answerForm.get(y).put("answer","Disagree");
+                            break;
+                        case 4:
+                            answerForm.get(y).put("answer","Completely Disagree");
+                            break;
+                    }
+                    if (y != radioGroups.size() -1){
+                        radioGroups.get(y+1).setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }

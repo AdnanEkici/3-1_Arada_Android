@@ -20,7 +20,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_below="@+id/animationImage"
-      android:text="Sohbetiniz kapanmıştır, ana sayfaya yönlendiriyorsunuz"
+      android:text="Chat session is over. You are being redirected to main page."
       android:textSize="20sp"
       android:layout_centerHorizontal="true"
       android:gravity="center"/>
