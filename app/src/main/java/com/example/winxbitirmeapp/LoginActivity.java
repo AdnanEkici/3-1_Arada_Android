@@ -30,7 +30,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.StaticAnket.first_questionnaire_questions;
 import com.example.winxbitirmeapp.toDoAndAchivements.ToDoActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private String tokenType;
     private boolean flag = false;
     private FirebaseAuth auth;
-    private final String URL = "http://10.2.37.139:8080/user/signin";
+    private final String URL = "http://10.2.37.147:8080/user/signin";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

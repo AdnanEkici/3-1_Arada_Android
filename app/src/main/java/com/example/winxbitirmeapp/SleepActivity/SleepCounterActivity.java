@@ -1,19 +1,12 @@
 package com.example.winxbitirmeapp.SleepActivity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Chronometer;
-import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -23,8 +16,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.winxbitirmeapp.HomeActivity;
-import com.example.winxbitirmeapp.LoginActivity;
 import com.example.winxbitirmeapp.Models.SleepDataModel;
 import com.example.winxbitirmeapp.R;
 import com.google.gson.Gson;
@@ -39,7 +30,6 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -55,9 +45,11 @@ public class SleepCounterActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
     private final String URL = "http://10.2.37.108:8080/sleep";
+    private final String URLFORACH = "http://10.2.37.108:8080/sleep";
     private String email;
     private String password;
     private Instant start = Instant.now();
+    private long minutes;
 
 
 
@@ -92,7 +84,7 @@ public class SleepCounterActivity extends AppCompatActivity {
 
         Instant end = Instant.now();
         Duration timeElapsed = Duration.between(start, end);
-        long minutes = (timeElapsed.toMillis() / 1000) / 60;
+        minutes = (timeElapsed.toMillis() / 1000) / 60;
         System.out.println("Time taken: "+ minutes +" dk");
 
         Intent intent = new Intent(SleepCounterActivity.this , SleepActivity.class);
@@ -144,7 +136,7 @@ public class SleepCounterActivity extends AppCompatActivity {
 
         Instant end = Instant.now();
         Duration timeElapsed = Duration.between(start, end);
-        long minutes = (timeElapsed.toMillis() / 1000) / 60;
+        minutes = (timeElapsed.toMillis() / 1000) / 60;
         System.out.println("Time taken: "+ minutes +" dk");
 
        Intent intent = new Intent(SleepCounterActivity.this , SleepActivity.class);
@@ -216,6 +208,45 @@ public class SleepCounterActivity extends AppCompatActivity {
         queue.add(req);
     }
 
+    private void postAchivementTime(){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        HashMap<String, Long> params = new HashMap<>();
+        params.put("minutes", minutes);
+
+        JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST,URLFORACH, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(String.valueOf(response));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }){
+
+            //Headera gönder
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("Authorization", tokenType + " " + token);
+                return headers;
+            }
+        };
+
+        queue.add(req);
+    }
 
     private void startVoiceDetection() {
         //TODO: Do soundMeter.stop() control

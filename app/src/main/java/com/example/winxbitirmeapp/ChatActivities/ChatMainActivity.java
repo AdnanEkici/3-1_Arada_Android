@@ -77,6 +77,7 @@ public class ChatMainActivity extends AppCompatActivity {
     private String email;
     private String password;
     private Instant start = Instant.now();
+    private long minutes;
 
     private final static String URL = "";
 
@@ -481,7 +482,7 @@ public class ChatMainActivity extends AppCompatActivity {
 
                         Instant end = Instant.now();
                         Duration timeElapsed = Duration.between(start, end);
-                        long minutes = (timeElapsed.toMillis() / 1000) / 60;
+                        minutes = (timeElapsed.toMillis() / 1000) / 60;
                         System.out.println("Time taken: " + minutes +" dk");
                         Intent intent = new Intent(ChatMainActivity.this,RedirectActivity.class);
                         intent.putExtra("token", token);
