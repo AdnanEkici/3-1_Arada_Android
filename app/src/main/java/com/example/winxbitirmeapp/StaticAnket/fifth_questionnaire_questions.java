@@ -39,18 +39,19 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
     private String tokenType;
     private String email;
     private String password;
-    private final String URL = "http://10.2.37.139:8080/question/submitAnswers";
+    private final String URL = "http://10.2.40.82:8080/question/submitAnswers";
     public static Context context;
-
+    private int answered;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        answered = 0;
         super.onCreate(savedInstanceState);
         Bundle extra = getIntent().getBundleExtra("answers");
         answerForm = (ArrayList<HashMap<String,String>>) extra.getSerializable("object");
-        setContentView(R.layout.activity_second_questionnaire_questions);
+        setContentView(R.layout.activity_fifth_questionnaire_questions);
         this.init();
         context = getApplicationContext();
         Intent intent = getIntent();
@@ -207,7 +208,7 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
         iterate.setOnClickListener(new AppearOnClickListener());
         containers.add(iterate);
 
-        Button next = findViewById(R.id.FirstQuestionnaireNextButtonID);
+        Button next = findViewById(R.id.FifthQuestionnaireNextButtonID);
         next.setOnClickListener(new NextPageOnClickListener());
 
     }
@@ -215,87 +216,94 @@ public class fifth_questionnaire_questions extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
+            if (answered < 10 ){
+                Toast.makeText(fifth_questionnaire_questions.this,"Please answer all questions before moving to next page.",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                RequestQueue queue = Volley.newRequestQueue(context);
+                // Post params to be sent to the server
+                HashMap<String, ArrayList<HashMap<String,String>>> params = new HashMap<>();
+                params.put("payload", answerForm);
+
+                JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                System.out.println("Response158: " + response.toString());
+                                JSONObject jsonObject = null;
+                                try {
+                                    jsonObject = new JSONObject(String.valueOf(response));
 
 
 
-            System.out.println("BURADAYIM");
-            RequestQueue queue = Volley.newRequestQueue(context);
-            // Post params to be sent to the server
-            HashMap<String, ArrayList<HashMap<String,String>>> params = new HashMap<>();
-            params.put("payload", answerForm);
 
-            JsonObjectRequest req = new JsonObjectRequest(URL, new JSONObject(params),
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            System.out.println("Response158: " + response.toString());
-                            JSONObject jsonObject = null;
-                            try {
-                                jsonObject = new JSONObject(String.valueOf(response));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
 
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        VolleyLog.e("Error: ", error.getMessage());
+                    }
+                }){
+
+                    //Headera gönder
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        //headers.put("Content-Type", "application/json");
+                        headers.put("Authorization", tokenType + " " + token);
+                        return headers;
+                    }
+                };
+
+                // add the request object to the queue to be executed
+                queue.add(req);
+
+                Intent intent = new Intent(fifth_questionnaire_questions.this,HomeActivity.class);            Bundle extra = new Bundle();
+                extra.putSerializable("object",answerForm);
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
+                startActivity(intent);
 
 
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    VolleyLog.e("Error: ", error.getMessage());
-                }
-            }){
-
-                //Headera gönder
-
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    //headers.put("Content-Type", "application/json");
-                    headers.put("Authorization", tokenType + " " + token);
-                    return headers;
-                }
-            };
-
-            // add the request object to the queue to be executed
-            queue.add(req);
-
-            Intent intent = new Intent(fifth_questionnaire_questions.this,HomeActivity.class);            Bundle extra = new Bundle();
-            extra.putSerializable("object",answerForm);
-            intent.putExtra("token", token);
-            intent.putExtra("tokenType", tokenType);
-            intent.putExtra("email", email);
-            intent.putExtra("password", password);
-            startActivity(intent);
-
+            }
 
         }
     }
     class FadeOnCheckedListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            int currentLocation = 0;
             radioGroup.setVisibility(View.GONE);
             for (int y = 0; y < radioGroups.size(); y++){
+                currentLocation = y + 40;
                 if (radioGroups.get(y).equals(radioGroup)){
+                    if (answerForm.get(currentLocation).get("answer").equals("")){
+                        answered++;
+                    }
                     switch (i%5){
                         case 0:
-                            answerForm.get(y).put("answer","Completely Agree");
+                            answerForm.get(currentLocation).put("answer","Completely Agree");
                             break;
                         case 1:
-                            answerForm.get(y).put("answer","Agree");
+                            answerForm.get(currentLocation).put("answer","Agree");
                             break;
                         case 2:
-                            answerForm.get(y).put("answer","Nor Agree Nor Disagree");
+                            answerForm.get(currentLocation).put("answer","Nor Agree Nor Disagree");
                             break;
                         case 3:
-                            answerForm.get(y).put("answer","Disagree");
+                            answerForm.get(currentLocation).put("answer","Disagree");
                             break;
                         case 4:
-                            answerForm.get(y).put("answer","Completely Disagree");
+                            answerForm.get(currentLocation).put("answer","Completely Disagree");
                             break;
                     }
                     if (y != radioGroups.size() -1){

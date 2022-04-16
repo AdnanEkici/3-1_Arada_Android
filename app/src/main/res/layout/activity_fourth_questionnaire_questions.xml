@@ -652,13 +652,15 @@
                         android:text="Completely Disagree" />
                 </RadioGroup>
             </RelativeLayout>
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/FourthQuestionnaireNextButtonID"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/FourthQuestionnaireTenthContainerID"
-                android:text="NEXT"/>
+                android:layout_centerHorizontal="true"
+                android:backgroundTint="@color/green"
+                android:text="Next"
+                android:textColor="@color/white" />
         </RelativeLayout>
 
     </ScrollView>

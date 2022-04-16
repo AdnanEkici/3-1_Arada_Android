@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
 
-    final String URL = "http://10.2.37.139:8080/profile";
+    final String URL = "http://10.2.40.82:8080/profile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,7 +202,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        final String URL = "http://10.2.37.139:8080/profile";
+        final String URL = "http://10.2.40.82:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);

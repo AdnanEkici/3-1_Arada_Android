@@ -10,10 +10,12 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.winxbitirmeapp.LoginActivity;
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
+import com.example.winxbitirmeapp.RegisterActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,11 +31,12 @@ public class first_questionnaire_questions extends AppCompatActivity {
     private String tokenType;
     private String email;
     private String password;
+    private int answered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-
+        answered = 0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_questionnaire_questions);
         this.init();
@@ -203,15 +206,20 @@ public class first_questionnaire_questions extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(first_questionnaire_questions.this,second_questionnaire_questions.class);
-            Bundle extra = new Bundle();
-            intent.putExtra("token", token);
-            intent.putExtra("tokenType", tokenType);
-            intent.putExtra("email", email);
-            intent.putExtra("password", password);
-            extra.putSerializable("object",answerForm);
-            intent.putExtra("answers",extra);
-            startActivity(intent);
+            if (answered < 10 ){
+                Toast.makeText(first_questionnaire_questions.this,"Please answer all questions before moving to next page.",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Intent intent = new Intent(first_questionnaire_questions.this,second_questionnaire_questions.class);
+                Bundle extra = new Bundle();
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
+                extra.putSerializable("object",answerForm);
+                intent.putExtra("answers",extra);
+                startActivity(intent);
+            }
         }
     }
     class FadeOnCheckedListener implements RadioGroup.OnCheckedChangeListener {
@@ -220,6 +228,9 @@ public class first_questionnaire_questions extends AppCompatActivity {
             radioGroup.setVisibility(View.GONE);
             for (int y = 0; y < radioGroups.size(); y++){
                 if (radioGroups.get(y).equals(radioGroup)){
+                    if (answerForm.get(y).get("answer").equals("")){
+                        answered++;
+                    }
                     switch (i%5){
                         case 0:
                             answerForm.get(y).put("answer","Completely Agree");

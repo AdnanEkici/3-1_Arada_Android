@@ -130,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity{
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String dateForDatabase;
 
-    private final String URL = "http://10.2.37.139:8080/user/signup";
+    private final String URL = "http://10.2.40.82:8080/user/signup";
 
 
     @Override
@@ -375,7 +375,7 @@ public class RegisterActivity extends AppCompatActivity{
             RequestQueue requestQueue = Volley.newRequestQueue(this);
 
 
-            String URL = "http://10.2.36.78:8080/user/signup";
+            String URL = "http://10.2.40.82:8080/user/signup";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("email", email);
             jsonBody.put("username", email);

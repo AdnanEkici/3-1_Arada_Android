@@ -60,9 +60,10 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private String token;
     private String tokenType;
+    private boolean didUserCompleteForm;
     private boolean flag = false;
     private FirebaseAuth auth;
-    private final String URL = "http://10.2.37.139:8080/user/signin";
+    private final String URL = "http://10.2.40.82:8080/user/signin";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -124,18 +125,24 @@ public class LoginActivity extends AppCompatActivity {
                                                             try {
                                                                 jsonObject = new JSONObject(String.valueOf(response));
                                                                 tokenType = jsonObject.getString("tokenType");
-                                                                token = jsonObject.getString("accessToken");
-
+                                                                token = jsonObject.getString("token");
+                                                                didUserCompleteForm = Boolean.parseBoolean(jsonObject.getString("formCompleted"));
                                                                 dialog.dismiss();
-                                                                //Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
-                                                                Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
-                                                                intent.putExtra("token", token);
-                                                                intent.putExtra("tokenType", tokenType);
-                                                                intent.putExtra("email", emailFromPref);
-                                                                intent.putExtra("password", passFromPref);
-                                                                startActivity(intent);
-                                                                finish();
 
+                                                                if (didUserCompleteForm){
+                                                                    Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                }
+                                                                else {
+                                                                    Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
+                                                                    intent.putExtra("token", token);
+                                                                    intent.putExtra("tokenType", tokenType);
+                                                                    intent.putExtra("email", emailFromPref);
+                                                                    intent.putExtra("password", passFromPref);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                }
                                                                 //Alttaki yorumlu kod json arrayi okur
                                                                 // JSONArray jsonArray = jsonObject.getJSONArray("data");
                                                                 // for (int i = 0; i < jsonArray.length(); i++) {
@@ -300,17 +307,25 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             jsonObject = new JSONObject(String.valueOf(response));
                             tokenType = jsonObject.getString("tokenType");
-                            token = jsonObject.getString("accessToken");
+                            token = jsonObject.getString("token");
+                            didUserCompleteForm = Boolean.parseBoolean(jsonObject.getString("formCompleted"));
 
+                            if (didUserCompleteForm){
+                                Intent intent = new Intent(LoginActivity.this , HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                            else {
+                                dialog.dismiss();
+                                Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
+                                intent.putExtra("token", token);
+                                intent.putExtra("tokenType", tokenType);
+                                intent.putExtra("email", email);
+                                intent.putExtra("password", password);
+                                startActivity(intent);
+                                finish();
+                            }
 
-                            dialog.dismiss();
-                            Intent intent = new Intent(LoginActivity.this , first_questionnaire_questions.class);
-                            intent.putExtra("token", token);
-                            intent.putExtra("tokenType", tokenType);
-                            intent.putExtra("email", email);
-                            intent.putExtra("password", password);
-                            startActivity(intent);
-                            finish();
 
                             //Alttaki yorumlu kod json arrayi okur
                             // JSONArray jsonArray = jsonObject.getJSONArray("data");

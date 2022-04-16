@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.winxbitirmeapp.Questionnaires.QuestionnaireActivity;
 import com.example.winxbitirmeapp.R;
@@ -25,14 +26,16 @@ public class fourth_questionnaire_questions extends AppCompatActivity {
     private String tokenType;
     private String email;
     private String password;
+    private int answered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        answered = 0;
         super.onCreate(savedInstanceState);
         Bundle extra = getIntent().getBundleExtra("answers");
         answerForm = (ArrayList<HashMap<String,String>>) extra.getSerializable("object");
-        setContentView(R.layout.activity_second_questionnaire_questions);
+        setContentView(R.layout.activity_fourth_questionnaire_questions);
         this.init();
 
         Intent intent = getIntent();
@@ -203,38 +206,49 @@ public class fourth_questionnaire_questions extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(fourth_questionnaire_questions.this,fifth_questionnaire_questions.class);
-            Bundle extra = new Bundle();
-            intent.putExtra("token", token);
-            intent.putExtra("tokenType", tokenType);
-            intent.putExtra("email", email);
-            intent.putExtra("password", password);
-            extra.putSerializable("object",answerForm);
-            intent.putExtra("answers",extra);
-            startActivity(intent);
+            if (answered < 10 ){
+                Toast.makeText(fourth_questionnaire_questions.this,"Please answer all questions before moving to next page.",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Intent intent = new Intent(fourth_questionnaire_questions.this,fifth_questionnaire_questions.class);
+                Bundle extra = new Bundle();
+                intent.putExtra("token", token);
+                intent.putExtra("tokenType", tokenType);
+                intent.putExtra("email", email);
+                intent.putExtra("password", password);
+                extra.putSerializable("object",answerForm);
+                intent.putExtra("answers",extra);
+                startActivity(intent);
+            }
+
         }
     }
     class FadeOnCheckedListener implements RadioGroup.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(RadioGroup radioGroup, int i) {
+            int currentLocation = 0;
             radioGroup.setVisibility(View.GONE);
             for (int y = 0; y < radioGroups.size(); y++){
+                currentLocation = y + 30;
                 if (radioGroups.get(y).equals(radioGroup)){
+                    if (answerForm.get(currentLocation).get("answer").equals("")){
+                        answered++;
+                    }
                     switch (i%5){
                         case 0:
-                            answerForm.get(y).put("answer","Completely Agree");
+                            answerForm.get(currentLocation).put("answer","Completely Agree");
                             break;
                         case 1:
-                            answerForm.get(y).put("answer","Agree");
+                            answerForm.get(currentLocation).put("answer","Agree");
                             break;
                         case 2:
-                            answerForm.get(y).put("answer","Nor Agree Nor Disagree");
+                            answerForm.get(currentLocation).put("answer","Nor Agree Nor Disagree");
                             break;
                         case 3:
-                            answerForm.get(y).put("answer","Disagree");
+                            answerForm.get(currentLocation).put("answer","Disagree");
                             break;
                         case 4:
-                            answerForm.get(y).put("answer","Completely Disagree");
+                            answerForm.get(currentLocation).put("answer","Completely Disagree");
                             break;
                     }
                     if (y != radioGroups.size() -1){

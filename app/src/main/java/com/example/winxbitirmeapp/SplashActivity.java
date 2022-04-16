@@ -16,7 +16,6 @@ import android.widget.ImageView;
 public class SplashActivity extends AppCompatActivity {
 
     AnimationDrawable logoAnimation;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
