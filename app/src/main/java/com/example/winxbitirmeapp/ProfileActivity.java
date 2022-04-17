@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String token;
     private String tokenType;
 
-    final String URL = "http://10.2.37.44:8080/profile";
+    final String URL = "http://10.2.36.114:8080/profile";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,8 +118,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         Intent intent = new Intent(ProfileActivity.this , HomeActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
@@ -128,8 +127,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
-    private void checkInternet()
-    {
+    private void checkInternet() {
         if (!isNetworkConnected())
         {
             AlertDialog alertDialog = new AlertDialog.Builder(ProfileActivity.this).create();
@@ -201,7 +199,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-        final String URL = "http://10.2.37.44:8080/profile";
+        final String URL = "http://10.2.36.114:8080/profile";
         // Post params to be sent to the server
         System.out.println(tokenType);
         System.out.println(token);
@@ -282,9 +280,7 @@ public class ProfileActivity extends AppCompatActivity {
         } else{
             otherButton.setChecked(true);
         }
-
         initDatePicker();
-
     }
 
     public void profilePictureChangeButton(View view){
@@ -299,10 +295,8 @@ public class ProfileActivity extends AppCompatActivity {
         String lname = lastnameTextSettings.getText().toString();
         String gender = femaleButton.isChecked() ? "FEMALE" : (maleButton.isChecked() ? "MALE" : "OTHER");
 
-
-
         RequestQueue queue = Volley.newRequestQueue(this);
-
+        System.out.println("database date ----->  " + dateForDatabase);
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("email", email);
@@ -316,19 +310,19 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
+
                         JSONObject jsonObject = null;
                         try {
                             jsonObject = new JSONObject(String.valueOf(response));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
+                System.out.println("---->   " + error.getLocalizedMessage());
             }
         }){
 
@@ -344,11 +338,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         // add the request object to the queue to be executed
         queue.add(req);
-
-
-
-
-
         finish();
         startActivity(getIntent());
     }
@@ -365,7 +354,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDateSet(DatePicker datePicker, int year, int month, int day)
             {
                 month = month + 1;
-                String date = makeDateString(day, month, year);
+                String date = year + "/" + month + "/" +  day;
                 try {
                     dateForDatabase = makeDateStringForDatabase(day, month, year);
                 } catch (ParseException e) {
@@ -385,57 +374,24 @@ public class ProfileActivity extends AppCompatActivity {
         }
         else{
             int date [] = parseDate((String) dateButton.getText());
-            int year = date[2];
+            int day = date[2];
             int month = date[1]-1;
-            int day = date[0];
+            int year = date[0];
             int style = android.app.AlertDialog.THEME_HOLO_LIGHT;
+
             datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
         }
     }
 
-    private String makeDateString(int day, int month, int year) {
-        return getMonthFormat(month) + " " + day + " " + year;
-    }
-
     private String makeDateStringForDatabase(int day, int month, int year) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateStr = year + "-" + month + "-" + day;
-        Date date = simpleDateFormat.parse(dateStr);
+        String m = month < 10 ? "0" + month : "" + month;
+        String d = day < 10 ? "0" + day : "" + day;
+
+        String dateStr = year + "-" + m + "-" + d;
         return dateStr;
     }
 
-    private String getMonthFormat(int month) {
-        if(month == 1)
-            return "Jan";
-        if(month == 2)
-            return "Feb";
-        if(month == 3)
-            return "Mar";
-        if(month == 4)
-            return "Apr";
-        if(month == 5)
-            return "May";
-        if(month == 6)
-            return "Jun";
-        if(month == 7)
-            return "Jul";
-        if(month == 8)
-            return "Aug";
-        if(month == 9)
-            return "Sep";
-        if(month == 10)
-            return "OCT";
-        if(month == 11)
-            return "NOV";
-        if(month == 12)
-            return "DEC";
-
-        //default should never happen
-        return "JAN";
-    }
-
-    public void openDatePicker(View view)
-    {
+    public void openDatePicker(View view) {
         datePickerDialog.show();
     }
 
@@ -449,16 +405,14 @@ public class ProfileActivity extends AppCompatActivity {
         return bdate;
     }
 
-    public void goTodo(View view)
-    {
+    public void goTodo(View view) {
         Intent intent = new Intent(ProfileActivity.this , ToDoActivity.class);
         intent.putExtra("token", token);
         intent.putExtra("tokenType", tokenType);
         startActivity(intent);
     }
 
-    public void gotoAchievements(View view)
-    {
+    public void gotoAchievements(View view) {
         Intent intentt = new Intent(ProfileActivity.this , AchivementActivity.class);
         intentt.putExtra("token", token);
         intentt.putExtra("tokenType", tokenType);

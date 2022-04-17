@@ -411,7 +411,6 @@
                         android:id="@+id/informationGrid1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
                         android:layout_alignParentLeft="true"
                         android:useDefaultMargins="true"
                         android:orientation="vertical"
@@ -424,10 +423,10 @@
                             android:layout_margin="5dp"
                             android:padding="10dp">
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/zzz"/>
+                                android:src="@drawable/sleep_time"/>
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -436,14 +435,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Woke Up"
-                                    android:textSize="15dp"
+                                    android:text="Slept"
+                                    android:textSize="12dp"
                                     android:textColor="@color/gray"/>
                                 <TextView
+                                    android:id="@+id/slept"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="7 : 35"
-                                    android:textSize="25dp"/>
+                                    android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
@@ -454,10 +453,10 @@
                             android:layout_margin="5dp"
                             android:padding="10dp">
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/zzz"/>
+                                android:src="@drawable/quality"/>
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -466,14 +465,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Woke Up"
-                                    android:textSize="15dp"
+                                    android:text="Sleep Quality"
+                                    android:textSize="12dp"
                                     android:textColor="@color/gray"/>
                                 <TextView
+                                    android:id="@+id/sleepQuality"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="7 : 35"
-                                    android:textSize="25dp"/>
+                                    android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
@@ -484,10 +483,10 @@
                             android:layout_margin="5dp"
                             android:padding="10dp">
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/zzz"/>
+                                android:src="@drawable/besttime"/>
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -496,14 +495,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Woke Up"
-                                    android:textSize="15dp"
+                                    android:text="Best Sleep At"
+                                    android:textSize="12dp"
                                     android:textColor="@color/gray"/>
                                 <TextView
+                                    android:id="@+id/bestSleepAt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="7 : 35"
-                                    android:textSize="25dp"/>
+                                    android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
 
@@ -513,7 +512,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/line"
-                        android:layout_margin="5dp"
                         android:useDefaultMargins="true"
                         android:layout_alignParentRight="true"
                         android:orientation="vertical"
@@ -526,10 +524,10 @@
                             android:layout_margin="5dp"
                             android:padding="10dp">
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/zzz"/>
+                                android:src="@drawable/wokeup"/>
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -539,13 +537,13 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Woke Up"
-                                    android:textSize="15dp"
+                                    android:textSize="12dp"
                                     android:textColor="@color/gray"/>
                                 <TextView
+                                    android:id="@+id/wokeUp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="7 : 35"
-                                    android:textSize="25dp"/>
+                                    android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
@@ -556,10 +554,10 @@
                             android:layout_margin="5dp"
                             android:padding="10dp">
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
                                 android:layout_margin="5dp"
-                                android:src="@drawable/zzz"/>
+                                android:src="@drawable/sleep"/>
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -568,14 +566,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Woke Up"
-                                    android:textSize="15dp"
+                                    android:text="Total Sleep Hours"
+                                    android:textSize="12dp"
                                     android:textColor="@color/gray"/>
                                 <TextView
+                                    android:id="@+id/totalSleep"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="7 : 35"
-                                    android:textSize="25dp"/>
+                                    android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
@@ -586,8 +584,8 @@
                             android:layout_margin="5dp"
                             android:padding="10dp">
                             <ImageView
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/zzz"/>
                             <LinearLayout
@@ -598,14 +596,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Woke Up"
-                                    android:textSize="15dp"
+                                    android:text="Worst Sleep At"
+                                    android:textSize="12dp"
                                     android:textColor="@color/gray"/>
                                 <TextView
+                                    android:id="@+id/worstSleepAt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="7 : 35"
-                                    android:textSize="25dp"/>
+                                    android:textSize="20dp"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -619,6 +617,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
                     android:backgroundTint="@color/green"
                     android:onClick="startSleepButtonAction"
                     android:text="START SLEEP"

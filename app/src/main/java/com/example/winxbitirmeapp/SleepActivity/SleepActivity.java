@@ -51,6 +51,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -71,13 +72,19 @@ public class SleepActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private LineChart chart;
     private TextView dateView, timeView;
+    private TextView slept, wokeUp, sleepQuality, totalSleep, bestSleepAt, worstSleepAt;
+    private String sleptData, wokeUpData, bestSleepAtData, worstSleepAtData;
+    private Double sleepQualityData;
+    private int totalSleepHoursData;
+
+
 
     private String token;
     private String tokenType;
     private String email;
     private String password;
 
-    private final static String URL = "http://10.2.37.44:8080/sleep/mobile";
+    private final static String URL = "http://10.2.36.114:8080/sleep/mobile";
 
 
     @Override
@@ -91,6 +98,9 @@ public class SleepActivity extends AppCompatActivity {
 
         System.out.println("Önemli Token::::" + token + "  " + tokenType);
         this.getData();
+
+
+
     }
 
 
@@ -151,8 +161,8 @@ public class SleepActivity extends AppCompatActivity {
         chart = (LineChart) findViewById(R.id.SleepActivityChartID); // Önemsiz dese bile bu activityde viewları cast et.
         bottomNavigationView = findViewById(R.id.bottomNav);// <--  Bu hariç
         bottomNavigationView.setSelectedItemId(R.id.sleep);
-        dateView = (TextView) findViewById(R.id.SleepActivityDateTextID);;
-        timeView = (TextView) findViewById(R.id.SleepActivityTimeTextID);;
+        dateView = (TextView) findViewById(R.id.SleepActivityDateTextID);
+        timeView = (TextView) findViewById(R.id.SleepActivityTimeTextID);
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         Intent intent = getIntent();
         tokenType = intent.getStringExtra("tokenType");
@@ -160,6 +170,12 @@ public class SleepActivity extends AppCompatActivity {
         email = intent.getStringExtra("email");
         password = intent.getStringExtra("password");
 
+        slept = (TextView) findViewById(R.id.slept);
+        wokeUp = (TextView) findViewById(R.id.wokeUp);
+        sleepQuality = (TextView) findViewById(R.id.sleepQuality);
+        totalSleep = (TextView) findViewById(R.id.totalSleep);
+        bestSleepAt = (TextView) findViewById(R.id.bestSleepAt);
+        worstSleepAt = (TextView) findViewById(R.id.worstSleepAt);
     }
 
     private void initGrap() {
@@ -367,17 +383,28 @@ public class SleepActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++)
                             {
                                 JSONObject jo = jsonArray.getJSONObject(i);
+                                sleptData = (String) jo.get("sleepStartTime");
+                                wokeUpData = (String) jo.get("sleepEndTime");
+                                bestSleepAtData = (String) jo.get("bestSleepAt");
+                                worstSleepAtData = (String) jo.get("worstSleepAt");
+                                sleepQualityData = (Double) jo.get("averageSleepQuality");
+                                totalSleepHoursData = (int) jo.get("totalSleepHours");
+
+
+                                slept.setText(sleptData.substring(11,16).replace(":" , " : "));
+                                wokeUp.setText(wokeUpData.substring(11,16).replace(":" , " : "));
+                                bestSleepAt.setText(bestSleepAtData.substring(11,16).replace(":" , " : "));
+                                worstSleepAt.setText(worstSleepAtData.substring(11,16).replace(":" , " : "));
+                                sleepQuality.setText(new DecimalFormat("##.#").format(sleepQualityData));
+                                totalSleep.setText(""+totalSleepHoursData);
 
                                 System.out.println("SLEEP GET  ------->    " + jo.toString());
 
+
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
